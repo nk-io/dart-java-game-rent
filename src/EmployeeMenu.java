@@ -15,13 +15,13 @@ public class EmployeeMenu {
         // adds the rent fee to the total profit
         // changes the rent status once returned
             for (int i = 0; i < DartController.gameList.size(); i++) {
-                if (DartController.gameList.get(i).getRentStatus().equals("Not available")) {
+                if (!DartController.gameList.get(i).isGameAvailableToRent()) {
                     if (DartController.gameList.get(i).getID().equals(gameReturnID)) {
                         int daysRented = InputClass.askIntInput("Enter the number of days the game was rented: ");
                         totalRent = DartController.gameList.get(i).getDailyRentFee() * (double) daysRented;
                         System.out.println("Total rent fee: " + totalRent + " SEK");
                         DartController.totalRentProfit += totalRent;
-                        DartController.gameList.get(i).setRentStatus("Available");
+                        DartController.gameList.get(i).setAvailableToRent();
                         System.out.println("Game successfully returned!");
                         return true;
                     }

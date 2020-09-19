@@ -5,8 +5,54 @@ public class DartController {
     public static ArrayList<Game> gameList = new ArrayList<Game>();
     public static ArrayList<Customer> registeredCustomerList = new ArrayList<Customer>();
     public static double totalRentProfit;
+    private static final String MANAGER_PASSWORD = "admin1234";
+    private static final String EMPLOYEE_PASSWORD = "password123";
 
-   // Prints the main menu and asks for string input
+    public static void start(){
+        boolean mainMenuActive = true;
+
+        // Starts the program by printing the main menu from DartController
+        do {
+            String mainMenuOption = DartController.mainMenu();
+
+            // Formats the received input to lower case so the program doesn't need to check whether it's upper or lower case
+            if (mainMenuOption.toLowerCase().equals("m"))  {
+
+                String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
+                // Checks whether the typed password matches the manager password
+                if (enteredPassword.equals(MANAGER_PASSWORD)) {
+                    DartController.managerMenu();
+
+                } else {
+                    System.out.println("Invalid Password!");
+                }
+
+            } else if (mainMenuOption.toLowerCase().equals("e")) {
+
+                String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
+                // Checks whether the typed password matches the employee password
+                if (enteredPassword.equals(EMPLOYEE_PASSWORD)) {
+                    DartController.employeeMenu();
+                } else {
+                    System.out.println("Invalid Password!");
+                }
+
+            } else if (mainMenuOption.toLowerCase().equals("c")) {
+                DartController.customerMenu();
+
+                // Closes the scanner and terminates the program if the input is X/x
+            } else if (mainMenuOption.toLowerCase().equals("x")) {
+                System.out.println("Exiting DART...");
+                mainMenuActive = false;
+                InputClass.closeScanner();
+
+            } else {
+                System.out.println("Invalid input! Please, try again!");
+            }
+
+        } while (mainMenuActive);
+    }
+    // Prints the main menu and asks for string input
     public static String mainMenu() {
 
         String mainMenuMessage =
@@ -26,109 +72,100 @@ public class DartController {
     }
     // Prints the manager menu and asks for integer input (1, 2, 3)
     // !!! CALL THIS AFTER CONFIRMING THE PASSWORD !!!
-    public static int managerMenu () {
+    public static void managerMenu () {
 
-        int managerMenuOption = 0;
-
-        String managerMenuMessage =
-                        "Manager Screen - Type one of the options below:\n" +
-                        "1. Add an employee\n" +
-                        "2. View all employees\n" +
-                        "3. Return to Main Menu\n";
-
-        managerMenuOption = InputClass.askIntInput(managerMenuMessage);
+        String managerMenuOption;
 
         // Checks the input and connects to other sub-menus depending on the input
         do {
-            if (managerMenuOption == 1) {
+            String managerMenuMessage =
+                    "Manager Screen - Type one of the options below:\n" +
+                            "1. Add an employee\n" +
+                            "2. View all employees\n" +
+                            "3. Return to Main Menu\n";
+
+            managerMenuOption = InputClass.askStringInput(managerMenuMessage);
+            if (managerMenuOption.equals("1")) {
                 ManagerMenu.addEmployee();
-                return managerMenu();
-            } else if (managerMenuOption == 2) {
+            } else if (managerMenuOption.equals("2")) {
                 ManagerMenu.viewEmployees();
-                return managerMenu();
-            } else {
+            } else if(managerMenuOption.equals("3")){
+                System.out.println("Returning to Main Menu...");
+            }
+            else {
                 System.out.println("Invalid Input! Please try again!");
             }
-        } while(managerMenuOption != 3);
+        } while(!managerMenuOption.equals("3"));
 
-        return managerMenuOption;
     }
     // Prints the employee menu and asks for integer input (1, 2, 3...7)
     // !!! CALL THIS AFTER CONFIRMING THE PASSWORD !!!
-    public static int employeeMenu ()    {
+    public static void employeeMenu ()    {
 
-        int employeeMenuOption = 0;
-
-        String employeeMenuMessage =
-                        "Employee Screen - Type one of the options below:\n" +
-                        "1. Register a game\n" +
-                        "2. Remove a game\n" +
-                        "3. Register a customer\n" +
-                        "4. Remove a customer\n" +
-                        "5. Show total rent profit\n" +
-                        "6. View all games\n" +
-                        "7. Return to Main Menu\n";
-
-        employeeMenuOption = InputClass.askIntInput(employeeMenuMessage);
+        String employeeMenuOption;
 
         // Checks the input and connects to other sub-menus depending on the input
         do {
-            if (employeeMenuOption == 1) {
+            String employeeMenuMessage =
+                    "Employee Screen - Type one of the options below:\n" +
+                            "1. Register a game\n" +
+                            "2. Remove a game\n" +
+                            "3. Register a customer\n" +
+                            "4. Remove a customer\n" +
+                            "5. Show total rent profit\n" +
+                            "6. View all games\n" +
+                            "7. Return to Main Menu\n";
+
+            employeeMenuOption = InputClass.askStringInput(employeeMenuMessage);
+
+            if (employeeMenuOption.equals("1")) {
                 EmployeeMenu.registerGame();
-                return employeeMenu();
-            } else if (employeeMenuOption == 2) {
+            } else if (employeeMenuOption.equals("2")) {
                 EmployeeMenu.removeGame();
-                return employeeMenu();
-            } else if (employeeMenuOption == 3) {
+            } else if (employeeMenuOption.equals("3")) {
                 EmployeeMenu.registerCustomer();
-                return employeeMenu();
-            } else if (employeeMenuOption == 4) {
+            } else if (employeeMenuOption.equals("4")) {
                 EmployeeMenu.removeCustomer();
-                return employeeMenu();
-            } else if (employeeMenuOption == 5) {
+            } else if (employeeMenuOption.equals("5")) {
                 EmployeeMenu.showTotalRentProfit();
-                return employeeMenu();
-            } else if (employeeMenuOption == 6) {
-                for(int i = 0; i < DartController.gameList.size(); i++ ){           // TEMPORARY CODE!!! I suggest we create listAllGames() method
-                    System.out.println(DartController.gameList.get(i));            // Since it will be more readable and this piece of code right here looks mediocre
-                    return employeeMenu();
-                }
+            } else if (employeeMenuOption.equals("6")) {
+                User.listAllGames();
+            } else if (employeeMenuOption.equals("7")) {
+                System.out.println("Returning to Main Menu...");
+
             } else {
                 System.out.println("Invalid Input! Please try again!");
             }
-        } while(employeeMenuOption != 7);
+        } while(!employeeMenuOption.equals("7"));
 
-        return employeeMenuOption;
     }
     // Prints the customer menu and no password is required here
-    public static int customerMenu() {
+    public static void customerMenu() {
 
-        int customerMenuOption = 0;
-
-        String customerMenuMessage =
-                "Customer Screen - Type one of the options below:\n" +
-                "1. Rent a game\n" +
-                "2. Return a game\n" +
-                "3. Return to Main Menu\n";
-
-
-        customerMenuOption = InputClass.askIntInput(customerMenuMessage);
+        String customerMenuOption;
 
         // Checks the input and connects to other sub-menus depending on the input
         do {
-            if (customerMenuOption == 1){
+            String customerMenuMessage =
+                    "Customer Screen - Type one of the options below:\n" +
+                            "1. Rent a game\n" +
+                            "2. Return a game\n" +
+                            "3. Return to Main Menu\n";
+
+
+            customerMenuOption = InputClass.askStringInput(customerMenuMessage);
+            if (customerMenuOption.equals("1")){
                 User.rentGame();
-                return customerMenu();
-            } else if (customerMenuOption == 2) {
+            } else if (customerMenuOption.equals("2")) {
                 EmployeeMenu.returnGame(); // NOTE: We should move this to User class?!
-                return customerMenu();
+            }else if (customerMenuOption.equals("3")) {
+                System.out.println("Returning to Main Menu...");
             } else {
                 System.out.println("Invalid Input! Please try again!");
             }
 
 
-        } while(customerMenuOption != 3);
+        } while(!customerMenuOption.equals("3"));
 
-        return customerMenuOption;
     }
 }

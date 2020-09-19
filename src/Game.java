@@ -15,18 +15,24 @@ public class Game {
         this.rentStatus = "Available";
     }
 
-    public String getRentStatus() { 
+    /*public String getRentStatus() {
         return this.rentStatus; 
-    } 
+    } */
 
-    public double getDailyRentFee() { 
+    public double getDailyRentFee() {
         return this.dailyRentFee; 
-    } 
+    }
+    public void setAvailableToRent(){this.rentStatus = "Available"; }
+    public void setNotAvailableToRent(){this.rentStatus = "Not available"; }
+    public boolean isGameAvailableToRent(){
+        if (this.rentStatus.equals("Available")){
+            return true;
+        }
+        else{
+            return false;
+        }
 
-    public void setRentStatus(String rentStatus) { 
-        this.rentStatus = rentStatus; 
-    } 
-
+    }
 
 
 
@@ -38,8 +44,8 @@ public class Game {
                 "ID='" + ID + '\'' +
                 ", title='" + title + '\'' +
                 ", genre='" + genre + '\'' +
-                ", dailyRentFee=" + dailyRentFee +
-                ", rentStatus=" + rentStatus ;
+                ", daily rent fee=" + dailyRentFee +
+                ", rent status=" + rentStatus ;
     }
 
     public String getID(){

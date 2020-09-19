@@ -10,7 +10,7 @@ public class Customer {
     public String toString() {
         return
                 "ID='" + ID + '\'' +
-                ", Name ='" + name + '\'';
+                ", name ='" + name + '\'';
 
     }
     public String getID(){
