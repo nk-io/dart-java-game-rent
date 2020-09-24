@@ -1,4 +1,4 @@
-public class ManagerMenu {
+public class ManagerMenu extends UserMenu{
 
     public void managerScreen(){
 
@@ -13,7 +13,7 @@ public class ManagerMenu {
 
         Employee employee = new Employee(employeeName, birthYear, employeeAddress, grossSalary);
         DartController.employeeList.add(employee);
-        System.out.println(employee.getID() + " : " + employeeName + " - " + birthYear + "( " + employee.getAge() + " ): " + grossSalary + " SEK.");
+        System.out.println(employee.toString());
     }
 
     // Prints the employeeList from Dart Controller

@@ -62,20 +62,17 @@ public class Employee {
         calculateNetSalary(grossSalary);
         calculateAgeBonus(getAge());
     }
-/*
+
     @Override
     public String toString() {
         return  "ID='" + ID + '\'' +
                 ", name='" + name + '\'' +
                 ", birth year=" + birthYear +
                 ", address='" + address + '\'' +
-                ", grossSalary=" + grossSalary +
-                ", netSalary=" + netSalary +
-                ", ageBonus=" + ageBonus +
-                '}';
+                ", gross salary=" + grossSalary;
     }
 
- */
+
 
     // Gross salary & age bonus to an employee's salary.
     // Kept private due to the way they are evaluated.

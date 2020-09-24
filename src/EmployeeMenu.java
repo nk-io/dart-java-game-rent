@@ -1,37 +1,5 @@
 
-public class EmployeeMenu {
-
-    // User Story 6.2 + 6.3
-    public static boolean returnGame(){
-        // gets the id of the game
-        String gameReturnID = InputClass.askStringInput("Please enter the ID of the game you want to return: ");
-        
-        // gets the days rented
-
-        double totalRent;
-
-        // checks if the id matches
-        // calculates the rent fee
-        // adds the rent fee to the total profit
-        // changes the rent status once returned
-            for (int i = 0; i < DartController.gameList.size(); i++) {
-                if (!DartController.gameList.get(i).isGameAvailableToRent()) {
-                    if (DartController.gameList.get(i).getID().equals(gameReturnID)) {
-                        int daysRented = InputClass.askIntInput("Enter the number of days the game was rented: ");
-                        totalRent = DartController.gameList.get(i).getDailyRentFee() * (double) daysRented;
-                        System.out.println("Total rent fee: " + totalRent + " SEK");
-                        DartController.totalRentProfit += totalRent;
-                        DartController.gameList.get(i).setAvailableToRent();
-                        System.out.println("Game successfully returned!");
-                        return true;
-                    }
-                }
-            }
-
-            System.out.println("Game with id: " + gameReturnID + " not found or not rented.");
-            return false;
-
-    }
+public class EmployeeMenu extends UserMenu {
 
     // User Story 6.3
 

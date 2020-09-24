@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 public class DartController {
-    public static ArrayList<Employee> employeeList = new ArrayList<Employee>();
+
+    public static double totalRentProfit;    public static ArrayList<Employee> employeeList = new ArrayList<Employee>();
     public static ArrayList<Game> gameList = new ArrayList<Game>();
     public static ArrayList<Customer> registeredCustomerList = new ArrayList<Customer>();
-    public static double totalRentProfit;
     private static final String MANAGER_PASSWORD = "admin1234";
     private static final String EMPLOYEE_PASSWORD = "password123";
 
@@ -129,7 +129,7 @@ public class DartController {
             } else if (employeeMenuOption.equals("5")) {
                 EmployeeMenu.showTotalRentProfit();
             } else if (employeeMenuOption.equals("6")) {
-                User.listAllGames();
+                EmployeeMenu.listAllGames();
             } else if (employeeMenuOption.equals("7")) {
                 System.out.println("Returning to Main Menu...");
 
@@ -155,9 +155,9 @@ public class DartController {
 
             customerMenuOption = InputClass.askStringInput(customerMenuMessage);
             if (customerMenuOption.equals("1")){
-                User.rentGame();
+                CustomerMenu.rentGame();
             } else if (customerMenuOption.equals("2")) {
-                EmployeeMenu.returnGame(); // NOTE: We should move this to User class?!
+                CustomerMenu.returnGame(); // NOTE: We should move this to User class?!
             }else if (customerMenuOption.equals("3")) {
                 System.out.println("Returning to Main Menu...");
             } else {
