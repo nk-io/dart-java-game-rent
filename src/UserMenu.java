@@ -40,6 +40,9 @@ public class UserMenu {
             if (!DartController.gameList.get(i).isGameAvailableToRent()) {
                 if (DartController.gameList.get(i).getID().equals(gameReturnID)) {
                     int daysRented = InputClass.askIntInput("Enter the number of days the game was rented: ");
+                    while(daysRented < 0 ) {
+                        daysRented = InputClass.askIntInput("Enter a valid number of days the game was rented: ");
+                    }
                     totalRent = DartController.gameList.get(i).getDailyRentFee() * (double) daysRented;
                     System.out.println("Total rent fee: " + totalRent + " SEK");
                     DartController.totalRentProfit += totalRent;

@@ -8,19 +8,31 @@ public class InputClass {
         String data = input.nextLine();
         return data;
     }
+
     public static double askDoubleInput (String message){
         System.out.println(message);
-        double data = input.nextDouble();
-        input.nextLine();
-        return data;
+        String dataInput  = input.nextLine();
+        try {
+            double data = Double.parseDouble(dataInput);
+            return data;
+        } catch (Exception e) {
+            return askDoubleInput("Invalid input, please enter a double");
+        }
     }
 
-    public static int askIntInput(String message){
+
+    public static int askIntInput(String message) {
         System.out.println(message);
-        int data = input.nextInt();
-        input.nextLine();
-        return data;
+        String dataInput  = input.nextLine();
+        try {
+            int data = Integer.parseInt(dataInput.trim());
+            return data;
+        } catch (Exception e) {
+            return askIntInput("Invalid input, please enter an integer");
+        }
     }
+
+
 
     //we need to call after reading "X" at main menu
     public static void closeScanner(){

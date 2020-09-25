@@ -12,13 +12,16 @@ public class EmployeeMenu extends UserMenu {
         //required fields for a game
         String title;
         String genre;
-        Double dailyRentFee;
+        double dailyRentFee;
 
         //Input and Output will be change after we got the input class
 
         title = InputClass.askStringInput("Please enter the name of the game: ");
         genre = InputClass.askStringInput("Please enter the genre of the game: ");
         dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ");
+        while(dailyRentFee < 0 ){
+            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
+        }
 
         //lets create the new game
         Game newGame = new Game(title,genre,dailyRentFee);
@@ -43,8 +46,6 @@ public class EmployeeMenu extends UserMenu {
                 return true;
             }
         }
-
-        //if we are here it means game doesn't exist
         System.out.println("Game with id:" + idToRemove + " not found");
 
         return false;

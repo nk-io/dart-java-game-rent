@@ -1,8 +1,6 @@
 public class ManagerMenu extends UserMenu{
 
-    public void managerScreen(){
 
-    }
     // Manager's input section for employee information. Refer to Employee.java for the employee object
     public static void addEmployee(){
         // Manager input section
@@ -10,6 +8,9 @@ public class ManagerMenu extends UserMenu{
         int birthYear = InputClass.askIntInput("Please enter the employee's birth year: ");
         String employeeAddress = InputClass.askStringInput("Please enter the employee's address: ");
         double grossSalary = InputClass.askDoubleInput("Please enter the employee's gross salary (in SEK): ");
+        while(grossSalary < 0){
+            grossSalary = InputClass.askDoubleInput("Please enter a valid gross salary (in SEK): ");
+        }
 
         Employee employee = new Employee(employeeName, birthYear, employeeAddress, grossSalary);
         DartController.employeeList.add(employee);
@@ -20,7 +21,7 @@ public class ManagerMenu extends UserMenu{
     public static void viewEmployees(){
         System.out.println("Here is the list of registered employees: ");
         for(int i = 0; i < DartController.employeeList.size(); i++ ){
-            System.out.println(DartController.employeeList.get(i));
+            System.out.println(DartController.employeeList.get(i).toString());
         }
     }
 

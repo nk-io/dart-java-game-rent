@@ -12,8 +12,6 @@ public class Employee {
     private double netSalary;
     private double ageBonus;
 
-    Employee() {
-    }
 
     Employee(String name, int birthYear, String address, double grossSalary) {
         this.name = name;

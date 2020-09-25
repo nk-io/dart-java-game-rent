@@ -2,7 +2,8 @@ import java.util.ArrayList;
 
 public class DartController {
 
-    public static double totalRentProfit;    public static ArrayList<Employee> employeeList = new ArrayList<Employee>();
+    public static double totalRentProfit;
+    public static ArrayList<Employee> employeeList = new ArrayList<Employee>();
     public static ArrayList<Game> gameList = new ArrayList<Game>();
     public static ArrayList<Customer> registeredCustomerList = new ArrayList<Customer>();
     private static final String MANAGER_PASSWORD = "admin1234";

@@ -35,8 +35,6 @@ public class Game {
     }
 
 
-
-
     //we can use this to list games later
     @Override
     public String toString() {
