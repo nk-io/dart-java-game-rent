@@ -12,6 +12,9 @@ public class InputClass {
     public static double askDoubleInput (String message){
         System.out.println(message);
         String dataInput  = input.nextLine();
+        //Instead of taking input as a double and risking an error if the user enters a string
+        //We take a string as input and later try to convert it to a double
+        //If the conversion fails, the user will be asked to try again
         try {
             double data = Double.parseDouble(dataInput);
             return data;
@@ -20,19 +23,16 @@ public class InputClass {
         }
     }
 
-
     public static int askIntInput(String message) {
         System.out.println(message);
         String dataInput  = input.nextLine();
         try {
-            int data = Integer.parseInt(dataInput.trim());
+            int data = Integer.parseInt(dataInput);
             return data;
         } catch (Exception e) {
             return askIntInput("Invalid input, please enter an integer");
         }
     }
-
-
 
     //we need to call after reading "X" at main menu
     public static void closeScanner(){
