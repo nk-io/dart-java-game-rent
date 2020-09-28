@@ -1,19 +1,11 @@
-public class Customer {
-    private String ID;
-    private String name;
+// Change Log for Milestone 2
+//Customer Menu and Customer classes have been merged
+//Methods are no longer statics
+//Some properties and methods have been inherited from parent User class
+public class Customer extends User{
 
-    Customer(String name){
-        this.ID = RandomUID.generateRandomID();
-        this.name = name;
+    Customer(String name, String password){
+        super(name,password);
     }
-    @Override
-    public String toString() {
-        return
-                "ID='" + ID + '\'' +
-                ", name ='" + name + '\'';
 
-    }
-    public String getID(){
-        return this.ID;
-    }
 }

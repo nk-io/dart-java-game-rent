@@ -1,6 +1,57 @@
-public class UserMenu {
+// Change Log for Milestone 2
+// Password property and methods have been added to achieve password protection for every user
+// UserMenu class became User class and its parent class for all user classes
+
+//Parent class for all users
+public class User {
+
+    private String ID;
+    private String name;
+    private String password;
+
+    User(String name, String password){
+        this.ID=RandomUID.generateRandomID();
+        this.name = name;
+        this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "ID='" + ID + '\'' +
+                ", name='" + name + '\'';
+    }
+
+
+    public String getName(){
+        return this.name;
+    }
+    public String getID() {
+        return this.ID;
+    }
+    // setter for name property (in case of if we need it)
+    public void setName(String name){
+        this.name=name;
+    }
+    //Checks for the password for user
+    public boolean checkPassword(String inputPassword) {
+        if(this.password.equals(inputPassword)){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public boolean checkID(String inputID) {
+        if(this.ID.equals(inputID)){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     // User Story: 6.1
-    public static boolean rentGame(){
+    public boolean rentGame(){
         // print all games
         listAllGames();
         if(DartController.gameList.size() > 0){
@@ -24,7 +75,7 @@ public class UserMenu {
 
     }
 
-    public static boolean returnGame(){
+    public boolean returnGame(){
         // gets the id of the game
         String gameReturnID = InputClass.askStringInput("Please enter the ID of the game you want to return: ");
 
@@ -58,7 +109,7 @@ public class UserMenu {
 
     }
 
-    public static void listAllGames(){
+    public void listAllGames(){
         //check if any games exists
         if(DartController.gameList.size() < 1){
             System.out.println("There are no games registered in the system!");

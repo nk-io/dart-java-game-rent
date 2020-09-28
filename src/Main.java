@@ -1,6 +1,10 @@
 public class Main {
 
     public static void main (String[] args){
-        DartController.start();
+        DartController dart = new DartController();
+        dart.testingInit();
+        dart.start();
+
+        System.out.println("done");
     }
 }
