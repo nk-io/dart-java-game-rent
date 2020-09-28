@@ -5,6 +5,7 @@ public class Main {
         dart.testingInit();
         dart.start();
 
-        System.out.println("done");
+
+
     }
 }
