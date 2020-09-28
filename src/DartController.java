@@ -1,5 +1,6 @@
 // Change Log for Milestone 2
 // Methods are no longer statics
+// Added messageList for Epic Feature 9
 import java.util.ArrayList;
 
 public class DartController {
@@ -9,6 +10,7 @@ public class DartController {
     public static ArrayList<User> managerList = new ArrayList<>();
     public static ArrayList<User> registeredCustomerList = new ArrayList<>();
     public static ArrayList<Game> gameList = new ArrayList<>();
+    public static ArrayList<Message> messageList = new ArrayList<>();
 
     //Starts the main program loop
     public void start(){
@@ -213,9 +215,10 @@ public class DartController {
                             "5. Return a song album\n" +
                             "6. Send a message\n" +
                             "7. Read messages\n" +
-                            "8. Request membership upgrade\n" +
-                            "9. View my credits\n" +
-                            "10. Return to Main Menu\n";
+                            "8. Delete a message\n" +
+                            "9. Request membership upgrade\n" +
+                            "10. View my credits\n" +
+                            "11. Return to Main Menu\n";
 
 
             customerMenuOption = InputClass.askStringInput(customerMenuMessage);
@@ -230,21 +233,23 @@ public class DartController {
             } else if (customerMenuOption.equals("5")) {
                 System.out.println("Feature coming soon...");
             } else if (customerMenuOption.equals("6")) {
-                System.out.println("Feature coming soon...");
+                currentCustomer.sendAMessage();
             } else if (customerMenuOption.equals("7")) {
-                System.out.println("Feature coming soon...");
+                currentCustomer.showCustomersMessages();
             } else if (customerMenuOption.equals("8")) {
-                System.out.println("Feature coming soon...");
+                currentCustomer.deleteAMessage();
             } else if (customerMenuOption.equals("9")) {
                 System.out.println("Feature coming soon...");
             } else if (customerMenuOption.equals("10")) {
+                System.out.println("Feature coming soon...");
+            } else if (customerMenuOption.equals("11")) {
                 System.out.println("Returning to Main Menu...");
             } else {
                 System.out.println("Invalid Input! Please try again!");
             }
 
 
-        } while(!customerMenuOption.equals("10"));
+        } while(!customerMenuOption.equals("11"));
 
     }
 
@@ -275,7 +280,7 @@ public class DartController {
     //search of an user in given arraylist
     //if finds it return the user reference
     //else return null
-    private User searchUserInList(ArrayList<User> list, String inputID){
+    public static User searchUserInList(ArrayList<User> list, String inputID){
         for(int i=0; i< list.size(); i++){
             if(list.get(i).checkID(inputID)){
                 return list.get(i);
@@ -283,4 +288,5 @@ public class DartController {
         }
         return null;
     }
+
 }
