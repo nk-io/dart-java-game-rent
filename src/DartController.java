@@ -10,6 +10,7 @@ public class DartController {
     public static ArrayList<User> managerList = new ArrayList<>();
     public static ArrayList<User> registeredCustomerList = new ArrayList<>();
     public static ArrayList<Game> gameList = new ArrayList<>();
+    public static ArrayList<Album> albumList = new ArrayList<>();
     public static ArrayList<Message> messageList = new ArrayList<>();
 
     //Starts the main program loop
@@ -157,7 +158,7 @@ public class DartController {
                             "2. Remove a game\n" +
                             "3. Register a customer\n" +
                             "4. Remove a customer\n" +
-                            "5. Add a song album\n" +
+                            "5. Register a song album\n" +
                             "6. Remove a song album \n" +
                             "7. Membership requests \n" +
                             "8. Show total rent profits \n" +
@@ -177,9 +178,9 @@ public class DartController {
             } else if (employeeMenuOption.equals("4")) {
                 currentEmployee.removeCustomer();
             }else if (employeeMenuOption.equals("5")) {
-                System.out.println("Feature coming soon...");
+                currentEmployee.registerAlbum();
             }else if (employeeMenuOption.equals("6")) {
-                System.out.println("Feature coming soon...");
+                currentEmployee.removeAlbum();
             }else if (employeeMenuOption.equals("7")) {
                 System.out.println("Feature coming soon...");
             } else if (employeeMenuOption.equals("8")) {
@@ -229,9 +230,9 @@ public class DartController {
             } else if (customerMenuOption.equals("3")) {
                 currentCustomer.returnGame();
             } else if (customerMenuOption.equals("4")) {
-                System.out.println("Feature coming soon...");
+                currentCustomer.rentAlbum();
             } else if (customerMenuOption.equals("5")) {
-                System.out.println("Feature coming soon...");
+                currentCustomer.returnAlbum();
             } else if (customerMenuOption.equals("6")) {
                 currentCustomer.sendAMessage();
             } else if (customerMenuOption.equals("7")) {
