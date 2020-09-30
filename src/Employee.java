@@ -167,4 +167,37 @@ public class Employee extends User{
         System.out.println("Customer with id: " + customerToRemove + " not found.");
         return false;
     }
+
+    public void registerAlbum(){
+        String title;
+        String artist;
+        int year;
+        double dailyRentFee;
+
+        title = InputClass.askStringInput("Please enter the name of the album: ");
+        artist = InputClass.askStringInput("Please enter the name of the artist: ");
+        year = InputClass.askIntInput("Please enter the year of the album: ");
+        dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ");
+        while(dailyRentFee < 0 ){
+            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
+        }
+
+        Album newAlbum = new Album(title, artist, year, dailyRentFee);
+        DartController.albumList.add(newAlbum);
+        System.out.println("Album with " + newAlbum.toString() + " has been created successfully.");
+    }
+
+    public boolean removeAlbum(){
+        String idToRemove = InputClass.askStringInput("Please enter the ID of the album: ");
+        for(int i = 0; i < DartController.albumList.size(); i++){
+            if (DartController.albumList.get(i).getID().equals(idToRemove)){
+                System.out.println("Album with " + DartController.albumList.get(i) +  " has been removed");
+                DartController.albumList.remove(i);
+                return true;
+            }
+        }
+        System.out.println("Album with id:" + idToRemove + " was not found.");
+        return false;
+    }    
+   
 }
