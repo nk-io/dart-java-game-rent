@@ -106,7 +106,6 @@ public class User {
 
         System.out.println("Game with id: " + gameReturnID + " not found or not rented.");
         return false;
-
     }
 
     public void listAllGames(){
@@ -119,8 +118,62 @@ public class User {
                 System.out.println(DartController.gameList.get(i).toString());
             }
         }
-
     }
+    
+    
+    public boolean rentAlbum() {
+        listAllAlbums();
+        if (DartController.albumList.size() > 0) {
+            String albumToRent = InputClass.askStringInput("Please enter the ID of the album you want to rent: ");
+            for (int i = 0; i < DartController.albumList.size(); i++) {
+                if (DartController.albumList.get(i).getID().equals(albumToRent) && !DartController.albumList.get(i).isAlbumAvailableToRent()) {
+                    System.out.println("The album with ID; " + albumToRent + " is already rented. ");
+                    return false;
+                } else if (DartController.albumList.get(i).getID().equals(albumToRent)) {
+                    System.out.println("You have successfully rented the album with ID " + albumToRent);
+                    DartController.albumList.get(i).setNotAvailableToRent();
+                    return true;
+                }
+            }
+            System.out.println("Album with ID: " + albumToRent + " does not exist.");
+        }
+        return false;
+    }
+
+    public boolean returnAlbum() {
+        listAllAlbums();
+        String albumToReturn = InputClass.askStringInput("Please enter the ID of the album you want to return: ");
+        double totalRent;
+        for (int i = 0; i < DartController.albumList.size(); i++) {
+            if (!DartController.albumList.get(i).isAlbumAvailableToRent()) {
+                if (DartController.albumList.get(i).getID().equals(albumToReturn)) {
+                    int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ");
+                    while (daysRented < 0) {
+                        daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
+                    }
+                    totalRent = DartController.albumList.get(i).getDailyRentFee() * daysRented;
+                    System.out.println("The total fee is: " + totalRent + " SEK.");
+                    DartController.albumList.get(i).setAvailableToRent();
+                    DartController.totalRentProfit += totalRent;
+                    System.out.println("Album successfully returned. ");
+                    return true;
+                }
+            }
+        }
+        System.out.println("Album with ID: " + albumToReturn + " was not found or is not rented. ");
+        return false;
+    }
+
+    public void listAllAlbums() {
+        if (DartController.albumList.size() > 0) {
+            System.out.println("List of all albums: ");
+            for (int i = 0; i < DartController.albumList.size(); i++) {
+                System.out.println(DartController.albumList.get(i).toString());
+            }
+        } else {
+            System.out.println("There are no albums registered in the system! ");
+        }
+    }    
 
 }
 
