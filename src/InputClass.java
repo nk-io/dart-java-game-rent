@@ -6,7 +6,12 @@ public class InputClass {
     public static String askStringInput (String message){
         System.out.println(message);
         String data = input.nextLine();
-        return data;
+        if (!data.equals("")) {
+            return data;
+        } else {
+            System.out.println("Invalid input, please try again.");
+            return askStringInput(message);
+        }
     }
 
     public static double askDoubleInput (String message){
@@ -19,7 +24,7 @@ public class InputClass {
             double data = Double.parseDouble(dataInput);
             return data;
         } catch (Exception e) {
-            return askDoubleInput("Invalid input, please enter a double");
+            return askDoubleInput("Invalid input, please enter a double.");
         }
     }
 
@@ -30,7 +35,7 @@ public class InputClass {
             int data = Integer.parseInt(dataInput);
             return data;
         } catch (Exception e) {
-            return askIntInput("Invalid input, please enter an integer");
+            return askIntInput("Invalid input, please enter an integer.");
         }
     }
 

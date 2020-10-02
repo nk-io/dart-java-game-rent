@@ -7,6 +7,5 @@ public class RandomUID {
         return UUID.randomUUID().toString();
     }
 
-
 }
 

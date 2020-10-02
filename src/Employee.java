@@ -4,6 +4,7 @@
 //Some properties have been inherited from parent User class
 import java.time.LocalDateTime;
 public class Employee extends User{
+
     private int birthYear;
     private String address;
     // $$ Related
@@ -20,7 +21,6 @@ public class Employee extends User{
     }
 
     // Getters for the employee's information (encapsulated)
-
     public int getBirthYear() {
         return birthYear;
     }
@@ -61,7 +61,6 @@ public class Employee extends User{
     }
 
 
-
     // Gross salary & age bonus to an employee's salary.
     // Kept private due to the way they are evaluated.
     private void calculateNetSalary(double grossSalary){
@@ -72,6 +71,7 @@ public class Employee extends User{
             netSalary = (grossSalary-(grossSalary *.3));
         }
     }
+
     private void calculateAgeBonus(int age){
         if (age < 22) {
             ageBonus = netSalary + 4000;
@@ -86,51 +86,6 @@ public class Employee extends User{
 
     public void showTotalRentProfit(){
         System.out.println("The total rent profit is "+ DartController.totalRentProfit + " SEK");
-    }
-
-    //EPIC FEATURE 3
-    public void registerGame(){
-        //required fields for a game
-        String title;
-        String genre;
-        double dailyRentFee;
-
-        //Input and Output will be change after we got the input class
-
-        title = InputClass.askStringInput("Please enter the name of the game: ");
-        genre = InputClass.askStringInput("Please enter the genre of the game: ");
-        dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ");
-        while(dailyRentFee < 0 ){
-            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
-        }
-
-        //lets create the new game
-        Game newGame = new Game(title,genre,dailyRentFee);
-        DartController.gameList.add(newGame);
-        System.out.println("Game with "+ newGame.toString() + " has been created successfully");
-
-    }
-
-    // search given ID in gameList array list
-    // if ID exists remove game object from the array list. return true
-    // if not print a message then return false
-    public boolean removeGame(){
-        //Input and Output will be change after we got the input class
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the game: ");
-
-        //lets check if game exist
-        for(int i=0; i<DartController.gameList.size(); i++){
-            if (DartController.gameList.get(i).getID().equals(idToRemove)){
-                //if ID's are equal remove the Game object from the array list
-                System.out.println("Game with " + DartController.gameList.get(i).toString() + " has been removed!");
-                DartController.gameList.remove(i);
-                return true;
-            }
-        }
-        System.out.println("Game with id:" + idToRemove + " not found");
-
-        return false;
-
     }
 
     //EPIC FEATURE 4
@@ -148,7 +103,6 @@ public class Employee extends User{
 
         System.out.println("The customer " + newCustomer.toString() + " has been created successfully.");
     }
-
 
     //remove an existing customer
     public boolean removeCustomer() {
@@ -168,36 +122,4 @@ public class Employee extends User{
         return false;
     }
 
-    public void registerAlbum(){
-        String title;
-        String artist;
-        int year;
-        double dailyRentFee;
-
-        title = InputClass.askStringInput("Please enter the name of the album: ");
-        artist = InputClass.askStringInput("Please enter the name of the artist: ");
-        year = InputClass.askIntInput("Please enter the year of the album: ");
-        dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ");
-        while(dailyRentFee < 0 ){
-            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
-        }
-
-        Album newAlbum = new Album(title, artist, year, dailyRentFee);
-        DartController.albumList.add(newAlbum);
-        System.out.println("Album with " + newAlbum.toString() + " has been created successfully.");
-    }
-
-    public boolean removeAlbum(){
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the album: ");
-        for(int i = 0; i < DartController.albumList.size(); i++){
-            if (DartController.albumList.get(i).getID().equals(idToRemove)){
-                System.out.println("Album with " + DartController.albumList.get(i) +  " has been removed");
-                DartController.albumList.remove(i);
-                return true;
-            }
-        }
-        System.out.println("Album with id:" + idToRemove + " was not found.");
-        return false;
-    }    
-   
 }

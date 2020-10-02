@@ -45,6 +45,7 @@ public class Customer extends User{
 
         return messagesOfCurrentCustomer;
     }
+
     public ArrayList<Message> showCustomersMessages(){
         ArrayList<Message> messagesOfCurrentCustomer = findAllMessagesOfCurrentCustomer();
         if(messagesOfCurrentCustomer.size() == 0){
@@ -64,6 +65,7 @@ public class Customer extends User{
             return messagesOfCurrentCustomer;
         }
     }
+
     public void deleteAMessage(){
         ArrayList<Message> messagesOfCurrentCustomer = showCustomersMessages();
         if(messagesOfCurrentCustomer != null){

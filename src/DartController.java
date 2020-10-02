@@ -1,6 +1,8 @@
 // Change Log for Milestone 2
 // Methods are no longer statics
 // Added messageList for Epic Feature 9
+
+
 import java.util.ArrayList;
 
 public class DartController {
@@ -9,12 +11,12 @@ public class DartController {
     public static ArrayList<User> employeeList = new ArrayList<>();
     public static ArrayList<User> managerList = new ArrayList<>();
     public static ArrayList<User> registeredCustomerList = new ArrayList<>();
-    public static ArrayList<Game> gameList = new ArrayList<>();
-    public static ArrayList<Album> albumList = new ArrayList<>();
     public static ArrayList<Message> messageList = new ArrayList<>();
 
+
     //Starts the main program loop
-    public void start(){
+    public void start() {
+
         boolean mainMenuActive = true;
 
         // Starts the program by printing the main menu from DartController
@@ -170,17 +172,17 @@ public class DartController {
             employeeMenuOption = InputClass.askStringInput(employeeMenuMessage);
 
             if (employeeMenuOption.equals("1")) {
-                currentEmployee.registerGame();
+                currentEmployee.registerItem("game");
             } else if (employeeMenuOption.equals("2")) {
-                currentEmployee.removeGame();
+                currentEmployee.removeItem("game");
             } else if (employeeMenuOption.equals("3")) {
                 currentEmployee.registerCustomer();
             } else if (employeeMenuOption.equals("4")) {
                 currentEmployee.removeCustomer();
             }else if (employeeMenuOption.equals("5")) {
-                currentEmployee.registerAlbum();
+                currentEmployee.registerItem("album");
             }else if (employeeMenuOption.equals("6")) {
-                currentEmployee.removeAlbum();
+                currentEmployee.removeItem("album");
             }else if (employeeMenuOption.equals("7")) {
                 System.out.println("Feature coming soon...");
             } else if (employeeMenuOption.equals("8")) {
@@ -188,7 +190,7 @@ public class DartController {
             } else if (employeeMenuOption.equals("9")) {
                 currentEmployee.listAllGames();
             } else if (employeeMenuOption.equals("10")) {
-                System.out.println("Feature coming soon...");
+                currentEmployee.listAllAlbums();
             } else if (employeeMenuOption.equals("11")) {
                 System.out.println("Feature coming soon...");
             } else if (employeeMenuOption.equals("12")) {
@@ -226,13 +228,13 @@ public class DartController {
             if (customerMenuOption.equals("1")){
                 System.out.println("Feature coming soon...");
             } else if (customerMenuOption.equals("2")) {
-                currentCustomer.rentGame();
+                currentCustomer.rentItem("game");
             } else if (customerMenuOption.equals("3")) {
-                currentCustomer.returnGame();
+                currentCustomer.returnItem("game");
             } else if (customerMenuOption.equals("4")) {
-                currentCustomer.rentAlbum();
+                currentCustomer.rentItem("album");
             } else if (customerMenuOption.equals("5")) {
-                currentCustomer.returnAlbum();
+                currentCustomer.returnItem("album");
             } else if (customerMenuOption.equals("6")) {
                 currentCustomer.sendAMessage();
             } else if (customerMenuOption.equals("7")) {
@@ -253,6 +255,8 @@ public class DartController {
         } while(!customerMenuOption.equals("11"));
 
     }
+
+
 
     //initializes some test users
     //this method created for testing purposes
@@ -278,6 +282,8 @@ public class DartController {
         System.out.println(testCustomer2.toString());
     }
 
+
+
     //search of an user in given arraylist
     //if finds it return the user reference
     //else return null
@@ -289,5 +295,7 @@ public class DartController {
         }
         return null;
     }
+
+
 
 }
