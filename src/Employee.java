@@ -83,43 +83,9 @@ public class Employee extends User{
             ageBonus = netSalary + 7500;
         }
     }
-
+    //this is gonna be relocated
     public void showTotalRentProfit(){
         System.out.println("The total rent profit is "+ DartController.totalRentProfit + " SEK");
-    }
-
-    //EPIC FEATURE 4
-    //add a new customer
-    public void registerCustomer(){
-        //Required fields for a new customer
-        String name;
-
-        //Creating the new customer
-        name = InputClass.askStringInput("Please enter the name of the customer: ");
-        //000000 password is temporary pls chage this by asking password when creating new user
-        //oh pls delete this comment after u r done :D
-        Customer newCustomer = new Customer(name, "000000");
-        DartController.registeredCustomerList.add(newCustomer);
-
-        System.out.println("The customer " + newCustomer.toString() + " has been created successfully.");
-    }
-
-    //remove an existing customer
-    public boolean removeCustomer() {
-        String customerToRemove = InputClass.askStringInput("Please enter the ID of the customer: ");
-
-        //check if the customer exists
-        for(int i = 0; i < DartController.registeredCustomerList.size(); i++){
-            if(DartController.registeredCustomerList.get(i).getID().equals(customerToRemove)){
-                System.out.println("Customer with " + DartController.registeredCustomerList.get(i).toString() + " has been removed!");
-                DartController.registeredCustomerList.remove(i);
-                return true;
-            }
-        }
-
-        //informs if the customer doesn't exist
-        System.out.println("Customer with id: " + customerToRemove + " not found.");
-        return false;
     }
 
 }
