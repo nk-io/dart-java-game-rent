@@ -10,6 +10,8 @@ abstract class UserLibrary {
         return userList;
     }
 
+
+
     public User doesUserExist(String idToSearch){
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getID().equals(idToSearch)) {
@@ -18,6 +20,7 @@ abstract class UserLibrary {
         }
         return null;
     }
+
 
     public boolean removeUser(String idToRemove){
         for (int i = 0; i < userList.size(); i++) {
@@ -34,9 +37,12 @@ abstract class UserLibrary {
         } else {
             StringBuilder listOfAll = new StringBuilder();
             for(int i=0; i<userList.size(); i++){
-                listOfAll.append(userList.get(i).toString());
+                listOfAll.append(userList.get(i).toString() + "\n");
             }
             return listOfAll.toString();
         }
     }
+
+
+
 }

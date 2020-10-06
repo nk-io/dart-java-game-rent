@@ -31,12 +31,12 @@ abstract class ItemLibrary {
         return false;
     }
 
-    public boolean rentItem(String itemToRent){
+    public boolean rentItem(String idToRent){
         if(itemList.size() > 0){
             for(int i = 0; i < itemList.size(); i++){
-                if(itemList.get(i).getID().equals(itemToRent) && !itemList.get(i).isItemAvailableToRent()){
+                if(itemList.get(i).getID().equals(idToRent) && !itemList.get(i).isItemAvailableToRent()){
                     return false;
-                } else if(itemList.get(i).getID().equals(itemToRent)){
+                } else if(itemList.get(i).getID().equals(idToRent)){
                     itemList.get(i).setNotAvailableToRent();
                     return true;
                 }
@@ -45,7 +45,7 @@ abstract class ItemLibrary {
         return false;
     }
 
-    public boolean returnItem(String itemToReturn, int daysRented) {
+    public double returnItem(String itemToReturn, int daysRented) {
         double totalRent;
         for (int i = 0; i < itemList.size(); i++) {
             if (!itemList.get(i).isItemAvailableToRent()) {
@@ -53,11 +53,11 @@ abstract class ItemLibrary {
                     totalRent = itemList.get(i).getDailyRentFee() * daysRented;
                     itemList.get(i).setAvailableToRent();
                     DartController.totalRentProfit += totalRent;
-                    return true;
+                    return totalRent;
                 }
             }
         }
-        return false;
+        return -1;
     }
 
     public String listAll(){
