@@ -8,11 +8,20 @@ import java.util.ArrayList;
 public class DartController {
 
     public static double totalRentProfit;
-    public static ArrayList<User> employeeList = new ArrayList<>();
-    public static ArrayList<User> managerList = new ArrayList<>();
-    public static ArrayList<User> registeredCustomerList = new ArrayList<>();
-    public static ArrayList<Message> messageList = new ArrayList<>();
+    private GameLibrary gameLibrary;
+    private AlbumLibrary albumLibrary;
+    private ManagerLibrary managerLibrary;
+    private EmployeeLibrary employeeLibrary;
+    private CustomerLibrary customerLibrary;
+    private MessageLibrary messageLibrary;
 
+    public DartController(){
+        this.gameLibrary = new GameLibrary();
+        this.albumLibrary = new AlbumLibrary();
+        this.managerLibrary = new ManagerLibrary();
+        this.employeeLibrary = new EmployeeLibrary();
+        this.customerLibrary = new CustomerLibrary();
+        this.messageLibrary = new MessageLibrary();}
 
     //Starts the main program loop
     public void start() {
@@ -26,7 +35,7 @@ public class DartController {
             // Formats the received input to lower case so the program doesn't need to check whether it's upper or lower case
             if (mainMenuOption.toLowerCase().equals("m"))  {
                 String enteredID = InputClass.askStringInput("Please enter your ID: ");
-                Manager currentManagerUser = (Manager) searchUserInList(managerList, enteredID);
+                Manager currentManagerUser = (Manager) managerLibrary.doesUserExist(enteredID);
                 //lets check if user exists
                 if(currentManagerUser != null){
                     //user exists, now we can check ask and check the password
@@ -124,9 +133,10 @@ public class DartController {
 
             managerMenuOption = InputClass.askStringInput(managerMenuMessage);
             if (managerMenuOption.equals("1")) {
-                currentManager.addEmployee();
+
+                //itemLibrary.registerGame();
             } else if (managerMenuOption.equals("2")) {
-                currentManager.viewEmployees();
+                //currentManager.viewEmployees();
             } else if(managerMenuOption.equals("3")){
                 System.out.println("Feature coming soon...");
             }else if(managerMenuOption.equals("4")){
@@ -172,25 +182,26 @@ public class DartController {
             employeeMenuOption = InputClass.askStringInput(employeeMenuMessage);
 
             if (employeeMenuOption.equals("1")) {
-                currentEmployee.registerItem("game");
+                gameLibrary.registerGame("test game 1", 25, "genre");
             } else if (employeeMenuOption.equals("2")) {
-                currentEmployee.removeItem("game");
+                //currentEmployee.removeItem("game");
             } else if (employeeMenuOption.equals("3")) {
-                currentEmployee.registerCustomer();
+                //currentEmployee.registerCustomer();
             } else if (employeeMenuOption.equals("4")) {
-                currentEmployee.removeCustomer();
+                //currentEmployee.removeCustomer();
             }else if (employeeMenuOption.equals("5")) {
-                currentEmployee.registerItem("album");
+                //currentEmployee.registerItem("album");
             }else if (employeeMenuOption.equals("6")) {
-                currentEmployee.removeItem("album");
+                //currentEmployee.removeItem("album");
             }else if (employeeMenuOption.equals("7")) {
                 System.out.println("Feature coming soon...");
             } else if (employeeMenuOption.equals("8")) {
-                currentEmployee.showTotalRentProfit();
+                //currentEmployee.showTotalRentProfit();
             } else if (employeeMenuOption.equals("9")) {
-                currentEmployee.listAllGames();
+                System.out.println(gameLibrary.listAll());
             } else if (employeeMenuOption.equals("10")) {
-                currentEmployee.listAllAlbums();
+
+                //currentEmployee.listAllAlbums();
             } else if (employeeMenuOption.equals("11")) {
                 System.out.println("Feature coming soon...");
             } else if (employeeMenuOption.equals("12")) {
@@ -228,19 +239,19 @@ public class DartController {
             if (customerMenuOption.equals("1")){
                 System.out.println("Feature coming soon...");
             } else if (customerMenuOption.equals("2")) {
-                currentCustomer.rentItem("game");
+                //currentCustomer.rentItem("game");
             } else if (customerMenuOption.equals("3")) {
-                currentCustomer.returnItem("game");
+                //currentCustomer.returnItem("game");
             } else if (customerMenuOption.equals("4")) {
-                currentCustomer.rentItem("album");
+                //currentCustomer.rentItem("album");
             } else if (customerMenuOption.equals("5")) {
-                currentCustomer.returnItem("album");
+                //currentCustomer.returnItem("album");
             } else if (customerMenuOption.equals("6")) {
-                currentCustomer.sendAMessage();
+                //currentCustomer.sendAMessage();
             } else if (customerMenuOption.equals("7")) {
-                currentCustomer.showCustomersMessages();
+                //currentCustomer.showCustomersMessages();
             } else if (customerMenuOption.equals("8")) {
-                currentCustomer.deleteAMessage();
+                //currentCustomer.deleteAMessage();
             } else if (customerMenuOption.equals("9")) {
                 System.out.println("Feature coming soon...");
             } else if (customerMenuOption.equals("10")) {

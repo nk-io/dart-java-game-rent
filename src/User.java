@@ -3,7 +3,7 @@
 // UserMenu class became User class and its parent class for all user classes
 
 //Parent class for all users
-public class User extends Item {
+public class User {
 
     private String ID;
     private String name;
