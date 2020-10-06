@@ -41,7 +41,7 @@ public class DartController {
                 String enteredID = InputClass.askStringInput("Please enter your ID: ");
                 Manager currentManagerUser = (Manager) managerLibrary.doesUserExist(enteredID);
                 //lets check if user exists
-                if(currentManagerUser == null){
+                if(currentManagerUser != null){
                     //user exists, now we can check ask and check the password
                     String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
                     if (currentManagerUser.checkPassword(enteredPassword)) {
@@ -102,7 +102,7 @@ public class DartController {
     private String mainMenu() {
 
         String mainMenuMessage =
-                        "Main Menu:\n" +
+                "Main Menu:\n" +
                         "Welcome to DART, your good old game rental system. The competition has no steam to keep up!\n" +
                         "\n" +
                         "Please specify your role by entering one of the options given:\n" +
@@ -274,13 +274,10 @@ public class DartController {
     //initializes some test users
     //this method created for testing purposes
     public void testingInit(){
-        ManagerLibrary managerLibrary = new ManagerLibrary();
         managerLibrary.registerManager("testManager1", "man1");
         managerLibrary.registerManager("testManager2", "man2");
-        EmployeeLibrary employeeLibrary = new EmployeeLibrary();
         employeeLibrary.registerEmployee("testEmployee1", "emp1", 1995, "address1", 10000);
         employeeLibrary.registerEmployee("testEmployee2", "emp2", 1994, "address2", 20000);
-        CustomerLibrary customerLibrary =  new CustomerLibrary();
         customerLibrary.registerCustomer("testCustomer1", "cust1");
         customerLibrary.registerCustomer("testCustomer2", "cust2");
 
