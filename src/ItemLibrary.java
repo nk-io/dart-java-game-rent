@@ -42,6 +42,12 @@ abstract class ItemLibrary {
         return false;
     }
 
+
+    public boolean areThereAnyItems(){
+        return itemList.size() != 0;
+    }
+
+
     public boolean rentItem(String idToRent){
         if(itemList.size() > 0){
             for(int i = 0; i < itemList.size(); i++){

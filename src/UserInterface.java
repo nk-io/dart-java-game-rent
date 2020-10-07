@@ -6,6 +6,7 @@ public class UserInterface {
     private EmployeeLibrary employeeLibrary;
     private CustomerLibrary customerLibrary;
     private MessageLibrary messageLibrary;
+
     public UserInterface(GameLibrary gameLibrary, AlbumLibrary albumLibrary, ManagerLibrary managerLibrary, EmployeeLibrary employeeLibrary, CustomerLibrary customerLibrary, MessageLibrary messageLibrary){
         this.gameLibrary = gameLibrary;
         this.albumLibrary = albumLibrary;
@@ -30,13 +31,17 @@ public class UserInterface {
 
 
     public void removeGame(){
-        listAllGames();
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the game you want to remove: ");
-        boolean removed = gameLibrary.removeItem(idToRemove);
-        if (removed){
-            System.out.println("The game with id " + idToRemove + " has been removed!");
+        if (gameLibrary.areThereAnyItems()){
+            listAllGames();
+            String idToRemove = InputClass.askStringInput("Please enter the ID of the game you want to remove: ");
+            boolean removed = gameLibrary.removeItem(idToRemove);
+            if (removed){
+                System.out.println("The game with id " + idToRemove + " has been removed!");
+            } else {
+                System.out.println("The  game with id: " + idToRemove + " not found.");
+            }
         } else {
-            System.out.println("The  game with id: " + idToRemove + " not found.");
+            System.out.println("There are no games to remove.");
         }
     }
 
@@ -64,13 +69,17 @@ public class UserInterface {
 
 
     public void removeAlbum(){
-        listAllAlbums();
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the album you want to remove: ");
-        boolean removed = albumLibrary.removeItem(idToRemove);
-        if (removed){
-            System.out.println("The album with id " + idToRemove + " has been removed!");
+        if (albumLibrary.areThereAnyItems()){
+            listAllAlbums();
+            String idToRemove = InputClass.askStringInput("Please enter the ID of the album you want to remove: ");
+            boolean removed = albumLibrary.removeItem(idToRemove);
+            if (removed){
+                System.out.println("The album with id " + idToRemove + " has been removed!");
+            } else {
+                System.out.println("The  album with id: " + idToRemove + " not found.");
+            }
         } else {
-            System.out.println("The  album with id: " + idToRemove + " not found.");
+            System.out.println("There are no albums to remove.");
         }
     }
 
@@ -119,9 +128,9 @@ public class UserInterface {
             }
             double totalRentFee = gameLibrary.returnItem(idToReturn, daysRented);
             System.out.println("The total fee is: " + totalRentFee + " SEK.");
-            System.out.println("The game has been successfully returned. ");
+            System.out.println("The game has been successfully returned.");
         } else {
-            System.out.println("Game with ID: " + idToReturn + " was not found or is not rented. ");
+            System.out.println("Game with ID: " + idToReturn + " was not found or is not rented.");
         }
     }
 
@@ -139,7 +148,7 @@ public class UserInterface {
             System.out.println("The total fee is: " + totalRentFee + " SEK.");
             System.out.println("The album has been successfully returned. ");
         } else {
-            System.out.println("Album with ID: " + idToReturn + " was not found or is not rented. ");
+            System.out.println("Album with ID: " + idToReturn + " was not found or is not rented.");
         }
     }
 
@@ -154,13 +163,17 @@ public class UserInterface {
 
 
     public void removeCustomer(){
-        listAllCustomers();
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the customer to remove: ");
-        boolean removed = customerLibrary.removeUser(idToRemove);
-        if (removed){
-            System.out.println("Customer with ID" + idToRemove + " has been removed!");
+        if (customerLibrary.areThereAnyUsers()){
+            listAllCustomers();
+            String idToRemove = InputClass.askStringInput("Please enter the ID of the customer to remove: ");
+            boolean removed = customerLibrary.removeUser(idToRemove);
+            if (removed){
+                System.out.println("Customer with ID" + idToRemove + " has been removed!");
+            } else {
+                System.out.println("Customer with id: " + idToRemove + " not found.");
+            }
         } else {
-            System.out.println("Customer with id: " + idToRemove + " not found.");
+            System.out.println("There are no customers to remove.");
         }
     }
 
@@ -189,13 +202,17 @@ public class UserInterface {
 
 
     public void removeEmployee(){
-        listAllEmployees();
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the employee to remove: ");
-        boolean removed = employeeLibrary.removeUser(idToRemove);
-        if (removed){
-            System.out.println("Employee with ID" + idToRemove + " has been removed!");
+        if (employeeLibrary.areThereAnyUsers()){
+            listAllEmployees();
+            String idToRemove = InputClass.askStringInput("Please enter the ID of the employee to remove: ");
+            boolean removed = employeeLibrary.removeUser(idToRemove);
+            if (removed){
+                System.out.println("Employee with ID" + idToRemove + " has been removed!");
+            } else {
+                System.out.println("Employee with id: " + idToRemove + " not found.");
+            }
         } else {
-            System.out.println("Employee with id: " + idToRemove + " not found.");
+            System.out.println("There are no employees to remove.");
         }
     }
 
@@ -218,14 +235,19 @@ public class UserInterface {
 
 
     public void removeManager(){
-        listAllManagers();
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the manager to remove: ");
-        boolean removed = managerLibrary.removeUser(idToRemove);
-        if (removed){
-            System.out.println("Manager with ID" + idToRemove + " has been removed!");
+        if (managerLibrary.areThereAnyUsers()){
+            listAllManagers();
+            String idToRemove = InputClass.askStringInput("Please enter the ID of the manager to remove: ");
+            boolean removed = managerLibrary.removeUser(idToRemove);
+            if (removed){
+                System.out.println("Manager with ID" + idToRemove + " has been removed!");
+            } else {
+                System.out.println("Manager with id: " + idToRemove + " not found.");
+            }
         } else {
-            System.out.println("Manager with id: " + idToRemove + " not found.");
+            System.out.println("There are no managers to remove.");
         }
+
     }
 
     public void listAllManagers(){

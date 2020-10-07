@@ -30,6 +30,13 @@ abstract class UserLibrary {
         }
         return false;
     }
+
+
+    public boolean areThereAnyUsers(){
+        return userList.size() != 0;
+    }
+
+
     public String listAll(){
         if(userList.size() < 1){
             return null;
