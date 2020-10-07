@@ -21,6 +21,17 @@ abstract class ItemLibrary {
         return null;
     }
 
+    public boolean IsItAvailable(String idToSearch){
+        for (int i = 0; i < itemList.size(); i++) {
+            if (itemList.get(i).getID().equals(idToSearch)) {
+                if (itemList.get(i).isItemAvailableToRent()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean removeItem(String idToRemove) {
         for (int i = 0; i < itemList.size(); i++) {
             if (itemList.get(i).getID().equals(idToRemove)) {
@@ -66,7 +77,7 @@ abstract class ItemLibrary {
         } else {
             StringBuilder listOfAll = new StringBuilder();
             for(int i=0; i<itemList.size(); i++){
-                listOfAll.append(itemList.get(i).toString());
+                listOfAll.append(itemList.get(i).toString() + "\n");
             }
             return listOfAll.toString();
         }

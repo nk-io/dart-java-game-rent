@@ -11,7 +11,6 @@ abstract class UserLibrary {
     }
 
 
-
     public User doesUserExist(String idToSearch){
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getID().equals(idToSearch)) {
@@ -43,6 +42,15 @@ abstract class UserLibrary {
         }
     }
 
+
+    public String getName(String enteredID){
+        for (int i = 0; i < userList.size(); i++){
+            if (userList.get(i).getName().equals(enteredID)){
+                return userList.get(i).getName();
+            }
+        }
+        return null;
+    }
 
 
 }
