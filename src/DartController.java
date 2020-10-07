@@ -241,11 +241,11 @@ public class DartController {
             } else if (customerMenuOption.equals("2")) {
                 userInterface.rentGame();
             } else if (customerMenuOption.equals("3")) {
-                userInterface.returnGame(customer);
+                userInterface.returnGame();
             } else if (customerMenuOption.equals("4")) {
                 userInterface.rentAlbum();
             } else if (customerMenuOption.equals("5")) {
-                userInterface.returnAlbum(customer);
+                userInterface.returnAlbum();
             } else if (customerMenuOption.equals("6")) {
                 userInterface.sendAMessage(customer.getID());
             } else if (customerMenuOption.equals("7")) {
