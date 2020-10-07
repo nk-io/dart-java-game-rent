@@ -4,12 +4,16 @@ public class Item {
     private String title;
     private double dailyRentFee;
     private String rentStatus;
+    private double averageRating;
+    private int numOfRatings;
 
     public Item(String title, double dailyRentFee){
         this.ID = RandomUID.generateRandomID();
         this.title = title;
         this.dailyRentFee = dailyRentFee;
         this.rentStatus = "Available";
+        averageRating=0;
+        numOfRatings=0;
     }
 
     public String getID() {
@@ -20,7 +24,15 @@ public class Item {
     public double getDailyRentFee() {
         return this.dailyRentFee;
     }
+    public double getAverageRating(){
+        return averageRating;
+    }
 
+    public void giveRating(int userRating){
+        double currentTotalScore = averageRating * numOfRatings;
+        numOfRatings++;
+        averageRating = (currentTotalScore+userRating)/numOfRatings;
+    }
     public void setAvailableToRent(){
         this.rentStatus = "Available";
     }

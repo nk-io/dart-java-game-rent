@@ -6,14 +6,16 @@ public class UserInterface {
     private EmployeeLibrary employeeLibrary;
     private CustomerLibrary customerLibrary;
     private MessageLibrary messageLibrary;
+    private ReviewLibrary reviewLibrary;
 
-    public UserInterface(GameLibrary gameLibrary, AlbumLibrary albumLibrary, ManagerLibrary managerLibrary, EmployeeLibrary employeeLibrary, CustomerLibrary customerLibrary, MessageLibrary messageLibrary){
+    public UserInterface(GameLibrary gameLibrary, AlbumLibrary albumLibrary, ManagerLibrary managerLibrary, EmployeeLibrary employeeLibrary, CustomerLibrary customerLibrary, MessageLibrary messageLibrary, ReviewLibrary reviewLibrary){
         this.gameLibrary = gameLibrary;
         this.albumLibrary = albumLibrary;
         this.managerLibrary = managerLibrary;
         this.employeeLibrary = employeeLibrary;
         this.customerLibrary = customerLibrary;
         this.messageLibrary = messageLibrary;
+        this.reviewLibrary = reviewLibrary;
     }
 
     //--------------------------------------------Items
