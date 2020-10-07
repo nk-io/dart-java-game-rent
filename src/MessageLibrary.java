@@ -38,14 +38,13 @@ public class MessageLibrary {
         ArrayList<Message> messagesOfCurrentCustomer = findAllMessagesOfCustomer(customerID);
         if(messagesOfCurrentCustomer.size() == 0){
             return "You have no messages in your inbox! ";
-
         }
         else{
             StringBuilder builder = new StringBuilder();
             for(int i=0; i<messagesOfCurrentCustomer.size(); i++){
-                builder.append("Message "+ (i+1));
+                builder.append("Message "+ (i+1) + " ");
                 if (!messagesOfCurrentCustomer.get(i).checkIfIsRead()){
-                    builder.append("Unread");
+                    builder.append("Unread ");
                     messagesOfCurrentCustomer.get(i).setRead();
 
                 }
@@ -58,6 +57,7 @@ public class MessageLibrary {
     public void deleteAMessage(String customerID){
         ArrayList<Message> messagesOfCurrentCustomer = findAllMessagesOfCustomer(customerID);
         if(messagesOfCurrentCustomer != null){
+            System.out.println(showCustomersMessages(customerID));
             int messageIndexToDelete = InputClass.askIntInput("Please enter the index of the message you want to delete: \n(Enter -1 to exit)" );
             while(messageIndexToDelete == 0 || messageIndexToDelete < -1 || messageIndexToDelete > messagesOfCurrentCustomer.size()){
                 System.out.println("Invalid input!");

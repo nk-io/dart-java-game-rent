@@ -2,9 +2,7 @@
 // Methods are no longer statics
 // Added messageList for Epic Feature 9
 
-
 import java.util.ArrayList;
-
 public class DartController {
 
     public static double totalRentProfit;
@@ -23,7 +21,7 @@ public class DartController {
         this.employeeLibrary = new EmployeeLibrary();
         this.customerLibrary = new CustomerLibrary();
         this.messageLibrary = new MessageLibrary();
-        this.userInterface = new UserInterface();
+        this.userInterface = new UserInterface(gameLibrary, albumLibrary, managerLibrary, employeeLibrary, customerLibrary, messageLibrary);
     }
 
     //Starts the main program loop
@@ -34,7 +32,9 @@ public class DartController {
         // Starts the program by printing the main menu from DartController
         do {
             String mainMenuOption = mainMenu();
-
+            userInterface.listAllManagers();
+            userInterface.listAllEmployees();
+            userInterface.listAllCustomers();
 
             // Formats the received input to lower case so the program doesn't need to check whether it's upper or lower case
             if (mainMenuOption.toLowerCase().equals("m"))  {
@@ -45,13 +45,13 @@ public class DartController {
                     //user exists, now we can check ask and check the password
                     String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
                     if (currentManagerUser.checkPassword(enteredPassword)) {
-                        managerMenu(userInterface, employeeLibrary);
+                        managerMenu();
                     } else {
                         System.out.println("Invalid Password!");
                     }
                 }
                 else{
-                    System.out.println("Manager with ID: "+enteredID+ " cannot found!");
+                    System.out.println("Manager with ID: " + enteredID + " cannot found!");
                 }
 
 
@@ -62,12 +62,12 @@ public class DartController {
                     //user exists, now we can check ask and check the password
                     String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
                     if (currentEmployeeUser.checkPassword(enteredPassword)) {
-                        employeeMenu(userInterface);
+                        employeeMenu();
                     } else {
                         System.out.println("Invalid Password!");
                     }
                 } else{
-                    System.out.println("Employee with ID: "+enteredID+ " cannot found!");
+                    System.out.println("Employee with ID: " + enteredID + " cannot found!");
                 }
 
 
@@ -78,7 +78,7 @@ public class DartController {
                     //user exists, now we can check ask and check the password
                     String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
                     if (currentCustomerUser.checkPassword(enteredPassword)) {
-                        customerMenu(userInterface);
+                        customerMenu(enteredID);
                     } else {
                         System.out.println("Invalid Password!");
                     }
@@ -118,7 +118,7 @@ public class DartController {
     }
     // Prints the manager menu and asks for integer input
     // Calls appropriate methods to current manager
-    private void managerMenu (UserInterface userInterface, EmployeeLibrary employeeLibrary) {
+    private void managerMenu () {
 
         String managerMenuOption;
 
@@ -126,7 +126,7 @@ public class DartController {
         do {
             String managerMenuMessage =
                     "Manager Screen - Type one of the options below:\n" +
-                            "1. Add an employee\n" +
+                            "1. Register an employee\n" +
                             "2. View all employees\n" +
                             "3. Remove an employee\n" +
                             "4. View the most profitable item\n"+
@@ -139,7 +139,7 @@ public class DartController {
             if (managerMenuOption.equals("1")) {
                 userInterface.registerEmployee();
             } else if (managerMenuOption.equals("2")) {
-                employeeLibrary.listAll();
+                userInterface.listAllEmployees();
             } else if(managerMenuOption.equals("3")){
                 userInterface.removeEmployee();
             }else if(managerMenuOption.equals("4")){
@@ -161,7 +161,7 @@ public class DartController {
     }
     // Prints the employee menu and asks for integer input
     // Calls appropriate methods to current employee
-    private void employeeMenu (UserInterface userInterface)    {
+    private void employeeMenu ()    {
 
         String employeeMenuOption;
 
@@ -171,10 +171,10 @@ public class DartController {
                     "Employee Screen - Type one of the options below:\n" +
                             "1. Register a game\n" +
                             "2. Remove a game\n" +
-                            "3. Register a customer\n" +
-                            "4. Remove a customer\n" +
-                            "5. Register a song album\n" +
-                            "6. Remove a song album \n" +
+                            "3. Register a song album\n" +
+                            "4. Remove a song album\n" +
+                            "5. Register a customer\n" +
+                            "6. Remove a customer\n" +
                             "7. Membership requests \n" +
                             "8. Show total rent profits \n" +
                             "9. View all games\n" +
@@ -189,23 +189,23 @@ public class DartController {
             } else if (employeeMenuOption.equals("2")) {
                 userInterface.removeGame();
             } else if (employeeMenuOption.equals("3")) {
-                userInterface.registerCustomer();
-            } else if (employeeMenuOption.equals("4")) {
-                userInterface.removeCustomer();
-            }else if (employeeMenuOption.equals("5")) {
                 userInterface.registerAlbum();
-            }else if (employeeMenuOption.equals("6")) {
+            } else if (employeeMenuOption.equals("4")) {
                 userInterface.removeAlbum();
+            }else if (employeeMenuOption.equals("5")) {
+                userInterface.registerCustomer();
+            }else if (employeeMenuOption.equals("6")) {
+                userInterface.removeCustomer();
             }else if (employeeMenuOption.equals("7")) {
                 System.out.println("Feature coming soon...");
             } else if (employeeMenuOption.equals("8")) {
-                //currentEmployee.showTotalRentProfit();
+                System.out.println(totalRentProfit);
             } else if (employeeMenuOption.equals("9")) {
                 userInterface.listAllGames();
             } else if (employeeMenuOption.equals("10")) {
                 userInterface.listAllAlbums();
             } else if (employeeMenuOption.equals("11")) {
-                System.out.println("Feature coming soon...");
+                userInterface.listAllCustomers();
             } else if (employeeMenuOption.equals("12")) {
                 System.out.println("Returning to Main Menu...");
             } else {
@@ -216,7 +216,7 @@ public class DartController {
     }
     // Prints the customer menu and asks for integer input
     // Calls appropriate methods to current customer
-    private void customerMenu(UserInterface userInterface) {
+    private void customerMenu(String enteredID) {
 
         String customerMenuOption;
 
@@ -249,11 +249,11 @@ public class DartController {
             } else if (customerMenuOption.equals("5")) {
                 userInterface.returnAlbum();
             } else if (customerMenuOption.equals("6")) {
-                //userInterface.sendAMessage;
+                userInterface.sendAMessage(enteredID);
             } else if (customerMenuOption.equals("7")) {
-                //currentCustomer.showCustomersMessages();
+                userInterface.showCustomerMessages(enteredID);
             } else if (customerMenuOption.equals("8")) {
-                //currentCustomer.deleteAMessage();
+                userInterface.deleteAMessage(enteredID);
             } else if (customerMenuOption.equals("9")) {
                 System.out.println("Feature coming soon...");
             } else if (customerMenuOption.equals("10")) {
@@ -270,7 +270,6 @@ public class DartController {
     }
 
 
-
     //initializes some test users
     //this method created for testing purposes
     public void testingInit(){
@@ -281,12 +280,11 @@ public class DartController {
         customerLibrary.registerCustomer("testCustomer1", "cust1");
         customerLibrary.registerCustomer("testCustomer2", "cust2");
 
-        System.out.println(managerLibrary.listAll());
-        System.out.println(employeeLibrary.listAll());
-        System.out.println(customerLibrary.listAll());
+        userInterface.listAllManagers();
+        userInterface.listAllEmployees();
+        userInterface.listAllCustomers();
 
     }
-
 
 
     //search of an user in given arraylist
@@ -300,7 +298,5 @@ public class DartController {
         }
         return null;
     }
-
-
 
 }

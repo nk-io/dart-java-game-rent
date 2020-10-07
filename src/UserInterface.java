@@ -1,23 +1,38 @@
+import java.sql.SQLOutput;
+
 public class UserInterface {
 
+    private GameLibrary gameLibrary;
+    private AlbumLibrary albumLibrary;
+    private ManagerLibrary managerLibrary;
+    private EmployeeLibrary employeeLibrary;
+    private CustomerLibrary customerLibrary;
+    private MessageLibrary messageLibrary;
+    public UserInterface(GameLibrary gameLibrary, AlbumLibrary albumLibrary, ManagerLibrary managerLibrary, EmployeeLibrary employeeLibrary, CustomerLibrary customerLibrary, MessageLibrary messageLibrary){
+        this.gameLibrary = gameLibrary;
+        this.albumLibrary = albumLibrary;
+        this.managerLibrary = managerLibrary;
+        this.employeeLibrary = employeeLibrary;
+        this.customerLibrary = customerLibrary;
+        this.messageLibrary = messageLibrary;
+    }
 
-//--------------------------------------------Items
+    //--------------------------------------------Items
+
     public void registerGame(){
-        GameLibrary gameLibrary = new GameLibrary();
         String title = InputClass.askStringInput("Please enter the name of the game: ");
         String genre = InputClass.askStringInput("Please enter the genre of the game: ");
-        double dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
+        double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ");
         while(dailyRentFee < 0 ){
             dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
         }
-        Object newGame = gameLibrary.registerGame(title, genre, dailyRentFee);
+        Game newGame = gameLibrary.registerGame(title, genre, dailyRentFee);
         System.out.println("The game with " + newGame.toString() + " has been created successfully.");
     }
 
 
     public void removeGame(){
-        GameLibrary gameLibrary = new GameLibrary();
-        gameLibrary.listAll();
+        listAllGames();
         String idToRemove = InputClass.askStringInput("Please enter the ID of the game you want to remove: ");
         boolean removed = gameLibrary.removeItem(idToRemove);
         if (removed){
@@ -29,28 +44,29 @@ public class UserInterface {
 
 
     public void listAllGames(){
-        GameLibrary gameLibrary = new GameLibrary();
-        System.out.println(gameLibrary.listAll());
+        if (gameLibrary.listAll() != null){
+            System.out.println(gameLibrary.listAll());
+        } else {
+            System.out.println("There are no games registered in the system.");
+        }
     }
 
 
     public void registerAlbum(){
-        AlbumLibrary albumLibrary = new AlbumLibrary();
         String title = InputClass.askStringInput("Please enter the name of the album: ");
         String artist = InputClass.askStringInput("Please enter the artist of the album: ");
         int year = InputClass.askIntInput("Please enter the release year for the album: ");
-        double dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
+        double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ");
         while(dailyRentFee < 0 ){
             dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
         }
-        Object newAlbum = albumLibrary.registerAlbum(title, artist, year, dailyRentFee);
+        Album newAlbum = albumLibrary.registerAlbum(title, artist, year, dailyRentFee);
         System.out.println("The album with " + newAlbum.toString() + " has been created successfully.");
     }
 
 
     public void removeAlbum(){
-        AlbumLibrary albumLibrary = new AlbumLibrary();
-        albumLibrary.listAll();
+        listAllAlbums();
         String idToRemove = InputClass.askStringInput("Please enter the ID of the album you want to remove: ");
         boolean removed = albumLibrary.removeItem(idToRemove);
         if (removed){
@@ -62,14 +78,16 @@ public class UserInterface {
 
 
     public void listAllAlbums(){
-        AlbumLibrary albumLibrary = new AlbumLibrary();
-        System.out.println(albumLibrary.listAll());
+        if (albumLibrary.listAll() != null){
+            System.out.println(albumLibrary.listAll());
+        } else {
+            System.out.println("There are no albums registered in the system.");
+        }
     }
 
 
     public void rentGame(){
-        GameLibrary gameLibrary = new GameLibrary();
-        gameLibrary.listAll();
+        listAllGames();
         String idToRent = InputClass.askStringInput("Enter item id of the game you want to rent: ");
         boolean rented = gameLibrary.rentItem(idToRent);
         if (rented){
@@ -81,8 +99,7 @@ public class UserInterface {
 
 
     public void rentAlbum(){
-        AlbumLibrary albumLibrary = new AlbumLibrary();
-        albumLibrary.listAll();
+        listAllAlbums();
         String idToRent = InputClass.askStringInput("Enter item album of the game you want to rent: ");
         boolean rented = albumLibrary.rentItem(idToRent);
         if (rented){
@@ -94,16 +111,15 @@ public class UserInterface {
 
 
     public void returnGame(){
-        GameLibrary gameLibrary = new GameLibrary();
-        gameLibrary.listAll();
+        listAllGames();
         String idToReturn = InputClass.askStringInput("Please enter the ID of the game you want to return: ");
-        Item isIDRight = gameLibrary.doesItemExist(idToReturn);
-        if (isIDRight != null){
+        Game isIDRight = (Game) gameLibrary.doesItemExist(idToReturn);
+        if (isIDRight != null && !gameLibrary.IsItAvailable(idToReturn)){
             int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ");
             while (daysRented < 0) {
                 daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
             }
-            double totalRentFee = gameLibrary.returnItem(isIDRight.toString(), daysRented);
+            double totalRentFee = gameLibrary.returnItem(idToReturn, daysRented);
             System.out.println("The total fee is: " + totalRentFee + " SEK.");
             System.out.println("The game has been successfully returned. ");
         } else {
@@ -113,16 +129,15 @@ public class UserInterface {
 
 
     public void returnAlbum(){
-        AlbumLibrary albumLibrary = new AlbumLibrary();
-        albumLibrary.listAll();
+        listAllAlbums();
         String idToReturn = InputClass.askStringInput("Please enter the ID of the album you want to return: ");
-        Item isIDRight = albumLibrary.doesItemExist(idToReturn);
-        if (isIDRight != null){
+        Album isIDRight = (Album) albumLibrary.doesItemExist(idToReturn);
+        if (isIDRight != null && !albumLibrary.IsItAvailable(idToReturn)){
             int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ");
             while (daysRented < 0) {
                 daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
             }
-            double totalRentFee = albumLibrary.returnItem(isIDRight.toString(), daysRented);
+            double totalRentFee = albumLibrary.returnItem(idToReturn, daysRented);
             System.out.println("The total fee is: " + totalRentFee + " SEK.");
             System.out.println("The album has been successfully returned. ");
         } else {
@@ -133,16 +148,15 @@ public class UserInterface {
 //--------------------------------------------People
 
     public void registerCustomer(){
-        CustomerLibrary customerLibrary = new CustomerLibrary();
         String name = InputClass.askStringInput("Please enter the name of the customer: ");
         String password = InputClass.askStringInput("Please enter a new password: ");
-        Object newCustomer = customerLibrary.registerCustomer(name, password);
+        Customer newCustomer = customerLibrary.registerCustomer(name, password);
         System.out.println("The customer " + newCustomer.toString() + " has been created successfully.");
     }
 
 
     public void removeCustomer(){
-        CustomerLibrary customerLibrary = new CustomerLibrary();
+        listAllCustomers();
         String idToRemove = InputClass.askStringInput("Please enter the ID of the customer to remove: ");
         boolean removed = customerLibrary.removeUser(idToRemove);
         if (removed){
@@ -153,8 +167,16 @@ public class UserInterface {
     }
 
 
+    public void listAllCustomers(){
+        if (customerLibrary.listAll() != null){
+            System.out.println(customerLibrary.listAll());
+        } else {
+            System.out.println("There are no customers registered in the system.");
+        }
+    }
+
+
     public void registerEmployee(){
-        EmployeeLibrary employeeLibrary = new EmployeeLibrary();
         String employeeName = InputClass.askStringInput("Please enter the employee's name: ");
         String password = InputClass.askStringInput("Please enter a new password: ");
         int birthYear = InputClass.askIntInput("Please enter the employee's birth year: ");
@@ -163,13 +185,13 @@ public class UserInterface {
         while(grossSalary < 0){
             grossSalary = InputClass.askDoubleInput("Please enter a valid gross salary (in SEK): ");
         }
-        Object newEmployee = employeeLibrary.registerEmployee(employeeName, password, birthYear, employeeAddress,grossSalary);
+        Employee newEmployee = employeeLibrary.registerEmployee(employeeName, password, birthYear, employeeAddress,grossSalary);
         System.out.println(newEmployee.toString()+ " has been created successfully!");
     }
 
 
     public void removeEmployee(){
-        EmployeeLibrary employeeLibrary = new EmployeeLibrary();
+        listAllEmployees();
         String idToRemove = InputClass.askStringInput("Please enter the ID of the employee to remove: ");
         boolean removed = employeeLibrary.removeUser(idToRemove);
         if (removed){
@@ -180,17 +202,25 @@ public class UserInterface {
     }
 
 
+    public void listAllEmployees(){
+        if (employeeLibrary.listAll() != null){
+            System.out.println(employeeLibrary.listAll());
+        } else {
+            System.out.println("There are no employees registered in the system.");
+        }
+    }
+
+
     public void registerManager(){
-        ManagerLibrary managerLibrary = new ManagerLibrary();
         String name = InputClass.askStringInput("Please enter the name of the manager: ");
         String password = InputClass.askStringInput("Please enter a new password: ");
-        Object newCustomer = managerLibrary.registerManager(name, password);
-        System.out.println("The manager " + newCustomer.toString() + " has been created successfully.");
+        Manager newManager = managerLibrary.registerManager(name, password);
+        System.out.println("The manager " + newManager.toString() + " has been created successfully.");
     }
 
 
     public void removeManager(){
-        ManagerLibrary managerLibrary = new ManagerLibrary();
+        listAllManagers();
         String idToRemove = InputClass.askStringInput("Please enter the ID of the manager to remove: ");
         boolean removed = managerLibrary.removeUser(idToRemove);
         if (removed){
@@ -200,15 +230,21 @@ public class UserInterface {
         }
     }
 
+    public void listAllManagers(){
+        if (managerLibrary.listAll() != null){
+            System.out.println(managerLibrary.listAll());
+        } else {
+            System.out.println("There are no managers registered in the system.");
+        }
+    }
+
 //--------------------------------------------Messages
-/*
-    public void sendAMessage(){
-        MessageLibrary messageLibrary = new MessageLibrary();
-        String receiverID = InputClass.askStringInput("Please enter the ID of the user you want to sena a message to: ");
+
+    public void sendAMessage(String enteredID){
+        String receiverID = InputClass.askStringInput("Please enter the ID of the user you want to send a message to: ");
         String message = InputClass.askStringInput("Please enter your message: ");
-        User user = new User();
-        CustomerLibrary customerLibrary = new CustomerLibrary();
-        Message sent = messageLibrary.sendAMessage(receiverID, getID(), getName, customerLibrary, message);
+        Message sent = messageLibrary.sendAMessage(receiverID, enteredID, customerLibrary.getName(enteredID), customerLibrary, message);
+        System.out.println();
         if (sent != null){
             System.out.println("Your message has been sent successfully!");
         }else {
@@ -217,8 +253,14 @@ public class UserInterface {
     }
 
 
- */
+    public void showCustomerMessages(String enteredID){
+        System.out.println(messageLibrary.showCustomersMessages(enteredID));
+    }
 
+
+    public void deleteAMessage(String enteredID){
+        messageLibrary.deleteAMessage(enteredID);
+    }
 
 }
 
