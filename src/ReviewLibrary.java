@@ -3,7 +3,7 @@ import java.util.Collections;
 
 public class ReviewLibrary {
     private ArrayList<Review> reviewList = new ArrayList<>();
-    public void addReview(Review newReview){
+    private void addReview(Review newReview){
         reviewList.add(newReview);
     }
 

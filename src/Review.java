@@ -5,6 +5,7 @@ public class Review {
     String review;
 
     public Review(String itemID, Customer customer, String review){
+        this.ID = RandomUID.generateRandomID();
         this.itemID = itemID;
         this.customer = customer;
         this.review = review;
