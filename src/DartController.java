@@ -13,6 +13,7 @@ public class DartController {
     private CustomerLibrary customerLibrary;
     private MessageLibrary messageLibrary;
     private UserInterface userInterface;
+    private ReviewLibrary reviewLibrary;
 
     public DartController() {
         this.gameLibrary = new GameLibrary();
@@ -21,7 +22,8 @@ public class DartController {
         this.employeeLibrary = new EmployeeLibrary();
         this.customerLibrary = new CustomerLibrary();
         this.messageLibrary = new MessageLibrary();
-        this.userInterface = new UserInterface(gameLibrary, albumLibrary, managerLibrary, employeeLibrary, customerLibrary, messageLibrary);
+        this.reviewLibrary = new ReviewLibrary();
+        this.userInterface = new UserInterface(gameLibrary, albumLibrary, managerLibrary, employeeLibrary, customerLibrary, messageLibrary, reviewLibrary);
     }
 
     //Starts the main program loop
@@ -74,7 +76,7 @@ public class DartController {
                     //user exists, now we can check ask and check the password
                     String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
                     if (currentCustomerUser.checkPassword(enteredPassword)) {
-                        customerMenu(enteredID);
+                        customerMenu(currentCustomerUser);
                     } else {
                         System.out.println("Invalid Password!");
                     }
@@ -212,7 +214,7 @@ public class DartController {
     }
     // Prints the customer menu and asks for integer input
     // Calls appropriate methods to current customer
-    private void customerMenu(String enteredID) {
+    private void customerMenu(Customer customer) {
 
         String customerMenuOption;
 
@@ -239,17 +241,17 @@ public class DartController {
             } else if (customerMenuOption.equals("2")) {
                 userInterface.rentGame();
             } else if (customerMenuOption.equals("3")) {
-                userInterface.returnGame();
+                userInterface.returnGame(customer);
             } else if (customerMenuOption.equals("4")) {
                 userInterface.rentAlbum();
             } else if (customerMenuOption.equals("5")) {
-                userInterface.returnAlbum();
+                userInterface.returnAlbum(customer);
             } else if (customerMenuOption.equals("6")) {
-                userInterface.sendAMessage(enteredID);
+                userInterface.sendAMessage(customer.getID());
             } else if (customerMenuOption.equals("7")) {
-                userInterface.showCustomerMessages(enteredID);
+                userInterface.showCustomerMessages(customer.getID());
             } else if (customerMenuOption.equals("8")) {
-                userInterface.deleteAMessage(enteredID);
+                userInterface.deleteAMessage(customer.getID());
             } else if (customerMenuOption.equals("9")) {
                 System.out.println("Feature coming soon...");
             } else if (customerMenuOption.equals("10")) {

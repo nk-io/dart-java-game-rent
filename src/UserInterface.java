@@ -6,13 +6,15 @@ public class UserInterface {
     private EmployeeLibrary employeeLibrary;
     private CustomerLibrary customerLibrary;
     private MessageLibrary messageLibrary;
-    public UserInterface(GameLibrary gameLibrary, AlbumLibrary albumLibrary, ManagerLibrary managerLibrary, EmployeeLibrary employeeLibrary, CustomerLibrary customerLibrary, MessageLibrary messageLibrary){
+    private ReviewLibrary reviewLibrary;
+    public UserInterface(GameLibrary gameLibrary, AlbumLibrary albumLibrary, ManagerLibrary managerLibrary, EmployeeLibrary employeeLibrary, CustomerLibrary customerLibrary, MessageLibrary messageLibrary, ReviewLibrary reviewLibrary){
         this.gameLibrary = gameLibrary;
         this.albumLibrary = albumLibrary;
         this.managerLibrary = managerLibrary;
         this.employeeLibrary = employeeLibrary;
         this.customerLibrary = customerLibrary;
         this.messageLibrary = messageLibrary;
+        this.reviewLibrary = reviewLibrary;
     }
 
     //--------------------------------------------Items
@@ -108,7 +110,7 @@ public class UserInterface {
     }
 
 
-    public void returnGame(){
+    public void returnGame(Customer customer){
         listAllGames();
         String idToReturn = InputClass.askStringInput("Please enter the ID of the game you want to return: ");
         Game isIDRight = (Game) gameLibrary.doesItemExist(idToReturn);
@@ -120,13 +122,14 @@ public class UserInterface {
             double totalRentFee = gameLibrary.returnItem(idToReturn, daysRented);
             System.out.println("The total fee is: " + totalRentFee + " SEK.");
             System.out.println("The game has been successfully returned. ");
+            giveRating(isIDRight, customer);
         } else {
             System.out.println("Game with ID: " + idToReturn + " was not found or is not rented. ");
         }
     }
 
 
-    public void returnAlbum(){
+    public void returnAlbum(Customer customer){
         listAllAlbums();
         String idToReturn = InputClass.askStringInput("Please enter the ID of the album you want to return: ");
         Album isIDRight = (Album) albumLibrary.doesItemExist(idToReturn);
@@ -137,11 +140,41 @@ public class UserInterface {
             }
             double totalRentFee = albumLibrary.returnItem(idToReturn, daysRented);
             System.out.println("The total fee is: " + totalRentFee + " SEK.");
+            giveRating(isIDRight, customer);
             System.out.println("The album has been successfully returned. ");
         } else {
             System.out.println("Album with ID: " + idToReturn + " was not found or is not rented. ");
         }
     }
+
+    private void giveRating(Item returnedItem, Customer customer){
+        String ratingCheck = InputClass.askStringInput("Would you like rate this item? Enter Yes or No ");
+        while(!ratingCheck.equalsIgnoreCase("YES") && !ratingCheck.equalsIgnoreCase("NO")){
+            ratingCheck = InputClass.askStringInput("Invalid input. Please enter yes or no!");
+        }
+        if(ratingCheck.equalsIgnoreCase("YES")){
+            int userRating = InputClass.askIntInput("Please enter your rating (a number between 0 and 5): ");
+            while (userRating < 0 || userRating > 5){
+                userRating = InputClass.askIntInput("Please enter a number between 0 and 5: ");
+            }
+            returnedItem.giveRating(userRating);
+            String reviewCheck = InputClass.askStringInput("Would you leave review? Enter Yes or No ");
+            while(!reviewCheck.equalsIgnoreCase("YES") && !reviewCheck.equalsIgnoreCase("NO")){
+                reviewCheck = InputClass.askStringInput("Invalid input. Please enter yes or no!");
+            }
+            if(reviewCheck.equalsIgnoreCase("YES")){
+                String review = InputClass.askStringInput("Please enter your review: ");
+                reviewLibrary.submitReview(returnedItem.getID(), customer, review);
+            }
+
+        }
+    }
+
+
+
+
+
+
 
 //--------------------------------------------People
 
