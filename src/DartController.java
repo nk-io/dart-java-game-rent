@@ -32,10 +32,6 @@ public class DartController {
         // Starts the program by printing the main menu from DartController
         do {
             String mainMenuOption = mainMenu();
-            userInterface.listAllManagers();
-            userInterface.listAllEmployees();
-            userInterface.listAllCustomers();
-
             // Formats the received input to lower case so the program doesn't need to check whether it's upper or lower case
             if (mainMenuOption.toLowerCase().equals("m"))  {
                 String enteredID = InputClass.askStringInput("Please enter your ID: ");

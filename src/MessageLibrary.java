@@ -44,10 +44,11 @@ public class MessageLibrary {
             for(int i=0; i<messagesOfCurrentCustomer.size(); i++){
                 builder.append("Message "+ (i+1) + " ");
                 if (!messagesOfCurrentCustomer.get(i).checkIfIsRead()){
-                    builder.append("Unread ");
+                    builder.append("Unread!! ");
                     messagesOfCurrentCustomer.get(i).setRead();
 
                 }
+                builder.append("\n");
                 builder.append(messagesOfCurrentCustomer.get(i).toString());
             }
             return builder.toString();

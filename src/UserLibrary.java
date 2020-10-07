@@ -45,7 +45,7 @@ abstract class UserLibrary {
 
     public String getName(String enteredID){
         for (int i = 0; i < userList.size(); i++){
-            if (userList.get(i).getName().equals(enteredID)){
+            if (userList.get(i).checkID(enteredID)){
                 return userList.get(i).getName();
             }
         }
