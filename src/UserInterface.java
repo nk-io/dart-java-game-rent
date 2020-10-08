@@ -1,3 +1,9 @@
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.util.Date;
+
 public class UserInterface {
 
     private GameLibrary gameLibrary;
@@ -95,64 +101,106 @@ public class UserInterface {
     }
 
 
-    public void rentGame(){
-        listAllGames();
-        String idToRent = InputClass.askStringInput("Enter item id of the game you want to rent: ");
-        boolean rented = gameLibrary.rentItem(idToRent);
-        if (rented){
-            System.out.println("The game with id: " + idToRent + " has been rented successfully!");
+    public Customer rentGame(Customer customer){
+        if (customer.getTotalRentedItems() < customer.getMembership().getRentalLimit()) {
+            listAllGames();
+            String idToRent = InputClass.askStringInput("Enter item id of the game you want to rent: ");
+            boolean rented = gameLibrary.rentItem(idToRent);
+            if (rented) {
+                RentalRecord record = new RentalRecord(customer.getID(), idToRent);
+                customer.addRecord(record);
+                customerLibrary.updateUser(customer);
+                System.out.println("The game with id: " + idToRent + " has been rented successfully!");
+            } else {
+                System.out.println("The game with id: " + idToRent + " is already rented or not found.");
+            }
         } else {
-            System.out.println("The game with id: " + idToRent + " is already rented or not found.");
+            System.out.println("Rental limit exceeded! You're currently renting " +
+                               customer.getTotalRentedItems() + " items out of " +
+                               customer.getMembership().getRentalLimit());
         }
+        return customer;
     }
 
-
-    public void rentAlbum(){
-        listAllAlbums();
-        String idToRent = InputClass.askStringInput("Enter item album of the game you want to rent: ");
-        boolean rented = albumLibrary.rentItem(idToRent);
-        if (rented){
-            System.out.println("The album with id: " + idToRent + " has been rented successfully!");
+    public Customer rentAlbum(Customer customer){
+        if (customer.getTotalRentedItems() < customer.getMembership().getRentalLimit()) {
+            listAllAlbums();
+            String idToRent = InputClass.askStringInput("Enter item id of the album you want to rent: ");
+            boolean rented = albumLibrary.rentItem(idToRent);
+            if (rented) {
+                RentalRecord record = new RentalRecord(customer.getID(), idToRent);
+                customer.addRecord(record);
+                customerLibrary.updateUser(customer);
+                System.out.println("The album with id: " + idToRent + " has been rented successfully!");
+            } else {
+                System.out.println("The album with id: " + idToRent + " is already rented or not found.");
+            }
         } else {
-            System.out.println("The album with id: " + idToRent + " is already rented or not found.");
+            System.out.println("Rental limit exceeded! You're currently renting " +
+                    customer.getTotalRentedItems() + " items out of " +
+                    customer.getMembership().getRentalLimit());
         }
+        return customer;
     }
 
-
-    public void returnGame(){
+    public Customer returnGame(Customer customer){
         listAllGames();
         String idToReturn = InputClass.askStringInput("Please enter the ID of the game you want to return: ");
         Game isIDRight = (Game) gameLibrary.doesItemExist(idToReturn);
         if (isIDRight != null && !gameLibrary.IsItAvailable(idToReturn)){
-            int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ");
-            while (daysRented < 0) {
-                daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
+            RentalRecord record = customer.findNonReturnedRecord(idToReturn);
+            if (record != null) {
+                LocalDateTime currentDate = LocalDateTime.now();
+                if (customer.hasEnoughCreditsToRent()) {
+                    customer.decrementStoreCredits();
+                    System.out.println("5 store credits were used for this transaction!");
+                } else {
+                    Period difference = Period.between(record.rentalDate.toLocalDate(), currentDate.toLocalDate());
+                    double baseRentFee = gameLibrary.returnItem(idToReturn, difference.getDays());
+                    double discount = customer.getDiscount();
+                    double totalRentFee = baseRentFee - (baseRentFee * discount);
+                    System.out.println("The total fee is: " + totalRentFee + " SEK.");
+                }
+                record.setReturnDate(currentDate);
+                record.setStoreCredits(customer.getMembership().getStoreCredits());
+                customer.incrementStoreCredits();
+                System.out.println("The game has been successfully returned.");
             }
-            double totalRentFee = gameLibrary.returnItem(idToReturn, daysRented);
-            System.out.println("The total fee is: " + totalRentFee + " SEK.");
-            System.out.println("The game has been successfully returned.");
         } else {
             System.out.println("Game with ID: " + idToReturn + " was not found or is not rented.");
         }
+        return customer;
     }
 
-
-    public void returnAlbum(){
+    public Customer returnAlbum(Customer customer){
         listAllAlbums();
         String idToReturn = InputClass.askStringInput("Please enter the ID of the album you want to return: ");
         Album isIDRight = (Album) albumLibrary.doesItemExist(idToReturn);
         if (isIDRight != null && !albumLibrary.IsItAvailable(idToReturn)){
-            int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ");
-            while (daysRented < 0) {
-                daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
+            RentalRecord record = customer.findNonReturnedRecord(idToReturn);
+            if (record != null) {
+                LocalDateTime currentDate = LocalDateTime.now();
+                if (customer.hasEnoughCreditsToRent()) {
+                    customer.decrementStoreCredits();
+                    System.out.println("5 store credits were used for this transaction!");
+                } else {
+                    Period difference = Period.between(record.rentalDate.toLocalDate(), currentDate.toLocalDate());
+                    double baseRentFee = albumLibrary.returnItem(idToReturn, difference.getDays());
+                    double discount = customer.getDiscount();
+                    double totalRentFee = baseRentFee - (baseRentFee * discount);
+                    System.out.println("The total fee is: " + totalRentFee * (discount/100) + " SEK.");
+                }
+                record.setReturnDate(currentDate);
+                record.setStoreCredits(customer.getMembership().getStoreCredits());
+                customer.incrementStoreCredits();
+                System.out.println("The album has been successfully returned.");
             }
-            double totalRentFee = albumLibrary.returnItem(idToReturn, daysRented);
-            System.out.println("The total fee is: " + totalRentFee + " SEK.");
-            System.out.println("The album has been successfully returned. ");
         } else {
             System.out.println("Album with ID: " + idToReturn + " was not found or is not rented.");
         }
+        return customer;
     }
+
 
 //--------------------------------------------People
 

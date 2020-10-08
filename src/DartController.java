@@ -3,6 +3,7 @@
 // Added messageList for Epic Feature 9
 
 import java.util.ArrayList;
+
 public class DartController {
 
     public static double totalRentProfit;
@@ -214,7 +215,6 @@ public class DartController {
     // Prints the customer menu and asks for integer input
     // Calls appropriate methods to current customer
     private void customerMenu(Customer customer) {
-
         String customerMenuOption;
 
         // Checks the input and connects to other sub-menus depending on the input
@@ -233,39 +233,35 @@ public class DartController {
                             "10. View my credits\n" +
                             "11. Return to Main Menu\n";
 
-
             customerMenuOption = InputClass.askStringInput(customerMenuMessage);
-            if (customerMenuOption.equals("1")){
-                System.out.println("Feature coming soon...");
-            } else if (customerMenuOption.equals("2")) {
-                userInterface.rentGame();
-            } else if (customerMenuOption.equals("3")) {
-                userInterface.returnGame();
-            } else if (customerMenuOption.equals("4")) {
-                userInterface.rentAlbum();
-            } else if (customerMenuOption.equals("5")) {
-                userInterface.returnAlbum();
-            } else if (customerMenuOption.equals("6")) {
-                userInterface.sendAMessage(customer.getID());
-            } else if (customerMenuOption.equals("7")) {
-                userInterface.showCustomerMessages(customer.getID());
-            } else if (customerMenuOption.equals("8")) {
-                userInterface.deleteAMessage(customer.getID());
-            } else if (customerMenuOption.equals("9")) {
-                System.out.println("Feature coming soon...");
-            } else if (customerMenuOption.equals("10")) {
-                System.out.println("Feature coming soon...");
-            } else if (customerMenuOption.equals("11")) {
-                System.out.println("Returning to Main Menu...");
-            } else {
-                System.out.println("Invalid Input! Please try again!");
+            switch (customerMenuOption) {
+                case "1" : System.out.println("Feature coming soon...");
+                    break;
+                case "2" : customer = userInterface.rentGame(customer);
+                    break;
+                case "3" : customer = userInterface.returnGame(customer);
+                    break;
+                case "4" : customer = userInterface.rentAlbum(customer);
+                    break;
+                case "5" : customer = userInterface.returnAlbum(customer);
+                    break;
+                case "6" : userInterface.sendAMessage(customer.getID());
+                    break;
+                case "7" : userInterface.showCustomerMessages(customer.getID());
+                    break;
+                case "8" : userInterface.deleteAMessage(customer.getID());
+                    break;
+                case "9" : System.out.println("Feature coming soon...");
+                    break;
+                case "10": System.out.println("Feature coming soon...");
+                    break;
+                case "11": System.out.println("Returning to Main Menu...");
+                    break;
+                default: System.out.println("Invalid Input! Please try again!");
+                    break;
             }
-
-
         } while(!customerMenuOption.equals("11"));
-
     }
-
 
     //initializes some test users
     //this method created for testing purposes
