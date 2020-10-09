@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 
 abstract class ItemLibrary {
 
@@ -87,6 +90,25 @@ abstract class ItemLibrary {
             }
             return listOfAll.toString();
         }
+    }
+
+
+    public String sortedItems(ArrayList <Item> item){
+        ArrayList<Item> temp = new ArrayList<>();
+        temp = (ArrayList) item.clone();
+
+        temp.sort(Collections.reverseOrder(new Comparator<Item>() {
+
+            @Override
+            public int compare(Item i1, Item i2) {
+                if (i1.getAverageRating() > i2.getAverageRating())
+                    return 1;
+                if (i1.getAverageRating() < i2.getAverageRating())
+                    return -1;
+                return 0;
+            }
+        }));
+        return temp.toString();
     }
 
 }

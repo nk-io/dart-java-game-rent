@@ -2,6 +2,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class UserInterface {
@@ -165,6 +166,7 @@ public class UserInterface {
                 record.setStoreCredits(customer.getMembership().getStoreCredits());
                 customer.incrementStoreCredits();
                 System.out.println("The game has been successfully returned.");
+                giveRating(isIDRight, customer);
             }
         } else {
             System.out.println("Game with ID: " + idToReturn + " was not found or is not rented.");
@@ -194,11 +196,67 @@ public class UserInterface {
                 record.setStoreCredits(customer.getMembership().getStoreCredits());
                 customer.incrementStoreCredits();
                 System.out.println("The album has been successfully returned.");
+                giveRating(isIDRight, customer);
             }
         } else {
             System.out.println("Album with ID: " + idToReturn + " was not found or is not rented.");
         }
         return customer;
+    }
+
+    public void giveRating(Item returnedItem, Customer customer){
+        String ratingCheck = InputClass.askStringInput("Would you like to rate this item? Enter Yes or No: ");
+        while(!ratingCheck.equalsIgnoreCase("YES") && !ratingCheck.equalsIgnoreCase("NO")){
+            ratingCheck = InputClass.askStringInput("Invalid input. Please enter yes or no!");
+        }
+        if(ratingCheck.equalsIgnoreCase("YES")){
+            int userRating = InputClass.askIntInput("Please enter your rating (a number between 0 and 5): ");
+            while (userRating < 0 || userRating > 5){
+                userRating = InputClass.askIntInput("Please enter a number between 0 and 5: ");
+            }
+            returnedItem.giveRating(userRating);
+            String reviewCheck = InputClass.askStringInput("Would you like to leave review? Enter Yes or No ");
+            while(!reviewCheck.equalsIgnoreCase("YES") && !reviewCheck.equalsIgnoreCase("NO")){
+                reviewCheck = InputClass.askStringInput("Invalid input. Please enter yes or no!");
+            }
+            if(reviewCheck.equalsIgnoreCase("YES")){
+                String review = InputClass.askStringInput("Please enter your review: ");
+                reviewLibrary.submitReview(returnedItem.getID(), customer, review);
+            }
+        }
+    }
+
+    public void searchItem(){
+        String itemCheck = InputClass.askStringInput("What is the item you are looking for? Type G for games, or A for albums.");
+        while(!itemCheck.equalsIgnoreCase("G") && !itemCheck.equalsIgnoreCase("A")){
+            itemCheck = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!");
+        }
+        if(itemCheck.equalsIgnoreCase("G")){
+            String genreToSearch = InputClass.askStringInput("Please enter the genre you are looking for: ");
+            String gamesWithGenre = gameLibrary.searchByGenre(genreToSearch);
+            System.out.println(gamesWithGenre);
+
+
+        } else if(itemCheck.equalsIgnoreCase("A")){
+            int yearToSearch = InputClass.askIntInput("Please enter the year you are looking for: ");
+            String albumsByYear = albumLibrary.searchByYear(yearToSearch);
+            System.out.println(albumsByYear);
+        }
+    }
+
+    public void sortItems() {
+        String sortCheck = InputClass.askStringInput("What item would you like to see sorted? Type G for games, or A for albums.");
+        while (!sortCheck.equalsIgnoreCase("G") && !sortCheck.equalsIgnoreCase("A")) {
+            sortCheck = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!");
+        }
+        if (sortCheck.equalsIgnoreCase("G")) {
+            String sortedGames = gameLibrary.sortedItems(gameLibrary.getItems());
+            System.out.println(sortedGames);
+
+        } else if (sortCheck.equalsIgnoreCase("A")) {
+            String sortedAlbums = albumLibrary.sortedItems(albumLibrary.getItems());
+            System.out.println(sortedAlbums);
+        }
     }
 
 
