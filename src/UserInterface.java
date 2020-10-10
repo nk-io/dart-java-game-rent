@@ -91,7 +91,7 @@ public class UserInterface {
     }
 
 
-    public void rentGame(){
+    public Customer rentGame(Customer customer){
         listAllGames();
         String idToRent = InputClass.askStringInput("Enter item id of the game you want to rent: ");
         boolean rented = gameLibrary.rentItem(idToRent);
@@ -103,19 +103,29 @@ public class UserInterface {
     }
 
 
-    public void rentAlbum(){
-        listAllAlbums();
-        String idToRent = InputClass.askStringInput("Enter item album of the game you want to rent: ");
-        boolean rented = albumLibrary.rentItem(idToRent);
-        if (rented){
-            System.out.println("The album with id: " + idToRent + " has been rented successfully!");
+    public Customer rentAlbum(Customer customer){
+        if (customer.getTotalRentedItems() < customer.getMembership().getRentalLimit()) {
+            listAllAlbums();
+            String idToRent = InputClass.askStringInput("Enter item id of the album you want to rent: ");
+            boolean rented = albumLibrary.rentItem(idToRent);
+            if (rented) {
+                RentalRecord record = new RentalRecord(customer.getID(), idToRent);
+                customer.addRecord(record);
+                customerLibrary.updateUser(customer);
+                System.out.println("The album with id: " + idToRent + " has been rented successfully!");
+            } else {
+                System.out.println("The album with id: " + idToRent + " is already rented or not found.");
+            }
         } else {
-            System.out.println("The album with id: " + idToRent + " is already rented or not found.");
+            System.out.println("Rental limit exceeded! You're currently renting " +
+                    customer.getTotalRentedItems() + " items out of " +
+                    customer.getMembership().getRentalLimit());
         }
+        return customer;
     }
 
 
-    public void returnGame(Customer customer){
+    public Customer returnGame(Customer customer){
         listAllGames();
         String idToReturn = InputClass.askStringInput("Please enter the ID of the game you want to return: ");
         Game isIDRight = (Game) gameLibrary.doesItemExist(idToReturn);
@@ -141,7 +151,7 @@ public class UserInterface {
 
 
 
-    public void returnAlbum(Customer customer){
+    public Customer returnAlbum(Customer customer){
         listAllAlbums();
         String idToReturn = InputClass.askStringInput("Please enter the ID of the album you want to return: ");
         Album isIDRight = (Album) albumLibrary.doesItemExist(idToReturn);
@@ -180,7 +190,7 @@ public class UserInterface {
                 reviewCheck = InputClass.askStringInput("Invalid input. Please enter yes or no!");
             }
             if(reviewCheck.equalsIgnoreCase("YES")){
-                giveReview( returnedItem, customer);
+                giveWrittenReview( returnedItem, customer);
             } else{
                 System.out.println("Thanks for leaving a rating.");
             }
@@ -196,10 +206,44 @@ public class UserInterface {
             returnedItem.giveRating(userRating);
     }
 
-    private void giveReview(Item returnedItem, Customer customer){
+    private void giveWrittenReview(Item returnedItem, Customer customer){
             String review = InputClass.askStringInput("Please enter your written review: ");
             reviewLibrary.submitReview(returnedItem.getID(), customer, review);
             System.out.println("Thanks for leaving a review and rating!");
+    }
+
+
+    public void searchItem(){
+        String itemCheck = InputClass.askStringInput("What is the item you are looking for? Type G for games, or A for albums.");
+        while(!itemCheck.equalsIgnoreCase("G") && !itemCheck.equalsIgnoreCase("A")){
+            itemCheck = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!");
+        }
+        if(itemCheck.equalsIgnoreCase("G")){
+            String genreToSearch = InputClass.askStringInput("Please enter the genre you are looking for: ");
+            String gamesWithGenre = gameLibrary.searchByGenre(genreToSearch);
+            System.out.println(gamesWithGenre);
+
+
+        } else if(itemCheck.equalsIgnoreCase("A")){
+            int yearToSearch = InputClass.askIntInput("Please enter the year you are looking for: ");
+            String albumsByYear = albumLibrary.searchByYear(yearToSearch);
+            System.out.println(albumsByYear);
+        }
+    }
+
+    public void sortItems() {
+        String sortCheck = InputClass.askStringInput("What item would you like to see sorted? Type G for games, or A for albums.");
+        while (!sortCheck.equalsIgnoreCase("G") && !sortCheck.equalsIgnoreCase("A")) {
+            sortCheck = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!");
+        }
+        if (sortCheck.equalsIgnoreCase("G")) {
+            String sortedGames = gameLibrary.sortedItems(gameLibrary.getItems());
+            System.out.println(sortedGames);
+
+        } else if (sortCheck.equalsIgnoreCase("A")) {
+            String sortedAlbums = albumLibrary.sortedItems(albumLibrary.getItems());
+            System.out.println(sortedAlbums);
+        }
     }
 
 

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Customer extends User {
     private Membership membership = Membership.NONE;
     private int storeCredits = 0;
+    private ArrayList<RentalRecord> records = new ArrayList<>();
 
     Customer(String name, String password){
         super(name,password);
@@ -47,4 +48,46 @@ public class Customer extends User {
         }
     }
 
+    public void addRecord(RentalRecord record) {
+        records.add(record);
+    }
+
+    public ArrayList<RentalRecord> getRecords() {
+        return records;
+    }
+
+    public int getTotalRentedItems() {
+        int totalItems = 0;
+        for (RentalRecord record: records) {
+            if (record.getReturnDate() == null) {
+                totalItems = totalItems + 1;
+            }
+        }
+        return totalItems;
+    }
+
+    public void showRentalRecords() {
+        for (RentalRecord record: records) {
+            String ID = record.itemID;
+            String userID = record.userID;
+            String rentDate = record.rentalDate.toString();
+            String returnDate = (record.getReturnDate() != null) ? record.getReturnDate().toString() : "Not returned yet.";
+            int credits = record.getStoreCredits();
+            System.out.println(
+                    "ID: " + ID + "\n" +
+                            "userID: " + userID + "\n" +
+                            "Rented on: " + rentDate + "\n" +
+                            "Returned on: " + returnDate + "\n" +
+                            "Credits earned: " + credits);
+        }
+    }
+
+    public RentalRecord findNonReturnedRecord(String itemId) {
+        for (RentalRecord record: records) {
+            if (record.getItemID().equals(itemId) && record.getReturnDate() == null) {
+                return record;
+            }
+        }
+        return null;
+    }
 }

@@ -1,4 +1,5 @@
 //created this class for Epic Feature 9
+import java.time.Instant;
 import java.util.Date;
 public class Message {
     private String ID;
@@ -7,7 +8,7 @@ public class Message {
     private String recipientID;
     private String message;
     private boolean isRead;
-    private Date date;
+    private Instant date;
 
     //constructor gets senderName since we create messages inside of customer class and we now the name of the sender customer
     Message(String senderID, String senderName, String recipientID, String message){
@@ -17,7 +18,7 @@ public class Message {
         this.recipientID=recipientID;
         this.message=formatLongMessage(message);
         this.isRead=false;
-        this.date=new Date();
+        this.date = Instant.now();
     }
 
     public String getSenderID() {
@@ -36,7 +37,7 @@ public class Message {
         isRead=true;
     }
     public boolean isAfter(Message otherMessage){
-        if(date.after(otherMessage.date)){
+        if(date.isAfter(otherMessage.date)){
             return true;
         }
         else {
@@ -59,7 +60,7 @@ public class Message {
         return  "Sender: " + getSenderName() + "\n" +
                 "Sender ID: " + senderID + '\n' +
                 "Message: " + '\n' +
-                 message + '\n';
+                message + '\n';
 
     }
 }

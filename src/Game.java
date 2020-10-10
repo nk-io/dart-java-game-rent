@@ -12,9 +12,9 @@ public class Game extends Item {
     @Override
     public String toString() {
         return "ID: '" + getID() + '\'' +
-                ", title: '" + getTitle() + '\'' +
-                ", genre: '" + getGenre() + '\'' +
-                ", daily rent fee: " + getDailyRentFee() +
-                ", rent status: " + getRentStatus() + ".";
+                ", Title: '" + getTitle() + '\'' +
+                ", Genre: '" + getGenre() + '\'' +
+                ", Daily rent fee: " + getDailyRentFee() +
+                " SEK. Rent status: " + getRentStatus() + ".";
     }
 }

@@ -3,6 +3,7 @@
 // Added messageList for Epic Feature 9
 
 import java.util.ArrayList;
+
 public class DartController {
 
     public static double totalRentProfit;
@@ -25,8 +26,7 @@ public class DartController {
         this.messageLibrary = new MessageLibrary();
         this.reviewLibrary = new ReviewLibrary();
         this.rentHistoryLibrary = new RentHistoryLibrary();
-
-        this.userInterface = new UserInterface(gameLibrary, albumLibrary, managerLibrary, employeeLibrary, customerLibrary, messageLibrary, reviewLibrary, rentHistoryLibrary);
+        this.userInterface = new UserInterface(gameLibrary, albumLibrary, managerLibrary, employeeLibrary, customerLibrary, messageLibrary, reviewLibrary,rentHistoryLibrary);
     }
 
     //Starts the main program loop
@@ -38,63 +38,62 @@ public class DartController {
         do {
             String mainMenuOption = mainMenu();
             // Formats the received input to lower case so the program doesn't need to check whether it's upper or lower case
-            if (mainMenuOption.toLowerCase().equals("m"))  {
-                String enteredID = InputClass.askStringInput("Please enter your ID: ");
-                Manager currentManagerUser = (Manager) managerLibrary.doesUserExist(enteredID);
-                //lets check if user exists
-                if(currentManagerUser != null){
-                    //user exists, now we can check ask and check the password
-                    String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
-                    if (currentManagerUser.checkPassword(enteredPassword)) {
-                        managerMenu();
+            switch (mainMenuOption.toLowerCase()) {
+                case "m" -> {
+                    String enteredID = InputClass.askStringInput("Please enter your ID: ");
+                    Manager currentManagerUser = (Manager) managerLibrary.doesUserExist(enteredID);
+                    //lets check if user exists
+                    if (currentManagerUser != null) {
+                        //user exists, now we can check ask and check the password
+                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
+                        if (currentManagerUser.checkPassword(enteredPassword)) {
+                            managerMenu();
+                        } else {
+                            System.out.println("Invalid Password!");
+                        }
                     } else {
-                        System.out.println("Invalid Password!");
+                        System.out.println("Manager with ID: " + enteredID + " was not found!");
                     }
                 }
-                else{
-                    System.out.println("Manager with ID: " + enteredID + " cannot found!");
-                }
 
-
-            } else if (mainMenuOption.toLowerCase().equals("e")) {
-                String enteredID = InputClass.askStringInput("Please enter your ID: ");
-                Employee currentEmployeeUser = (Employee) employeeLibrary.doesUserExist(enteredID);
-                if(currentEmployeeUser != null){
-                    //user exists, now we can check ask and check the password
-                    String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
-                    if (currentEmployeeUser.checkPassword(enteredPassword)) {
-                        employeeMenu();
+                case "e" -> {
+                    String enteredID = InputClass.askStringInput("Please enter your ID: ");
+                    Employee currentEmployeeUser = (Employee) employeeLibrary.doesUserExist(enteredID);
+                    if (currentEmployeeUser != null) {
+                        //user exists, now we can check ask and check the password
+                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
+                        if (currentEmployeeUser.checkPassword(enteredPassword)) {
+                            employeeMenu();
+                        } else {
+                            System.out.println("Invalid Password!");
+                        }
                     } else {
-                        System.out.println("Invalid Password!");
+                        System.out.println("Employee with ID: " + enteredID + " was not found!");
                     }
-                } else{
-                    System.out.println("Employee with ID: " + enteredID + " cannot found!");
                 }
 
-
-            } else if (mainMenuOption.toLowerCase().equals("c")) {
-                String enteredID = InputClass.askStringInput("Please enter your ID: ");
-                Customer currentCustomerUser = (Customer) customerLibrary.doesUserExist(enteredID);
-                if(currentCustomerUser != null){
-                    //user exists, now we can check ask and check the password
-                    String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
-                    if (currentCustomerUser.checkPassword(enteredPassword)) {
-                        customerMenu(currentCustomerUser);
+                case "c" -> {
+                    String enteredID = InputClass.askStringInput("Please enter your ID: ");
+                    Customer currentCustomerUser = (Customer) customerLibrary.doesUserExist(enteredID);
+                    if (currentCustomerUser != null) {
+                        //user exists, now we can check ask and check the password
+                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
+                        if (currentCustomerUser.checkPassword(enteredPassword)) {
+                            customerMenu(currentCustomerUser);
+                        } else {
+                            System.out.println("Invalid Password!");
+                        }
                     } else {
-                        System.out.println("Invalid Password!");
+                        System.out.println("Customer with ID: " + enteredID + " was not found!");
                     }
-                } else{
-                    System.out.println("Customer with ID: "+enteredID+ " cannot found!");
                 }
-
                 // Closes the scanner and terminates the program if the input is X/x
-            } else if (mainMenuOption.toLowerCase().equals("x")) {
-                System.out.println("Exiting DART...");
-                mainMenuActive = false;
-                InputClass.closeScanner();
-
-            } else {
-                System.out.println("Invalid input! Please, try again!");
+                case "x" -> {
+                    System.out.println("Exiting DART...");
+                    mainMenuActive = false;
+                    InputClass.closeScanner();
+                }
+                default -> System.out.println("Invalid input! Please, try again!");
             }
 
         } while (mainMenuActive);
@@ -120,8 +119,7 @@ public class DartController {
     // Prints the manager menu and asks for integer input
     // Calls appropriate methods to current manager
     private void managerMenu () {
-
-        String managerMenuOption;
+        int managerMenuOption;
 
         // Checks the input and connects to other sub-menus depending on the input
         do {
@@ -136,35 +134,26 @@ public class DartController {
                             "7. Show total rent profits\n"+
                             "8. Return to Main Menu\n";
 
-            managerMenuOption = InputClass.askStringInput(managerMenuMessage);
-            if (managerMenuOption.equals("1")) {
-                userInterface.registerEmployee();
-            } else if (managerMenuOption.equals("2")) {
-                userInterface.listAllEmployees();
-            } else if(managerMenuOption.equals("3")){
-                userInterface.removeEmployee();
-            }else if(managerMenuOption.equals("4")){
-                System.out.println("Feature coming soon...");
-            }else if(managerMenuOption.equals("5")){
-                System.out.println("Feature coming soon...");
-            }else if(managerMenuOption.equals("6")){
-                System.out.println("Feature coming soon...");
-            }else if(managerMenuOption.equals("7")){
-                System.out.println("Feature coming soon...");
-            }else if(managerMenuOption.equals("8")){
-                System.out.println("Returning to Main Menu...");
+            managerMenuOption = InputClass.askIntInput(managerMenuMessage);
+            switch (managerMenuOption) {
+                case 1 -> userInterface.registerEmployee();
+                case 2 -> userInterface.listAllEmployees();
+                case 3 -> userInterface.removeEmployee();
+                case 4 -> System.out.println("Feature coming soon...");
+                case 5 -> System.out.println("Feature coming soon...");
+                case 6 -> System.out.println("Feature coming soon...");
+                case 7 -> System.out.println("Feature coming soon...");
+                case 8 -> System.out.println("Returning to Main Menu...");
+                default -> System.out.println("Invalid Input! Please try again!");
             }
-            else {
-                System.out.println("Invalid Input! Please try again!");
-            }
-        } while(!managerMenuOption.equals("8"));
+        } while(!(managerMenuOption == 8));
 
     }
     // Prints the employee menu and asks for integer input
     // Calls appropriate methods to current employee
     private void employeeMenu ()    {
 
-        String employeeMenuOption;
+        int employeeMenuOption;
 
         // Checks the input and connects to other sub-menus depending on the input
         do {
@@ -183,43 +172,30 @@ public class DartController {
                             "11. View all customers\n" +
                             "12. Return to Main Menu\n";
 
-            employeeMenuOption = InputClass.askStringInput(employeeMenuMessage);
+            employeeMenuOption = InputClass.askIntInput(employeeMenuMessage);
 
-            if (employeeMenuOption.equals("1")) {
-                userInterface.registerGame();
-            } else if (employeeMenuOption.equals("2")) {
-                userInterface.removeGame();
-            } else if (employeeMenuOption.equals("3")) {
-                userInterface.registerAlbum();
-            } else if (employeeMenuOption.equals("4")) {
-                userInterface.removeAlbum();
-            }else if (employeeMenuOption.equals("5")) {
-                userInterface.registerCustomer();
-            }else if (employeeMenuOption.equals("6")) {
-                userInterface.removeCustomer();
-            }else if (employeeMenuOption.equals("7")) {
-                System.out.println("Feature coming soon...");
-            } else if (employeeMenuOption.equals("8")) {
-                System.out.println(totalRentProfit);
-            } else if (employeeMenuOption.equals("9")) {
-                userInterface.listAllGames();
-            } else if (employeeMenuOption.equals("10")) {
-                userInterface.listAllAlbums();
-            } else if (employeeMenuOption.equals("11")) {
-                userInterface.listAllCustomers();
-            } else if (employeeMenuOption.equals("12")) {
-                System.out.println("Returning to Main Menu...");
-            } else {
-                System.out.println("Invalid Input! Please try again!");
+            switch (employeeMenuOption) {
+                case 1 -> userInterface.registerGame();
+                case 2 -> userInterface.removeGame();
+                case 3 -> userInterface.registerAlbum();
+                case 4 -> userInterface.removeAlbum();
+                case 5 -> userInterface.registerCustomer();
+                case 6 -> userInterface.removeCustomer();
+                case 7 -> System.out.println("Feature coming soon...");
+                case 8 -> System.out.println(totalRentProfit);
+                case 9 -> userInterface.listAllGames();
+                case 10 -> userInterface.listAllAlbums();
+                case 11 -> userInterface.listAllCustomers();
+                case 12 -> System.out.println("Returning to Main Menu...");
+                default -> System.out.println("Invalid Input! Please try again!");
             }
-        } while(!employeeMenuOption.equals("12"));
+        } while(!(employeeMenuOption == 12));
 
     }
     // Prints the customer menu and asks for integer input
     // Calls appropriate methods to current customer
     private void customerMenu(Customer customer) {
-
-        String customerMenuOption;
+        int customerMenuOption;
 
         // Checks the input and connects to other sub-menus depending on the input
         do {
@@ -237,39 +213,23 @@ public class DartController {
                             "10. View my credits\n" +
                             "11. Return to Main Menu\n";
 
-
-            customerMenuOption = InputClass.askStringInput(customerMenuMessage);
-            if (customerMenuOption.equals("1")){
-                System.out.println("Feature coming soon...");
-            } else if (customerMenuOption.equals("2")) {
-                userInterface.rentGame();
-            } else if (customerMenuOption.equals("3")) {
-                userInterface.returnGame(customer);
-            } else if (customerMenuOption.equals("4")) {
-                userInterface.rentAlbum();
-            } else if (customerMenuOption.equals("5")) {
-                userInterface.returnAlbum(customer);
-            } else if (customerMenuOption.equals("6")) {
-                userInterface.sendAMessage(customer.getID());
-            } else if (customerMenuOption.equals("7")) {
-                userInterface.showCustomerMessages(customer.getID());
-            } else if (customerMenuOption.equals("8")) {
-                userInterface.deleteAMessage(customer.getID());
-            } else if (customerMenuOption.equals("9")) {
-                System.out.println("Feature coming soon...");
-            } else if (customerMenuOption.equals("10")) {
-                System.out.println("Feature coming soon...");
-            } else if (customerMenuOption.equals("11")) {
-                System.out.println("Returning to Main Menu...");
-            } else {
-                System.out.println("Invalid Input! Please try again!");
+            customerMenuOption = InputClass.askIntInput(customerMenuMessage);
+            switch (customerMenuOption) {
+                case 1 -> userInterface.searchItem();
+                case 2 -> customer = userInterface.rentGame(customer);
+                case 3 -> customer = userInterface.returnGame(customer);
+                case 4 -> customer = userInterface.rentAlbum(customer);
+                case 5 -> customer = userInterface.returnAlbum(customer);
+                case 6 -> userInterface.sendAMessage(customer.getID());
+                case 7 -> userInterface.showCustomerMessages(customer.getID());
+                case 8 -> userInterface.deleteAMessage(customer.getID());
+                case 9 -> System.out.println("Feature coming soon...");
+                case 10 -> System.out.println("Feature coming soon...");
+                case 11 -> System.out.println("Returning to Main Menu...");
+                default -> System.out.println("Invalid Input! Please try again!");
             }
-
-
-        } while(!customerMenuOption.equals("11"));
-
+        } while(!(customerMenuOption == 11));
     }
-
 
     //initializes some test users
     //this method created for testing purposes
@@ -289,7 +249,6 @@ public class DartController {
         userInterface.listAllManagers();
         userInterface.listAllEmployees();
         userInterface.listAllCustomers();
-
 
     }
 

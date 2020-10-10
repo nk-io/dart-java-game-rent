@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 
 abstract class ItemLibrary {
 
@@ -42,6 +45,12 @@ abstract class ItemLibrary {
         return false;
     }
 
+
+    public boolean areThereAnyItems(){
+        return itemList.size() != 0;
+    }
+
+
     public boolean rentItem(String idToRent){
         if(itemList.size() > 0){
             for(int i = 0; i < itemList.size(); i++){
@@ -56,21 +65,19 @@ abstract class ItemLibrary {
         return false;
     }
 
-    // need to change this according to membership
-
-    public boolean returnItem(String itemToReturn, int daysRented) {
+    public double returnItem(String itemToReturn, int daysRented) {
         double totalRent;
         for (int i = 0; i < itemList.size(); i++) {
             if (!itemList.get(i).isItemAvailableToRent()) {
                 if (itemList.get(i).getID().equals(itemToReturn)) {
+                    totalRent = itemList.get(i).getDailyRentFee() * daysRented;
                     itemList.get(i).setAvailableToRent();
-                    // get rent somewhere else
-                   // DartController.totalRentProfit += totalRent;
-                    return true;
+                    DartController.totalRentProfit += totalRent;
+                    return totalRent;
                 }
             }
         }
-        return false;
+        return -1;
     }
 
     public String listAll(){
@@ -83,6 +90,25 @@ abstract class ItemLibrary {
             }
             return listOfAll.toString();
         }
+    }
+
+
+    public String sortedItems(ArrayList <Item> item){
+        ArrayList<Item> temp = new ArrayList<>();
+        temp = (ArrayList) item.clone();
+
+        temp.sort(Collections.reverseOrder(new Comparator<Item>() {
+
+            @Override
+            public int compare(Item i1, Item i2) {
+                if (i1.getAverageRating() > i2.getAverageRating())
+                    return 1;
+                if (i1.getAverageRating() < i2.getAverageRating())
+                    return -1;
+                return 0;
+            }
+        }));
+        return temp.toString();
     }
 
 }
