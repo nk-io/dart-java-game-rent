@@ -139,11 +139,11 @@ public class DartController {
                 case 1 -> userInterface.registerEmployee();
                 case 2 -> userInterface.listAllEmployees();
                 case 3 -> userInterface.removeEmployee();
-                case 4 -> userInterface.xd();
-                case 5 -> System.out.println("Feature coming soon...");
+                case 4 -> userInterface.showMostProfitableItem();
+                case 5 -> userInterface.listRentFrequency();
                 case 6 -> System.out.println("Feature coming soon...");
                 case 7 -> userInterface.showTotalRentProfit();
-                case 8 -> userInterface.showRentHistory();
+                case 8 -> userInterface.listRentTransactions();
                 case 9 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid Input! Please try again!");
             }

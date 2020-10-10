@@ -265,15 +265,18 @@ public class UserInterface {
         System.out.println("Total rent profit for all items rented: " + totalRentProfit + "SEK");
     }
 
-    public void showRentHistory(){
+    public void listRentFrequency(){
+        System.out.println("All items rent frequency: ");
+        System.out.println(rentHistoryLibrary.showRentFrequency());
+    }
+
+    public void listRentTransactions(){
         System.out.println("List of rent history transactions: ");
         System.out.println(rentHistoryLibrary.showAllRentHistory());
     }
 
-    public void xd(){
+    public void showMostProfitableItem(){
     System.out.println("Most profitable item: " + rentHistoryLibrary.getMostProfitableItem());
-
-
     }
 
 

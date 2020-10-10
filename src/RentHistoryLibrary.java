@@ -1,8 +1,4 @@
-import java.util.Set;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 public class RentHistoryLibrary {
     public ArrayList<RentHistory> rentHistoryList = new ArrayList<>();
@@ -33,6 +29,24 @@ public class RentHistoryLibrary {
             totalRentProfit = totalRentProfit + rentHistoryList.get(i).getRentExpense();
         }
         return totalRentProfit;
+    }
+
+    public String showRentFrequency(){
+        ArrayList<String> IDS = new ArrayList<String>();
+        if(rentHistoryList.size() == 0){
+            return "No items have ever been rented.";
+        } else{
+            StringBuilder builder = new StringBuilder();
+            for(int i = 0; i < rentHistoryList.size();i++){
+                IDS.add(rentHistoryList.get(i).getItemID());
+            }
+            Set<String> uniqueSet = new HashSet<String>(IDS);
+            for (String temp : uniqueSet) {
+                builder.append( "Item ID:" + temp + ": " + "has been rented" + Collections.frequency(IDS, temp) + "times.");
+                builder.append("\n");
+            }
+            return builder.toString();
+        }
     }
 
     public String getMostProfitableItem() {
