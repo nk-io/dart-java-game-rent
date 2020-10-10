@@ -24,7 +24,7 @@ abstract class ItemLibrary {
         return null;
     }
 
-    public boolean IsItAvailable(String idToSearch){
+    public boolean isItAvailable(String idToSearch){
         for (int i = 0; i < itemList.size(); i++) {
             if (itemList.get(i).getID().equals(idToSearch)) {
                 if (itemList.get(i).isItemAvailableToRent()) {
@@ -72,7 +72,6 @@ abstract class ItemLibrary {
                 if (itemList.get(i).getID().equals(itemToReturn)) {
                     totalRent = itemList.get(i).getDailyRentFee() * daysRented;
                     itemList.get(i).setAvailableToRent();
-                    DartController.totalRentProfit += totalRent;
                     return totalRent;
                 }
             }

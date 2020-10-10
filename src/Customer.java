@@ -75,10 +75,10 @@ public class Customer extends User {
             int credits = record.getStoreCredits();
             System.out.println(
                     "ID: " + ID + "\n" +
-                    "userID: " + userID + "\n" +
-                    "Rented on: " + rentDate + "\n" +
-                    "Returned on: " + returnDate + "\n" +
-                    "Credits earned: " + credits);
+                            "userID: " + userID + "\n" +
+                            "Rented on: " + rentDate + "\n" +
+                            "Returned on: " + returnDate + "\n" +
+                            "Credits earned: " + credits);
         }
     }
 

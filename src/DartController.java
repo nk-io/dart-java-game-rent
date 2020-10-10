@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class DartController {
 
-    public static double totalRentProfit;
     private GameLibrary gameLibrary;
     private AlbumLibrary albumLibrary;
     private ManagerLibrary managerLibrary;
@@ -15,6 +14,7 @@ public class DartController {
     private MessageLibrary messageLibrary;
     private UserInterface userInterface;
     private ReviewLibrary reviewLibrary;
+    private RentHistoryLibrary rentHistoryLibrary;
 
     public DartController() {
         this.gameLibrary = new GameLibrary();
@@ -24,7 +24,8 @@ public class DartController {
         this.customerLibrary = new CustomerLibrary();
         this.messageLibrary = new MessageLibrary();
         this.reviewLibrary = new ReviewLibrary();
-        this.userInterface = new UserInterface(gameLibrary, albumLibrary, managerLibrary, employeeLibrary, customerLibrary, messageLibrary, reviewLibrary);
+        this.rentHistoryLibrary = new RentHistoryLibrary();
+        this.userInterface = new UserInterface(gameLibrary, albumLibrary, managerLibrary, employeeLibrary, customerLibrary, messageLibrary, reviewLibrary,rentHistoryLibrary);
     }
 
     //Starts the main program loop
@@ -130,21 +131,23 @@ public class DartController {
                             "5. View rent frequency of all items\n"+
                             "6. View the best customer\n"+
                             "7. Show total rent profits\n"+
-                            "8. Return to Main Menu\n";
+                            "8. Show all rent transactions\n"+
+                            "9. Return to Main Menu\n";
 
             managerMenuOption = InputClass.askIntInput(managerMenuMessage);
             switch (managerMenuOption) {
                 case 1 -> userInterface.registerEmployee();
                 case 2 -> userInterface.listAllEmployees();
                 case 3 -> userInterface.removeEmployee();
-                case 4 -> System.out.println("Feature coming soon...");
-                case 5 -> System.out.println("Feature coming soon...");
-                case 6 -> System.out.println("Feature coming soon...");
-                case 7 -> System.out.println("Feature coming soon...");
-                case 8 -> System.out.println("Returning to Main Menu...");
+                case 4 -> userInterface.showMostProfitableItem();
+                case 5 -> userInterface.listRentFrequency();
+                case 6 -> userInterface.showBestCustomer();
+                case 7 -> userInterface.showTotalRentProfit();
+                case 8 -> userInterface.listRentTransactions();
+                case 9 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid Input! Please try again!");
             }
-        } while(!(managerMenuOption == 8));
+        } while(!(managerMenuOption == 9));
 
     }
     // Prints the employee menu and asks for integer input
@@ -180,7 +183,7 @@ public class DartController {
                 case 5 -> userInterface.registerCustomer();
                 case 6 -> userInterface.removeCustomer();
                 case 7 -> System.out.println("Feature coming soon...");
-                case 8 -> System.out.println(totalRentProfit);
+                case 8 -> userInterface.showTotalRentProfit();
                 case 9 -> userInterface.listAllGames();
                 case 10 -> userInterface.listAllAlbums();
                 case 11 -> userInterface.listAllCustomers();
@@ -238,7 +241,12 @@ public class DartController {
         employeeLibrary.registerEmployee("testEmployee2", "emp2", 1994, "address2", 20000);
         customerLibrary.registerCustomer("testCustomer1", "cust1");
         customerLibrary.registerCustomer("testCustomer2", "cust2");
-
+        gameLibrary.registerGame("testGame","testGenre", 300);
+        gameLibrary.registerGame("testGame2","testGenre2", 350);
+        gameLibrary.registerGame("testGame3","testGenre3", 150);
+        albumLibrary.registerAlbum("testTitle","Test Artist", 2012,200);
+        albumLibrary.registerAlbum("testTitle2","Test Artist2", 2014,300);
+        albumLibrary.registerAlbum("testTitle3","Test Artist3", 2016,15);
         userInterface.listAllManagers();
         userInterface.listAllEmployees();
         userInterface.listAllCustomers();

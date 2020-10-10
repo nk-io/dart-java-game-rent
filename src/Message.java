@@ -60,7 +60,7 @@ public class Message {
         return  "Sender: " + getSenderName() + "\n" +
                 "Sender ID: " + senderID + '\n' +
                 "Message: " + '\n' +
-                 message + '\n';
+                message + '\n';
 
     }
 }
