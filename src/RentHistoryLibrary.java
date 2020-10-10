@@ -40,14 +40,15 @@ public class RentHistoryLibrary {
             for(int i = 0; i < rentHistoryList.size();i++){
                 IDS.add(rentHistoryList.get(i).getItemID());
             }
-            Set<String> uniqueSet = new HashSet<String>(IDS);
-            for (String temp : uniqueSet) {
-                builder.append( "Item ID:" + temp + ": " + "has been rented" + Collections.frequency(IDS, temp) + "times.");
+            Set<String> IDSet = new HashSet<String>(IDS);
+            for (String id : IDSet) {
+                builder.append( "Item ID: " + id + ": " + "has been rented " + Collections.frequency(IDS, id) + " times.");
                 builder.append("\n");
             }
             return builder.toString();
         }
     }
+
 
     public String getMostProfitableItem() {
         HashMap<String, Double> itemProfits = new HashMap<String, Double>();
