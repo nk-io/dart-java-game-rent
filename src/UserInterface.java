@@ -271,7 +271,7 @@ public class UserInterface {
     }
 
     public void xd(){
-    rentHistoryLibrary.getMostProfitableItem();
+    System.out.println("Most profitable item: " + rentHistoryLibrary.getMostProfitableItem());
 
 
     }

@@ -83,9 +83,6 @@ public class Employee extends User{
             ageBonus = netSalary + 7500;
         }
     }
-    //this is gonna be relocated
-    public void showTotalRentProfit(){
-        System.out.println("The total rent profit is "+ DartController.totalRentProfit + " SEK");
-    }
+
 
 }

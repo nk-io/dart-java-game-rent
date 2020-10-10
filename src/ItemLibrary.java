@@ -72,7 +72,6 @@ abstract class ItemLibrary {
                 if (itemList.get(i).getID().equals(itemToReturn)) {
                     totalRent = itemList.get(i).getDailyRentFee() * daysRented;
                     itemList.get(i).setAvailableToRent();
-                    DartController.totalRentProfit += totalRent;
                     return totalRent;
                 }
             }

@@ -29,7 +29,7 @@ public class RentHistory {
                 "'customer ID='" + customer.getID() + '\'' +
                         ", 'item ID='" + item.getID() + '\'' +
                         ", days rented=" + daysRented +
-                        ", rent expense=" + rentExpense + "\n";
+                        ", rent expense=" + rentExpense + "SEK" + "\n";
     }
 
 }

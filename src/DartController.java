@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class DartController {
 
-    public static double totalRentProfit;
     private GameLibrary gameLibrary;
     private AlbumLibrary albumLibrary;
     private ManagerLibrary managerLibrary;
@@ -140,7 +139,7 @@ public class DartController {
                 case 1 -> userInterface.registerEmployee();
                 case 2 -> userInterface.listAllEmployees();
                 case 3 -> userInterface.removeEmployee();
-                case 4 -> System.out.println("Feature coming soon...");
+                case 4 -> userInterface.xd();
                 case 5 -> System.out.println("Feature coming soon...");
                 case 6 -> System.out.println("Feature coming soon...");
                 case 7 -> userInterface.showTotalRentProfit();
