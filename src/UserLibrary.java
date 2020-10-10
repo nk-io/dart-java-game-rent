@@ -30,13 +30,6 @@ abstract class UserLibrary {
         }
         return false;
     }
-
-
-    public boolean areThereAnyUsers(){
-        return userList.size() != 0;
-    }
-
-
     public String listAll(){
         if(userList.size() < 1){
             return null;
@@ -57,18 +50,6 @@ abstract class UserLibrary {
             }
         }
         return null;
-    }
-
-    // Updates user by removing old user object -> new updated user
-    public boolean updateUser(User user) {
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getID().equals(user.getID())) {
-                userList.remove(i);
-                userList.add(user);
-                return true;
-            }
-        }
-        return false;
     }
 
 

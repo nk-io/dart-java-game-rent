@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Item {
 
     private String ID;
@@ -12,8 +14,8 @@ public class Item {
         this.title = title;
         this.dailyRentFee = dailyRentFee;
         this.rentStatus = "Available";
-        averageRating=0;
-        numOfRatings=0;
+        averageRating = 0;
+        numOfRatings = 0;
     }
 
     public String getID() {

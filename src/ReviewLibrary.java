@@ -27,8 +27,7 @@ public class ReviewLibrary {
         ArrayList<Review> reviewsOfCurrentItem = findAllReviewsOfItem(itemID);
         if(reviewsOfCurrentItem.size() == 0){
             return "This item does not have any reviews! ";
-        }
-        else{
+        } else{
             StringBuilder builder = new StringBuilder();
             for(int i=0; i<reviewsOfCurrentItem.size(); i++){
                 builder.append("Review "+ (i+1) + " ");
