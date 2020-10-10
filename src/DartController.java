@@ -132,7 +132,8 @@ public class DartController {
                             "5. View rent frequency of all items\n"+
                             "6. View the best customer\n"+
                             "7. Show total rent profits\n"+
-                            "8. Return to Main Menu\n";
+                            "8. Show all rent transactions\n"+
+                            "9. Return to Main Menu\n";
 
             managerMenuOption = InputClass.askIntInput(managerMenuMessage);
             switch (managerMenuOption) {
@@ -142,11 +143,12 @@ public class DartController {
                 case 4 -> System.out.println("Feature coming soon...");
                 case 5 -> System.out.println("Feature coming soon...");
                 case 6 -> System.out.println("Feature coming soon...");
-                case 7 -> System.out.println("Feature coming soon...");
-                case 8 -> System.out.println("Returning to Main Menu...");
+                case 7 -> userInterface.showTotalRentProfit();
+                case 8 -> userInterface.showRentHistory();
+                case 9 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid Input! Please try again!");
             }
-        } while(!(managerMenuOption == 8));
+        } while(!(managerMenuOption == 9));
 
     }
     // Prints the employee menu and asks for integer input
@@ -182,7 +184,7 @@ public class DartController {
                 case 5 -> userInterface.registerCustomer();
                 case 6 -> userInterface.removeCustomer();
                 case 7 -> System.out.println("Feature coming soon...");
-                case 8 -> System.out.println(totalRentProfit);
+                case 8 -> userInterface.showTotalRentProfit();
                 case 9 -> userInterface.listAllGames();
                 case 10 -> userInterface.listAllAlbums();
                 case 11 -> userInterface.listAllCustomers();

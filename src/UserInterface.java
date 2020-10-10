@@ -260,6 +260,22 @@ public class UserInterface {
         }
     }
 
+    public void showTotalRentProfit(){
+        double totalRentProfit = rentHistoryLibrary.calculateTotalProfit();
+        System.out.println("Total rent profit for all items rented: " + totalRentProfit + "SEK");
+    }
+
+    public void showRentHistory(){
+        System.out.println("List of rent history transactions: ");
+        System.out.println(rentHistoryLibrary.showAllRentHistory());
+    }
+
+    public void xd(){
+    rentHistoryLibrary.getMostProfitableItem();
+
+
+    }
+
 
 
 

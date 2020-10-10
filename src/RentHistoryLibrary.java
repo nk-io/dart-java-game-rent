@@ -14,14 +14,25 @@ public class RentHistoryLibrary {
     public String showAllRentHistory() {
 
         if (rentHistoryList.size() == 0) {
-            return "There are no records available";
+            return "There are no transactions available.";
         } else {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < rentHistoryList.size(); i++) {
+                builder.append("Transaction "+ (i+1) + ": ");
+                builder.append("\n");
                 builder.append(rentHistoryList.get(i).toString());
+
             }
             return builder.toString();
         }
+    }
+
+    public double calculateTotalProfit(){
+        double totalRentProfit = 0.0;
+        for(int i = 0; i < rentHistoryList.size(); i++){
+            totalRentProfit = totalRentProfit + rentHistoryList.get(i).getRentExpense();
+        }
+        return totalRentProfit;
     }
 
     public String getMostProfitableItem() {
