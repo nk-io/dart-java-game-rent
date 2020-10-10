@@ -32,10 +32,10 @@ public class RentHistoryLibrary {
     }
 
     public String showRentFrequency(){
-        ArrayList<String> IDS = new ArrayList<String>();
         if(rentHistoryList.size() == 0){
             return "No items have ever been rented.";
         } else{
+            ArrayList<String> IDS = new ArrayList<String>();
             StringBuilder builder = new StringBuilder();
             for(int i = 0; i < rentHistoryList.size();i++){
                 IDS.add(rentHistoryList.get(i).getItemID());
@@ -49,11 +49,66 @@ public class RentHistoryLibrary {
         }
     }
 
+ public int checkFrequencyOfID(String ItemID){
+      int frequency = 0;
+     ArrayList<String> IDS = new ArrayList<String>();
+     for(int i = 0; i < rentHistoryList.size();i++){
+         IDS.add(rentHistoryList.get(i).getItemID());
+     }
+     Set<String> IDSet = new HashSet<String>(IDS);
+     for (String id : IDSet) {
+         if(ItemID.equals(id)){
+             frequency = Collections.frequency(IDS, id);
+         }
+     }
+     return frequency;
+ }
+
+    /*
+
+    	System.out.println("\nExample 3 - Count all with Map");
+	Map<String, Integer> map = new HashMap<String, Integer>();
+
+	for (String temp : list) {
+		Integer count = map.get(temp);
+		map.put(temp, (count == null) ? 1 : count + 1);
+	}
+	printMap(map);
+
+
+     */
+
 
     public String getMostProfitableItem() {
-        HashMap<String, Double> itemProfits = new HashMap<String, Double>();
+        Map<String, Double> itemProfits = new HashMap<String, Double>();
+        if(rentHistoryList.size() == 0){
+            return "No items have ever been rented so there is no most profitable item.";
+        } else{
+            double currentMax;
+            for(int i = 0; i < rentHistoryList.size(); i++){
+                itemProfits.put(rentHistoryList.get(i).getItemID(), rentHistoryList.get(i).getRentExpense());
+            }
+            for(String id: itemProfits.keySet()){
+               System.out.println("Total profit for id" + getAllSameIDProfit(id));
+            }
 
-        for(int i = 0; i < rentHistoryList.size();i++){
+
+        }
+        return "something";
+    }
+
+    public double getAllSameIDProfit(String itemID){
+        double totalProfit = 0;
+        for(int i= 0; i < rentHistoryList.size();i++ ){
+            if(rentHistoryList.get(i).getItemID().equals(itemID)){
+                totalProfit = totalProfit + rentHistoryList.get(i).getRentExpense();
+            }
+        }
+        return totalProfit;
+    }
+
+
+  /*      for(int i = 0; i < rentHistoryList.size();i++){
                 if (!itemProfits.containsKey(rentHistoryList.get(i).getItemID())) {
                     itemProfits.put(rentHistoryList.get(i).getItemID(), rentHistoryList.get(i).getRentExpense());
                 } else {
@@ -74,8 +129,7 @@ public class RentHistoryLibrary {
                     idToReturn = (String)me.getKey();
                 }
             }
-
         return idToReturn;
 
-    }
+    }*/
 }

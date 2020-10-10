@@ -279,6 +279,10 @@ public class UserInterface {
     System.out.println("Most profitable item: " + rentHistoryLibrary.getMostProfitableItem());
     }
 
+    public void showBestCustomer(){
+       // System.out.println("Most profitable item: " + rentHistoryLibrary.getBestCustomer());
+    }
+
 
 
 
