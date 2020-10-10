@@ -15,6 +15,7 @@ public class Game extends Item {
                 ", Title: '" + getTitle() + '\'' +
                 ", Genre: '" + getGenre() + '\'' +
                 ", Daily rent fee: " + getDailyRentFee() +
-                " SEK. Rent status: " + getRentStatus() + ".";
+                " SEK. Rent status: " + getRentStatus() +
+                ", Average rating: "+ getAverageRating() + "\n";
     }
 }

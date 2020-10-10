@@ -95,10 +95,9 @@ abstract class ItemLibrary {
         return rentFee *  (1 - customer.getDiscount());
     }
 
-    public String sortedItems(ArrayList <Item> item){
+    public ArrayList<Item> sortedItems(ArrayList <Item> item){
         ArrayList<Item> temp = new ArrayList<>();
         temp = (ArrayList) item.clone();
-
         temp.sort(Collections.reverseOrder(new Comparator<Item>() {
 
             @Override
@@ -110,7 +109,7 @@ abstract class ItemLibrary {
                 return 0;
             }
         }));
-        return temp.toString();
+        return temp;
     }
 
 }
