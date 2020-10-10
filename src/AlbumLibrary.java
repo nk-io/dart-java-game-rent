@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class AlbumLibrary extends ItemLibrary {
 
     public Album registerAlbum(String title, String artist, int year, double dailyRentFee) {
@@ -8,19 +10,23 @@ public class AlbumLibrary extends ItemLibrary {
     }
 
     public String searchByYear(int year) {
-        int counter = 0;
-        StringBuilder builder = new StringBuilder();
+        ArrayList<Item> subList = new ArrayList<>();
         for (int i = 0; i < getItems().size(); i++) {
             Album currentAlbum = (Album) getItems().get(i);
             if (year == currentAlbum.getYear()) {
-                builder.append(currentAlbum.toString());
-                builder.append("\n");
-                counter++;
+                subList.add(currentAlbum);
             }
         }
-        if (counter == 0) {
+        if (subList.size() == 0) {
             return "There are no registered albums released in the given year.";
         } else {
+            subList = sortedItems(subList);
+            StringBuilder builder = new StringBuilder();
+            builder.append("Albums are sorted by average ratings\n");
+            for(int i=0; i<subList.size(); i++){
+                builder.append(subList.get(i).toString());
+
+            }
             return builder.toString();
         }
     }

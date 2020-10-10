@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class UserInterface {
 
     private GameLibrary gameLibrary;
@@ -242,21 +244,6 @@ public class UserInterface {
             int yearToSearch = InputClass.askIntInput("Please enter the year you are looking for: ");
             String albumsByYear = albumLibrary.searchByYear(yearToSearch);
             System.out.println(albumsByYear);
-        }
-    }
-
-    public void sortItems() {
-        String sortCheck = InputClass.askStringInput("What item would you like to see sorted? Type G for games, or A for albums.");
-        while (!sortCheck.equalsIgnoreCase("G") && !sortCheck.equalsIgnoreCase("A")) {
-            sortCheck = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!");
-        }
-        if (sortCheck.equalsIgnoreCase("G")) {
-            String sortedGames = gameLibrary.sortedItems(gameLibrary.getItems());
-            System.out.println(sortedGames);
-
-        } else if (sortCheck.equalsIgnoreCase("A")) {
-            String sortedAlbums = albumLibrary.sortedItems(albumLibrary.getItems());
-            System.out.println(sortedAlbums);
         }
     }
 

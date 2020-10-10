@@ -92,10 +92,9 @@ abstract class ItemLibrary {
     }
 
 
-    public String sortedItems(ArrayList <Item> item){
+    public ArrayList<Item> sortedItems(ArrayList <Item> item){
         ArrayList<Item> temp = new ArrayList<>();
         temp = (ArrayList) item.clone();
-
         temp.sort(Collections.reverseOrder(new Comparator<Item>() {
 
             @Override
@@ -107,7 +106,7 @@ abstract class ItemLibrary {
                 return 0;
             }
         }));
-        return temp.toString();
+        return temp;
     }
 
 }

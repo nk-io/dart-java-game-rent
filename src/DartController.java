@@ -241,29 +241,15 @@ public class DartController {
         employeeLibrary.registerEmployee("testEmployee2", "emp2", 1994, "address2", 20000);
         customerLibrary.registerCustomer("testCustomer1", "cust1");
         customerLibrary.registerCustomer("testCustomer2", "cust2");
-        gameLibrary.registerGame("testGame","testGenre", 300);
-        gameLibrary.registerGame("testGame2","testGenre2", 350);
-        gameLibrary.registerGame("testGame3","testGenre3", 150);
-        albumLibrary.registerAlbum("testTitle","Test Artist", 2012,200);
-        albumLibrary.registerAlbum("testTitle2","Test Artist2", 2014,300);
-        albumLibrary.registerAlbum("testTitle3","Test Artist3", 2016,15);
+        Game game1 = gameLibrary.registerGame("testGame","testGenre", 300);
+        Game game2 =gameLibrary.registerGame("testGame2","testGenre", 350);
+        Game game3 =gameLibrary.registerGame("testGame3","testGenre", 150);
+        Album album1 = albumLibrary.registerAlbum("testTitle","Test Artist", 2012,200);
+        Album album2 = albumLibrary.registerAlbum("testTitle2","Test Artist2", 2012,300);
+        Album album3 = albumLibrary.registerAlbum("testTitle3","Test Artist3", 2012,15);
         userInterface.listAllManagers();
         userInterface.listAllEmployees();
         userInterface.listAllCustomers();
 
     }
-
-
-    //search of an user in given arraylist
-    //if finds it return the user reference
-    //else return null
-    public static User searchUserInList(ArrayList<User> list, String inputID){
-        for(int i=0; i< list.size(); i++){
-            if(list.get(i).checkID(inputID)){
-                return list.get(i);
-            }
-        }
-        return null;
-    }
-
 }

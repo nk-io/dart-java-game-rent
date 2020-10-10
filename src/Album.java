@@ -22,6 +22,7 @@ public class Album extends Item{
                 " - by '" + getArtist() + "'." +
                 " Released in " + getYear() +
                 ". daily rent fee: " + getDailyRentFee() +
-                " SEK. Rent status: " + getDailyRentFee() + ".";
+                " SEK. Rent status: " + getRentStatus() +
+                " Average rating: " + getAverageRating() + "\n";
     }
 }
