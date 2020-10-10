@@ -91,6 +91,9 @@ abstract class ItemLibrary {
         }
     }
 
+    public double rentFee(Customer customer, double rentFee){
+        return rentFee *  (1 - customer.getDiscount());
+    }
 
     public String sortedItems(ArrayList <Item> item){
         ArrayList<Item> temp = new ArrayList<>();

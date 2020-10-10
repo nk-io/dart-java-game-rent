@@ -91,24 +91,20 @@ public class UserInterface {
     }
 
 
-
-
     public Customer rentGame(Customer customer){
-        if (customer.getTotalRentedItems() < customer.getMembership().getRentalLimit()) {
+        if (customer.getNumOfCurrentRentedItems() < customer.getMembership().getRentalLimit()) {
             listAllGames();
             String idToRent = InputClass.askStringInput("Enter item id of the game you want to rent: ");
-            boolean rented = gameLibrary.rentItem(idToRent);
-            if (rented) {
-                RentalRecord record = new RentalRecord(customer.getID(), idToRent);
-                customer.addRecord(record);
+            if (gameLibrary.rentItem(idToRent)) {
                 customerLibrary.updateUser(customer);
+                customer.addToNumOfCurrentRentedItems();
                 System.out.println("The game with id: " + idToRent + " has been rented successfully!");
             } else {
                 System.out.println("The game with id: " + idToRent + " is already rented or not found.");
             }
         } else {
             System.out.println("Rental limit exceeded! You're currently renting " +
-                    customer.getTotalRentedItems() + " items out of " +
+                    customer.getNumOfCurrentRentedItems() + " items out of " +
                     customer.getMembership().getRentalLimit());
         }
         return customer;
@@ -116,21 +112,19 @@ public class UserInterface {
 
 
     public Customer rentAlbum(Customer customer){
-        if (customer.getTotalRentedItems() < customer.getMembership().getRentalLimit()) {
+        if (customer.getNumOfCurrentRentedItems() < customer.getMembership().getRentalLimit()) {
             listAllAlbums();
             String idToRent = InputClass.askStringInput("Enter item id of the album you want to rent: ");
-            boolean rented = albumLibrary.rentItem(idToRent);
-            if (rented) {
-                RentalRecord record = new RentalRecord(customer.getID(), idToRent);
-                customer.addRecord(record);
+            if (albumLibrary.rentItem(idToRent)) {
                 customerLibrary.updateUser(customer);
                 System.out.println("The album with id: " + idToRent + " has been rented successfully!");
+                customer.addToNumOfCurrentRentedItems();
             } else {
                 System.out.println("The album with id: " + idToRent + " is already rented or not found.");
             }
         } else {
             System.out.println("Rental limit exceeded! You're currently renting " +
-                    customer.getTotalRentedItems() + " items out of " +
+                    customer.getNumOfCurrentRentedItems() + " items out of " +
                     customer.getMembership().getRentalLimit());
         }
         return customer;
@@ -146,23 +140,19 @@ public class UserInterface {
             while (daysRented < 0) {
                 daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
             }
-            gameLibrary.returnItem(idToReturn, daysRented);
-            double rentExpense = daysRented * isIDRight.getDailyRentFee();
-            rentExpense = rentExpense - rentExpense * customer.getDiscount();
-
+            double rentExpense = gameLibrary.rentFee(customer, gameLibrary.returnItem(idToReturn, daysRented));
             System.out.println("The total fee is: " + rentExpense + " SEK.");
             System.out.println("The game has been successfully returned. ");
             giveRating(isIDRight, customer);
             RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
             rentHistoryLibrary.addRentHistory(newTransaction);
+            customer.subFromNumOfCurrentRentedItems();
         } else {
             System.out.println("Game with ID: " + idToReturn + " was not found or is not rented. ");
         }
 
         return customer;
     }
-
-
 
 
     public Customer returnAlbum(Customer customer){
@@ -174,14 +164,13 @@ public class UserInterface {
             while (daysRented < 0) {
                 daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
             }
-            albumLibrary.returnItem(idToReturn, daysRented);
-            double rentExpense = daysRented * isIDRight.getDailyRentFee();
-            rentExpense = rentExpense - rentExpense * customer.getDiscount();
+            double rentExpense = albumLibrary.rentFee(customer , albumLibrary.returnItem(idToReturn, daysRented));
             System.out.println("The total fee is: " + rentExpense + " SEK.");
             giveRating(isIDRight, customer);
             System.out.println("The album has been successfully returned. ");
             RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
             rentHistoryLibrary.addRentHistory(newTransaction);
+            customer.subFromNumOfCurrentRentedItems();
         } else {
             System.out.println("Album with ID: " + idToReturn + " was not found or is not rented. ");
         }

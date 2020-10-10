@@ -1,6 +1,7 @@
 import java.time.LocalDateTime;
 
 public class RentalRecord {
+    /*
     String userID;
     String itemID;
     int storeCredits = 0;
@@ -52,4 +53,6 @@ public class RentalRecord {
     public void setStoreCredits(int storeCredits) {
         this.storeCredits = storeCredits;
     }
+
+     */
 }

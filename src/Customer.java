@@ -10,13 +10,17 @@ import java.util.ArrayList;
 public class Customer extends User {
     private Membership membership = Membership.NONE;
     private int storeCredits = 0;
-    private ArrayList<RentalRecord> records = new ArrayList<>();
+    //private ArrayList<RentalRecord> records = new ArrayList<>();
+    private int numOfCurrentRentedItems = 0;
 
     Customer(String name, String password){
         super(name,password);
     }
 
     // Getters
+    public int getNumOfCurrentRentedItems(){
+        return numOfCurrentRentedItems;
+    }
     public Membership getMembership() {
         return membership;
     }
@@ -29,6 +33,12 @@ public class Customer extends User {
     public void setMembership(Membership membership) {
         this.membership = membership;
     }
+    public void addToNumOfCurrentRentedItems(){
+        this.numOfCurrentRentedItems  += 1;
+    }
+    public void subFromNumOfCurrentRentedItems(){
+        this.numOfCurrentRentedItems -= 1;
+    }
 
     public boolean hasEnoughCreditsToRent() {
         if (this.storeCredits >= 5) {
@@ -36,6 +46,8 @@ public class Customer extends User {
         }
         return false;
     }
+
+
 
 
     public void incrementStoreCredits() {
@@ -47,7 +59,7 @@ public class Customer extends User {
             this.storeCredits = this.storeCredits - 5;
         }
     }
-
+/*
     public void addRecord(RentalRecord record) {
         records.add(record);
     }
@@ -56,15 +68,6 @@ public class Customer extends User {
         return records;
     }
 
-    public int getTotalRentedItems() {
-        int totalItems = 0;
-        for (RentalRecord record: records) {
-            if (record.getReturnDate() == null) {
-                totalItems = totalItems + 1;
-            }
-        }
-        return totalItems;
-    }
 
     public void showRentalRecords() {
         for (RentalRecord record: records) {
@@ -90,4 +93,6 @@ public class Customer extends User {
         }
         return null;
     }
+
+ */
 }
