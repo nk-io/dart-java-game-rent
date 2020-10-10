@@ -91,15 +91,27 @@ public class UserInterface {
     }
 
 
+
+
     public Customer rentGame(Customer customer){
-        listAllGames();
-        String idToRent = InputClass.askStringInput("Enter item id of the game you want to rent: ");
-        boolean rented = gameLibrary.rentItem(idToRent);
-        if (rented){
-            System.out.println("The game with id: " + idToRent + " has been rented successfully!");
+        if (customer.getTotalRentedItems() < customer.getMembership().getRentalLimit()) {
+            listAllGames();
+            String idToRent = InputClass.askStringInput("Enter item id of the game you want to rent: ");
+            boolean rented = gameLibrary.rentItem(idToRent);
+            if (rented) {
+                RentalRecord record = new RentalRecord(customer.getID(), idToRent);
+                customer.addRecord(record);
+                customerLibrary.updateUser(customer);
+                System.out.println("The game with id: " + idToRent + " has been rented successfully!");
+            } else {
+                System.out.println("The game with id: " + idToRent + " is already rented or not found.");
+            }
         } else {
-            System.out.println("The game with id: " + idToRent + " is already rented or not found.");
+            System.out.println("Rental limit exceeded! You're currently renting " +
+                    customer.getTotalRentedItems() + " items out of " +
+                    customer.getMembership().getRentalLimit());
         }
+        return customer;
     }
 
 
@@ -146,6 +158,8 @@ public class UserInterface {
         } else {
             System.out.println("Game with ID: " + idToReturn + " was not found or is not rented. ");
         }
+
+        return customer;
     }
 
 
@@ -171,6 +185,7 @@ public class UserInterface {
         } else {
             System.out.println("Album with ID: " + idToReturn + " was not found or is not rented. ");
         }
+        return customer;
     }
 
     // needed to change this for 11.1 return behaviors
@@ -196,7 +211,6 @@ public class UserInterface {
             }
         }
     }
-
 
     private void giveRatingScore(Item returnedItem) {
             int userRating = InputClass.askIntInput("Please enter your rating (a number between 0 and 5): ");
