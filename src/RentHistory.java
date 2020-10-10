@@ -18,6 +18,10 @@ public class RentHistory {
         return this.item.getID();
     }
 
+    public String getCustomerID(){
+        return this.customer.getID();
+    }
+
     public double getRentExpense(){
         return this.rentExpense;
     }

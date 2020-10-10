@@ -280,7 +280,7 @@ public class UserInterface {
     }
 
     public void showBestCustomer(){
-       // System.out.println("Most profitable item: " + rentHistoryLibrary.getBestCustomer());
+       System.out.println("Best customer: " + rentHistoryLibrary.getBestCustomer());
     }
 
 

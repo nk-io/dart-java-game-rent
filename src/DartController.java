@@ -141,7 +141,7 @@ public class DartController {
                 case 3 -> userInterface.removeEmployee();
                 case 4 -> userInterface.showMostProfitableItem();
                 case 5 -> userInterface.listRentFrequency();
-                case 6 -> System.out.println("Feature coming soon...");
+                case 6 -> userInterface.showBestCustomer();
                 case 7 -> userInterface.showTotalRentProfit();
                 case 8 -> userInterface.listRentTransactions();
                 case 9 -> System.out.println("Returning to Main Menu...");
