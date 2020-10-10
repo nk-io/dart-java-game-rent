@@ -84,17 +84,22 @@ public class RentHistoryLibrary {
         if(rentHistoryList.size() == 0){
             return "No items have ever been rented so there is no most profitable item.";
         } else{
-            double currentMax;
+            double currentMax = 0;
+            String currentID = "";
             for(int i = 0; i < rentHistoryList.size(); i++){
                 itemProfits.put(rentHistoryList.get(i).getItemID(), rentHistoryList.get(i).getRentExpense());
             }
             for(String id: itemProfits.keySet()){
-               System.out.println("Total profit for id" + getAllSameIDProfit(id));
+               System.out.println("Total profit for id: " + id + getAllSameIDProfit(id));
+               if(getAllSameIDProfit(id) > currentMax){
+                currentMax = getAllSameIDProfit(id);
+                currentID = id;
+               }
             }
+            return currentID;
 
 
         }
-        return "something";
     }
 
     public double getAllSameIDProfit(String itemID){
@@ -107,29 +112,4 @@ public class RentHistoryLibrary {
         return totalProfit;
     }
 
-
-  /*      for(int i = 0; i < rentHistoryList.size();i++){
-                if (!itemProfits.containsKey(rentHistoryList.get(i).getItemID())) {
-                    itemProfits.put(rentHistoryList.get(i).getItemID(), rentHistoryList.get(i).getRentExpense());
-                } else {
-                    double newTotalExpense = itemProfits.get(rentHistoryList.get(i).getItemID()) + rentHistoryList.get(i).getRentExpense();
-                    itemProfits.put(rentHistoryList.get(i).getItemID(), newTotalExpense);
-                }
-            }
-
-        String idToReturn = "";
-        double currentMax = 0;
-        Set entrySet = itemProfits.entrySet();
-
-        Iterator it = entrySet.iterator();
-        while(it.hasNext()){
-                Map.Entry me = (Map.Entry)it.next();
-                if(me.getValue().equals(currentMax)){
-                    currentMax = (double)me.getValue();
-                    idToReturn = (String)me.getKey();
-                }
-            }
-        return idToReturn;
-
-    }*/
 }
