@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 // Change Log for Milestone 2
@@ -41,15 +42,6 @@ public class Customer extends User {
         currentRentedItemsByCustomer.remove(item);
     }
 
-    public void addCredits(){
-        if (getMembership() == Membership.SILVER){
-            storeCredits += 1;
-        } else if (getMembership() == Membership.GOLD){
-            storeCredits += 2;
-        } else if (getMembership() == Membership.PLATINUM){
-            storeCredits += 3;
-        }
-    }
     public String getCurrentRentedGamesByCustomer(){
         StringBuilder builder = new StringBuilder();
         for(int i=0; i< currentRentedItemsByCustomer.size(); i++){
@@ -77,20 +69,19 @@ public class Customer extends User {
         return false;
     }
 
-    /*
-    public boolean hasEnoughCreditsToRent() {
-        if (this.storeCredits >= 5) {
-            return true;
+
+    public ArrayList getItemsIDs(){
+        ArrayList itemsId = new ArrayList();
+        for(int i=0; i< currentRentedItemsByCustomer.size(); i++){
+            itemsId.add(currentRentedItemsByCustomer.get(i).getID());
         }
-        return false;
+        return itemsId;
     }
 
 
     public void incrementStoreCredits() {
         this.storeCredits = this.storeCredits + this.membership.getStoreCredits();
     }
-
- */
 
     public void decrementStoreCredits() {
         this.storeCredits = this.storeCredits - 5;

@@ -40,11 +40,10 @@ public class UserInterface {
     public void removeGame(){
         listAllGames();
         String idToRemove = InputClass.askStringInput("Please enter the ID of the game you want to remove: ");
-        boolean removed = gameLibrary.removeItem(idToRemove);
-        if (removed){
+        if (gameLibrary.isItAvailable(idToRemove) && gameLibrary.removeItem(idToRemove)){
             System.out.println("The game with id " + idToRemove + " has been removed!");
         } else {
-            System.out.println("The  game with id: " + idToRemove + " not found.");
+            System.out.println("The game with id: " + idToRemove + " not found or rented.");
         }
     }
 
@@ -74,11 +73,10 @@ public class UserInterface {
     public void removeAlbum(){
         listAllAlbums();
         String idToRemove = InputClass.askStringInput("Please enter the ID of the album you want to remove: ");
-        boolean removed = albumLibrary.removeItem(idToRemove);
-        if (removed){
+        if (albumLibrary.isItAvailable(idToRemove) && albumLibrary.removeItem(idToRemove)) {
             System.out.println("The album with id " + idToRemove + " has been removed!");
         } else {
-            System.out.println("The  album with id: " + idToRemove + " not found.");
+            System.out.println("The  album with id: " + idToRemove + " not found or rented.");
         }
     }
 
@@ -193,6 +191,17 @@ public class UserInterface {
 
     }
 
+
+    public void returnItems(String idToReturn , Customer customer){
+        int daysRented = 0;
+        try {
+            albumLibrary.returnItem(idToReturn, daysRented, customer);
+        } catch (Exception e) { }
+        try {
+            gameLibrary.returnItem(idToReturn, daysRented, customer);
+        } catch (Exception e){ }
+    }
+
     // needed to change this for 11.1 return behaviors
     // should work the same
 
@@ -243,8 +252,6 @@ public class UserInterface {
             String genreToSearch = InputClass.askStringInput("Please enter the genre you are looking for: ");
             String gamesWithGenre = gameLibrary.searchByGenre(genreToSearch);
             System.out.println(gamesWithGenre);
-
-
         } else if(itemCheck.equalsIgnoreCase("A")){
             int yearToSearch = InputClass.askIntInput("Please enter the year you are looking for: ");
             String albumsByYear = albumLibrary.searchByYear(yearToSearch);
@@ -302,9 +309,16 @@ public class UserInterface {
     public void removeCustomer(){
         listAllCustomers();
         String idToRemove = InputClass.askStringInput("Please enter the ID of the customer to remove: ");
+        Customer customer = (Customer) customerLibrary.doesUserExist(idToRemove);
+        ArrayList items = customer.getItemsIDs();
+        if (items != null){
+            for (int i = 0; i < items.size(); i++){
+                returnItems(items.get(i).toString(), customer);
+            }
+        }
         boolean removed = customerLibrary.removeUser(idToRemove);
         if (removed){
-            System.out.println("Customer with ID" + idToRemove + " has been removed!");
+            System.out.println("Customer with ID: " + idToRemove + " has been removed!");
         } else {
             System.out.println("Customer with id: " + idToRemove + " not found.");
         }
