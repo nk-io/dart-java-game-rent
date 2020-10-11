@@ -270,7 +270,8 @@ public class UserInterface {
     }
 
     public void showBestCustomer(){
-       System.out.println("Best customer: " + rentHistoryLibrary.getBestCustomer());
+        String bestCustomerID =rentHistoryLibrary.getBestCustomer();
+       System.out.println("Best customer: " + "id:" + bestCustomerID + " name: " + customerLibrary.getName(bestCustomerID));
     }
 
 //--------------------------------------------People
