@@ -318,17 +318,26 @@ public class UserInterface {
             optionsCounter += 1;
             System.out.println(optionsCounter + ". Return to Employee Menu.");
 
-            int option = InputClass.askIntInput("Please select the customer you wish to upgrade or return to the previous menu: ");
+            int option = InputClass.askIntInput("Please select the customer you wish to interact with, or return to the previous menu: ");
             if (option == optionsCounter) { return;}
             else if (option > 0 && option <= customersToUpgrade.size()) {
                 Customer customer = customersToUpgrade.get(option - 1);
-                switch(customer.getMembership()){
-                    case NONE -> customer.setMembership(Membership.SILVER);
-                    case SILVER -> customer.setMembership(Membership.GOLD);
-                    case GOLD -> customer.setMembership(Membership.PLATINUM);
+                int approveOption = InputClass.askIntInput("Do you wish to approve or reject the membership request? \n1. Approve\n2. Reject");
+                if (approveOption == 1) {
+
+                    switch (customer.getMembership()) {
+                        case NONE -> customer.setMembership(Membership.SILVER);
+                        case SILVER -> customer.setMembership(Membership.GOLD);
+                        case GOLD -> customer.setMembership(Membership.PLATINUM);
+                    }
+                    customer.setUpgradeRequest(false);
+                    System.out.println("The customer " + customer.getID() + " has been upgraded to " + customer.getMembership().toString() + " membership!");
                 }
-                customer.setUpgradeRequest(false);
-                System.out.println("The customer " + customer.getID() + " has been upgraded to " + customer.getMembership().toString() + " membership!");
+                else if (approveOption == 2){
+                    System.out.println("This membership request has been rejected.");
+                    customer.setUpgradeRequest(false);
+                } else { System.out.println("Invalid input.");
+                }
             } else {
                 System.out.println("Invalid input.");
             }
