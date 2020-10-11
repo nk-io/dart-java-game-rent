@@ -259,6 +259,36 @@ public class UserInterface {
         }
     }
 
+    public void viewByAverageRating(){
+        String itemCheck = InputClass.askStringInput("Select an item: Type G for games, or A for albums.");
+        while (!itemCheck.equalsIgnoreCase("G") && !itemCheck.equalsIgnoreCase("A")) {
+            itemCheck = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!");
+        }
+        if (itemCheck.equalsIgnoreCase("G")) {
+            ArrayList<Item> sortedGames = gameLibrary.sortedItems(gameLibrary.getItems());
+            for(Item game : sortedGames){
+                System.out.println(game);
+            }
+        } else if (itemCheck.equalsIgnoreCase("A")) {
+            ArrayList<Item> sortedAlbums = albumLibrary.sortedItems(albumLibrary.getItems());
+            for(Item album : sortedAlbums) {
+                System.out.println(album);
+            }
+        }
+    }
+    public void viewItemReviews(){
+        System.out.println("--- List of All Games ---");
+        listAllGames();
+        System.out.println("--- List of All Albums ---");
+        listAllAlbums();
+        String itemID = InputClass.askStringInput("Enter the ID of an item to see its reviews: ");
+        if (albumLibrary.doesItemExist(itemID) != null || gameLibrary.doesItemExist(itemID) != null){
+            String reviewList = reviewLibrary.showItemReviews(itemID);
+            System.out.println(reviewList);
+        } else {
+            System.out.println("There is no registered item with such an ID!");
+        }
+    }
 
     public void showTotalRentProfit(){
         System.out.println("Total rent profit for all items rented: " + rentHistoryLibrary.calculateTotalProfit() + "SEK");
@@ -274,18 +304,18 @@ public class UserInterface {
 
     public void showMostProfitableItem(){
         String itemID = rentHistoryLibrary.getMostProfitableItem();
-        Item itemInfo = null;
-        if(gameLibrary.doesItemExist(itemID) == null){
-            itemInfo = albumLibrary.doesItemExist((itemID));
-        } else{
-            itemInfo = gameLibrary.doesItemExist(itemID);
+        Item itemInfo;
+        if(itemID != null){
+            if(gameLibrary.doesItemExist(itemID) == null){
+                itemInfo = albumLibrary.doesItemExist(itemID);
+            } else{
+                itemInfo = gameLibrary.doesItemExist(itemID);
+            }
+            System.out.println("Most profitable item: " + itemInfo.toString() );
+        } else {
+            System.out.println("No items have been rented so there is no most profitable item");
         }
 
-        if(itemInfo == null){
-            System.out.println("No items have been rented so there is no most profitable item");
-        } else {
-            System.out.println("Most profitable item: " + itemInfo.toString() );
-        }
     }
 
     public void showBestCustomer(){
