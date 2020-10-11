@@ -76,7 +76,7 @@ abstract class ItemLibrary {
                             customer.decrementStoreCredits();
                         }
                         else{
-                            customer.incrementStoreCredits();
+                            customer.addCredits();
                             rentExpense = itemList.get(i).getDailyRentFee() * daysRented * (1-customer.getDiscount());
                         }
                         itemList.get(i).setAvailableToRent();

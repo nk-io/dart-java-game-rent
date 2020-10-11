@@ -68,7 +68,7 @@ public class RentHistoryLibrary {
 
     public String getMostProfitableItem() {
         if(rentHistoryList.size() == 0){
-            return "No items have ever been rented so there is no most profitable item.";
+            return null;
         } else{
             double currentMaxProfit = 0;
             String currentMaxID = "";
@@ -86,7 +86,7 @@ public class RentHistoryLibrary {
 
     public String getBestCustomer() {
         if(rentHistoryList.size() == 0){
-            return "No items have ever been rented so there is no best customer.";
+            return null;
         } else{
             double currentMaxProfit = 0;
             String currentMaxID = "";
