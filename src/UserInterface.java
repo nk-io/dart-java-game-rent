@@ -266,13 +266,13 @@ public class UserInterface {
     }
 
     public void showMostProfitableItem(){
-        String itemID =rentHistoryLibrary.getMostProfitableItem();
+        String itemID = rentHistoryLibrary.getMostProfitableItem();
         Item itemInfo;
         if(gameLibrary.doesItemExist(itemID) == null){
             itemInfo = albumLibrary.doesItemExist(itemID);
         } else{
             itemInfo = gameLibrary.doesItemExist(itemID);
-        };
+        }
         System.out.println("Most profitable item: " + itemInfo.toString() );
     }
 
