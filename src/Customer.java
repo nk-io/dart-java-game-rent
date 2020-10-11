@@ -4,15 +4,12 @@ import java.util.ArrayList;
 //Customer Menu and Customer classes have been merged
 //Methods are no longer statics
 //Some properties and methods have been inherited from parent User class
-//Added sendAMessage method for User Story 9.1
-//Added findAllMessagesOfCurrentCustomer and showCustomersMessages methods for User Story 9.2
-//Added deleteAMessage method for VG
 public class Customer extends User {
     private Membership membership = Membership.NONE;
     private int storeCredits = 0;
     private boolean upgradeRequest = false;
     //private ArrayList<RentalRecord> records = new ArrayList<>();
-    private int numOfCurrentRentedItems = 0;
+    private ArrayList<Item> currentRentedItemsByCustomer = new ArrayList<>();
 
     Customer(String name, String password){
         super(name,password);
@@ -21,7 +18,7 @@ public class Customer extends User {
     // Getters
     public boolean getUpgradeRequest() { return upgradeRequest; }
     public int getNumOfCurrentRentedItems(){
-        return numOfCurrentRentedItems;
+        return currentRentedItemsByCustomer.size();
     }
     public Membership getMembership() {
         return membership;
@@ -35,12 +32,13 @@ public class Customer extends User {
     public void setMembership(Membership membership) {
         this.membership = membership;
     }
-    public void addToNumOfCurrentRentedItems(){
-        this.numOfCurrentRentedItems  += 1;
+    public void addToCurrentRentedItemsByCustomer(Item item){
+        currentRentedItemsByCustomer.add(item);
     }
     public void setUpgradeRequest(boolean upgrade) { upgradeRequest = upgrade; }
-    public void subFromNumOfCurrentRentedItems(){
-        this.numOfCurrentRentedItems -= 1;
+
+    public void subFromCurrentRentedItemsByCustomer(Item item){
+        currentRentedItemsByCustomer.remove(item);
     }
 
     public void addCredits(){
@@ -53,6 +51,32 @@ public class Customer extends User {
         } else if (getMembership() == Membership.NONE){
             storeCredits += 5;
         }
+    }
+    public String getCurrentRentedGamesByCustomer(){
+        StringBuilder builder = new StringBuilder();
+        for(int i=0; i< currentRentedItemsByCustomer.size(); i++){
+            if(currentRentedItemsByCustomer.get(i) instanceof Game) {
+                builder.append(currentRentedItemsByCustomer.get(i).toString());
+            }
+        }
+        return builder.toString();
+    }
+    public String getCurrentRentedAlbumsByCustomer(){
+        StringBuilder builder = new StringBuilder();
+        for(int i=0; i< currentRentedItemsByCustomer.size(); i++){
+            if(currentRentedItemsByCustomer.get(i) instanceof Album) {
+                builder.append(currentRentedItemsByCustomer.get(i).toString());
+            }
+        }
+        return builder.toString();
+    }
+    public boolean checkIfTheItemRentedByCustomer(String itemID){
+        for(int i=0; i<currentRentedItemsByCustomer.size(); i++){
+            if(currentRentedItemsByCustomer.get(i).getID().equals(itemID)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /*
@@ -74,40 +98,4 @@ public class Customer extends User {
         this.storeCredits = this.storeCredits - 5;
     }
 
-/*
-    public void addRecord(RentalRecord record) {
-        records.add(record);
-    }
-
-    public ArrayList<RentalRecord> getRecords() {
-        return records;
-    }
-
-
-    public void showRentalRecords() {
-        for (RentalRecord record: records) {
-            String ID = record.itemID;
-            String userID = record.userID;
-            String rentDate = record.rentalDate.toString();
-            String returnDate = (record.getReturnDate() != null) ? record.getReturnDate().toString() : "Not returned yet.";
-            int credits = record.getStoreCredits();
-            System.out.println(
-                    "ID: " + ID + "\n" +
-                            "userID: " + userID + "\n" +
-                            "Rented on: " + rentDate + "\n" +
-                            "Returned on: " + returnDate + "\n" +
-                            "Credits earned: " + credits);
-        }
-    }
-
-    public RentalRecord findNonReturnedRecord(String itemId) {
-        for (RentalRecord record: records) {
-            if (record.getItemID().equals(itemId) && record.getReturnDate() == null) {
-                return record;
-            }
-        }
-        return null;
-    }
-
- */
 }

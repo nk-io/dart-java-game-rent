@@ -96,9 +96,7 @@ public class UserInterface {
         if (customer.getNumOfCurrentRentedItems() < customer.getMembership().getRentalLimit()) {
             listAllGames();
             String idToRent = InputClass.askStringInput("Enter item id of the game you want to rent: ");
-            if (gameLibrary.rentItem(idToRent)) {
-                customerLibrary.updateUser(customer);
-                customer.addToNumOfCurrentRentedItems();
+            if (gameLibrary.rentItem(idToRent, customer)) {
                 System.out.println("The game with id: " + idToRent + " has been rented successfully!");
             } else {
                 System.out.println("The game with id: " + idToRent + " is already rented or not found.");
@@ -115,10 +113,9 @@ public class UserInterface {
         if (customer.getNumOfCurrentRentedItems() < customer.getMembership().getRentalLimit()) {
             listAllAlbums();
             String idToRent = InputClass.askStringInput("Enter item id of the album you want to rent: ");
-            if (albumLibrary.rentItem(idToRent)) {
-                customerLibrary.updateUser(customer);
+            if (albumLibrary.rentItem(idToRent, customer)) {
                 System.out.println("The album with id: " + idToRent + " has been rented successfully!");
-                customer.addToNumOfCurrentRentedItems();
+
             } else {
                 System.out.println("The album with id: " + idToRent + " is already rented or not found.");
             }
@@ -131,60 +128,66 @@ public class UserInterface {
 
 
     public void returnGame(Customer customer){
-        listAllGames();
-        String idToReturn = InputClass.askStringInput("Please enter the ID of the game you want to return: ");
-        Game isIDRight = (Game) gameLibrary.doesItemExist(idToReturn);
-        if (isIDRight != null && !gameLibrary.isItAvailable(idToReturn)){
-            double rentExpense = 0;
-            int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ");
-            while (daysRented < 0) {
-                daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
-            }
-            if (customer.getStoreCredits() > 4) {
-                System.out.println("You have used 5 credits and rented the game for free.");
-                customer.decrementStoreCredits();
-            } else {
-                rentExpense = gameLibrary.rentFee(customer, gameLibrary.returnItem(idToReturn, daysRented));
-                System.out.println("The total fee is: " + rentExpense + " SEK.");
-                System.out.println("The game has been successfully returned. ");
-                customer.addCredits();
-            }
-            customer.subFromNumOfCurrentRentedItems();
-            giveRating(isIDRight, customer);
-            RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
-            rentHistoryLibrary.addRentHistory(newTransaction);
+        String customerItems = customer.getCurrentRentedGamesByCustomer();
+        if(customerItems.equals("")){
+            System.out.println("You have no game to return!");
         } else {
-            System.out.println("Game with ID: " + idToReturn + " was not found or is not rented. ");
+            System.out.println(customerItems);
+            String idToReturn = InputClass.askStringInput("Please enter the ID of the game you want to return: ");
+            Game isIDRight = (Game) gameLibrary.doesItemExist(idToReturn);
+            if (isIDRight != null && !gameLibrary.isItAvailable(idToReturn) && customer.checkIfTheItemRentedByCustomer(idToReturn)) {
+                double rentExpense = 0;
+                int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ");
+                while (daysRented < 0) {
+                    daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
+                }
+                if (customer.getStoreCredits() > 4) {
+                    System.out.println("You have used 5 credits and rented the game for free.");
+                } else {
+                    rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
+                    System.out.println("The total fee is: " + rentExpense + " SEK.");
+                    System.out.println("The game has been successfully returned. ");
+                }
+
+                giveRating(isIDRight, customer);
+                RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
+                rentHistoryLibrary.addRentHistory(newTransaction);
+            } else {
+                System.out.println("Game with ID: " + idToReturn + " was not found or is not rented by you. ");
+            }
         }
     }
 
 
     public void returnAlbum(Customer customer){
-        listAllAlbums();
-        String idToReturn = InputClass.askStringInput("Please enter the ID of the album you want to return: ");
-        Album isIDRight = (Album) albumLibrary.doesItemExist(idToReturn);
-        if (isIDRight != null && !albumLibrary.isItAvailable(idToReturn)){
-            double rentExpense = 0;
-            int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ");
-            while (daysRented < 0) {
-                daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
-            }
-            if (customer.getStoreCredits() > 4){
-                System.out.println("You have used 5 credits and rented the album for free.");
-                customer.decrementStoreCredits();
+        String customerItems = customer.getCurrentRentedAlbumsByCustomer();
+        if(customerItems.equals("")){
+            System.out.println("You have no album to return!");
+        } else{
+            System.out.println(customerItems);
+            String idToReturn = InputClass.askStringInput("Please enter the ID of the album you want to return: ");
+            Album isIDRight = (Album) albumLibrary.doesItemExist(idToReturn);
+            if (isIDRight != null && !albumLibrary.isItAvailable(idToReturn) && customer.checkIfTheItemRentedByCustomer(idToReturn)){
+                double rentExpense = 0;
+                int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ");
+                while (daysRented < 0) {
+                    daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
+                }
+                if (customer.getStoreCredits() > 4){
+                    System.out.println("You have used 5 credits and rented the album for free.");
+                } else {
+                    rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
+                    System.out.println("The total fee is: " + rentExpense + " SEK.");
+                    System.out.println("The album has been successfully returned. ");
+                };
+                giveRating(isIDRight, customer);
+                RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
+                rentHistoryLibrary.addRentHistory(newTransaction);
             } else {
-                rentExpense = albumLibrary.rentFee(customer , albumLibrary.returnItem(idToReturn, daysRented));
-                System.out.println("The total fee is: " + rentExpense + " SEK.");
-                System.out.println("The album has been successfully returned. ");
-                customer.addCredits();
+                System.out.println("Album with ID: " + idToReturn + " was not found or is not rented by you. ");
             }
-            customer.subFromNumOfCurrentRentedItems();
-            giveRating(isIDRight, customer);
-            RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
-            rentHistoryLibrary.addRentHistory(newTransaction);
-        } else {
-            System.out.println("Album with ID: " + idToReturn + " was not found or is not rented. ");
         }
+
     }
 
     // needed to change this for 11.1 return behaviors

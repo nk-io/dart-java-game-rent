@@ -237,8 +237,8 @@ public class DartController {
         managerLibrary.registerManager("testManager2", "man2");
         employeeLibrary.registerEmployee("testEmployee1", "emp1", 1995, "address1", 10000);
         employeeLibrary.registerEmployee("testEmployee2", "emp2", 1994, "address2", 20000);
-        customerLibrary.registerCustomer("testCustomer1", "cust1");
-        customerLibrary.registerCustomer("testCustomer2", "cust2");
+        Customer cust1 = customerLibrary.registerCustomer("testCustomer1", "cust1");
+        Customer cust2 = customerLibrary.registerCustomer("testCustomer2", "cust2");
         Game game1 = gameLibrary.registerGame("testGame","testGenre", 300);
         Game game2 =gameLibrary.registerGame("testGame2","testGenre", 350);
         Game game3 =gameLibrary.registerGame("testGame3","testGenre", 150);
