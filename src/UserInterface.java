@@ -142,6 +142,7 @@ public class UserInterface {
                     daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
                 }
                 if (customer.getStoreCredits() > 4) {
+                    rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
                     System.out.println("You have used 5 credits and rented the game for free.");
                 } else {
                     rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
@@ -175,6 +176,8 @@ public class UserInterface {
                 }
                 if (customer.getStoreCredits() > 4){
                     System.out.println("You have used 5 credits and rented the album for free.");
+                    rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
+
                 } else {
                     rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
                     System.out.println("The total fee is: " + rentExpense + " SEK.");

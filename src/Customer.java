@@ -48,8 +48,6 @@ public class Customer extends User {
             storeCredits += 2;
         } else if (getMembership() == Membership.PLATINUM){
             storeCredits += 3;
-        } else if (getMembership() == Membership.NONE){
-            storeCredits += 5;
         }
     }
     public String getCurrentRentedGamesByCustomer(){
