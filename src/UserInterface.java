@@ -304,18 +304,26 @@ public class UserInterface {
 
     public void showMostProfitableItem(){
         String itemID = rentHistoryLibrary.getMostProfitableItem();
-        Item itemInfo;
+        Item itemInfo = null;
         if(gameLibrary.doesItemExist(itemID) == null){
-            itemInfo = albumLibrary.doesItemExist(itemID);
         } else{
             itemInfo = gameLibrary.doesItemExist(itemID);
         }
-        System.out.println("Most profitable item: " + itemInfo.toString() );
+
+        if(itemInfo == null){
+            System.out.println("No items have been rented so there is no most profitable item");
+        } else {
+            System.out.println("Most profitable item: " + itemInfo.toString() );
+        }
     }
 
     public void showBestCustomer(){
         String bestCustomerID =rentHistoryLibrary.getBestCustomer();
-       System.out.println("Best customer: id: " + bestCustomerID + " name: " + customerLibrary.getName(bestCustomerID));
+        if(bestCustomerID == null){
+            System.out.println("No items has ever been rented so there is no best customer.");
+        } else{
+            System.out.println("Best customer: id: " + bestCustomerID + " name: " + customerLibrary.getName(bestCustomerID));
+        }
     }
 
 //--------------------------------------------People

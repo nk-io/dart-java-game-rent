@@ -51,24 +51,24 @@ public class RentHistoryLibrary {
     }
 
     public int checkFrequencyOfItemID(String ItemID){
-      int frequency = 0;
-     ArrayList<String> IDS = new ArrayList<String>();
-     for(int i = 0; i < rentHistoryList.size();i++){
-         IDS.add(rentHistoryList.get(i).getItemID());
-     }
-     Set<String> IDSet = new HashSet<String>(IDS);
+        int frequency = 0;
+        ArrayList<String> IDS = new ArrayList<String>();
+        for(int i = 0; i < rentHistoryList.size();i++){
+            IDS.add(rentHistoryList.get(i).getItemID());
+        }
+        Set<String> IDSet = new HashSet<String>(IDS);
         for (String id : IDSet) {
-         if(ItemID.equals(id)){
-             frequency = Collections.frequency(IDS, id);
-         }
-     }
-     return frequency;
+            if(ItemID.equals(id)){
+                frequency = Collections.frequency(IDS, id);
+            }
+        }
+        return frequency;
     }
 
 
     public String getMostProfitableItem() {
         if(rentHistoryList.size() == 0){
-            return "No items have ever been rented so there is no most profitable item.";
+            return null;
         } else{
             double currentMaxProfit = 0;
             String currentMaxID = "";
@@ -86,7 +86,7 @@ public class RentHistoryLibrary {
 
     public String getBestCustomer() {
         if(rentHistoryList.size() == 0){
-            return "No items have ever been rented so there is no best customer.";
+            return null;
         } else{
             double currentMaxProfit = 0;
             String currentMaxID = "";
