@@ -140,6 +140,7 @@ public class UserInterface {
                     daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
                 }
                 if (customer.getStoreCredits() > 4) {
+                    rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
                     System.out.println("You have used 5 credits and rented the game for free.");
                 } else {
                     rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
@@ -173,6 +174,8 @@ public class UserInterface {
                 }
                 if (customer.getStoreCredits() > 4){
                     System.out.println("You have used 5 credits and rented the album for free.");
+                    rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
+
                 } else {
                     rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
                     System.out.println("The total fee is: " + rentExpense + " SEK.");
@@ -305,7 +308,6 @@ public class UserInterface {
         }
     }
 
-
     public void listAllCustomers(){
         if (customerLibrary.listAll() != null){
             System.out.println(customerLibrary.listAll());
@@ -317,6 +319,62 @@ public class UserInterface {
 
     public void viewCredits(Customer customer){
         System.out.println("You have: " + customer.getStoreCredits() + " credits.");
+    }
+
+    public void upgradeCustomer(){
+        System.out.println("Pending customer upgrade requests:");
+        ArrayList<Customer> customersToUpgrade = new ArrayList<>();
+        int optionsCounter = 0;
+        for (User user: customerLibrary.getUsers()) {
+            Customer customer = (Customer) user;
+            if (customer.getUpgradeRequest() == true && customer.getMembership() != Membership.PLATINUM) {
+                optionsCounter += 1;
+                customersToUpgrade.add(customer);
+                System.out.println(optionsCounter + ". Customer ID: " + customer.getID() + " | Membership: " + customer.getMembership().toString());
+            }
+        }
+
+        if (customersToUpgrade.size() > 0) {
+            optionsCounter += 1;
+            System.out.println(optionsCounter + ". Return to Employee Menu.");
+
+            int option = InputClass.askIntInput("Please select the customer you wish to interact with, or return to the previous menu: ");
+            if (option == optionsCounter) { return;}
+            else if (option > 0 && option <= customersToUpgrade.size()) {
+                Customer customer = customersToUpgrade.get(option - 1);
+                int approveOption = InputClass.askIntInput("Do you wish to approve or reject the membership request? \n1. Approve\n2. Reject");
+                if (approveOption == 1) {
+
+                    switch (customer.getMembership()) {
+                        case NONE -> customer.setMembership(Membership.SILVER);
+                        case SILVER -> customer.setMembership(Membership.GOLD);
+                        case GOLD -> customer.setMembership(Membership.PLATINUM);
+                    }
+                    customer.setUpgradeRequest(false);
+                    System.out.println("The customer " + customer.getID() + " has been upgraded to " + customer.getMembership().toString() + " membership!");
+                }
+                else if (approveOption == 2){
+                    System.out.println("This membership request has been rejected.");
+                    customer.setUpgradeRequest(false);
+                } else { System.out.println("Invalid input.");
+                }
+            } else {
+                System.out.println("Invalid input.");
+            }
+        } else {
+            System.out.println("There are no currently pending customer upgrade requests.");
+        }
+    }
+
+    public void requestMembershipUpgrade(Customer customer) {
+        if (customer.getMembership() == Membership.PLATINUM) {
+            System.out.println("You have reached the maximum membership level and cannot be upgraded further!");
+        } else if (customer.getUpgradeRequest() == true) {
+            System.out.println("You have already requested to be upgraded! Your request is still being reviewed!");
+        } else {
+            customer.setUpgradeRequest(true);
+            System.out.println(("Your request to be upgraded has been submitted!"));
+        }
     }
 
 

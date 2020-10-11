@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Customer extends User {
     private Membership membership = Membership.NONE;
     private int storeCredits = 0;
+    private boolean upgradeRequest = false;
     //private ArrayList<RentalRecord> records = new ArrayList<>();
     private ArrayList<Item> currentRentedItemsByCustomer = new ArrayList<>();
 
@@ -16,6 +17,7 @@ public class Customer extends User {
     }
 
     // Getters
+    public boolean getUpgradeRequest() { return upgradeRequest; }
     public int getNumOfCurrentRentedItems(){
         return currentRentedItemsByCustomer.size();
     }
@@ -34,22 +36,12 @@ public class Customer extends User {
     public void addToCurrentRentedItemsByCustomer(Item item){
         currentRentedItemsByCustomer.add(item);
     }
+    public void setUpgradeRequest(boolean upgrade) { upgradeRequest = upgrade; }
 
     public void subFromCurrentRentedItemsByCustomer(Item item){
         currentRentedItemsByCustomer.remove(item);
     }
 
-    public void addCredits(){
-        if (getMembership() == Membership.SILVER){
-            storeCredits += 1;
-        } else if (getMembership() == Membership.GOLD){
-            storeCredits += 2;
-        } else if (getMembership() == Membership.PLATINUM){
-            storeCredits += 3;
-        } else if (getMembership() == Membership.NONE){
-            storeCredits += 5;
-        }
-    }
     public String getCurrentRentedGamesByCustomer(){
         StringBuilder builder = new StringBuilder();
         for(int i=0; i< currentRentedItemsByCustomer.size(); i++){
@@ -86,20 +78,10 @@ public class Customer extends User {
         return itemsId;
     }
 
-    /*
-    public boolean hasEnoughCreditsToRent() {
-        if (this.storeCredits >= 5) {
-            return true;
-        }
-        return false;
-    }
-
 
     public void incrementStoreCredits() {
         this.storeCredits = this.storeCredits + this.membership.getStoreCredits();
     }
-
- */
 
     public void decrementStoreCredits() {
         this.storeCredits = this.storeCredits - 5;
