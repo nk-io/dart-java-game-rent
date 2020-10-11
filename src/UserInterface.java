@@ -387,7 +387,7 @@ public class UserInterface {
 
     public void requestMembershipUpgrade(Customer customer) {
         System.out.println("Your current membership tier is " + customer.getMembership().toString() + ".");
-        System.out.println("As such, your total rental limit is " + customer.getMembership().getRentalLimit() + " items.");
+        System.out.println("As such, your total rental limit consists of " + customer.getMembership().getRentalLimit() + " items.");
         System.out.println("You receive a discount of " + customer.getMembership().getDiscount()*100 + "% when returning items.");
         System.out.println("You also receive " + customer.getMembership().getStoreCredits() + " credits when returning an item.");
         if (customer.getMembership() == Membership.PLATINUM) {
