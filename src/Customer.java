@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 // Change Log for Milestone 2
@@ -67,6 +68,16 @@ public class Customer extends User {
         }
         return false;
     }
+
+
+    public ArrayList getItemsIDs(){
+        ArrayList itemsId = new ArrayList();
+        for(int i=0; i< currentRentedItemsByCustomer.size(); i++){
+            itemsId.add(currentRentedItemsByCustomer.get(i).getID());
+        }
+        return itemsId;
+    }
+
 
     public void incrementStoreCredits() {
         this.storeCredits = this.storeCredits + this.membership.getStoreCredits();
