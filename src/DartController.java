@@ -195,39 +195,41 @@ public class DartController {
     // Calls appropriate methods to current customer
     private void customerMenu(Customer customer) {
         int customerMenuOption;
-
         // Checks the input and connects to other sub-menus depending on the input
         do {
             String customerMenuMessage =
                     "Customer Screen - Type one of the options below:\n" +
-                            "1. Search for an item \n" +
-                            "2. Rent a game\n" +
-                            "3. Return a game\n" +
-                            "4. Rent a song album\n" +
-                            "5. Return a song album\n" +
-                            "6. Send a message\n" +
-                            "7. Read messages\n" +
-                            "8. Delete a message\n" +
-                            "9. Request membership upgrade\n" +
-                            "10. View my credits\n" +
-                            "11. Return to Main Menu\n";
-
+                            "1. Search for an item\n" +
+                            "2. View items by average rating\n" +
+                            "3. View reviews of an item\n" +
+                            "4. Rent a game\n" +
+                            "5. Return a game\n" +
+                            "6. Rent a song album\n" +
+                            "7. Return a song album\n" +
+                            "8. Send a message\n" +
+                            "9. Read messages\n" +
+                            "10. Delete a message\n" +
+                            "11. Request membership upgrade\n" +
+                            "12. View my credits\n" +
+                            "13. Return to Main Menu\n";
             customerMenuOption = InputClass.askIntInput(customerMenuMessage);
             switch (customerMenuOption) {
                 case 1 -> userInterface.searchItem();
-                case 2 -> userInterface.rentGame(customer);
-                case 3 -> userInterface.returnGame(customer);
-                case 4 -> userInterface.rentAlbum(customer);
-                case 5 -> userInterface.returnAlbum(customer);
-                case 6 -> userInterface.sendAMessage(customer.getID());
-                case 7 -> userInterface.showCustomerMessages(customer.getID());
-                case 8 -> userInterface.deleteAMessage(customer.getID());
-                case 9 -> userInterface.requestMembershipUpgrade(customer);
-                case 10 -> userInterface.viewCredits(customer);
-                case 11 -> System.out.println("Returning to Main Menu...");
+                case 2 -> userInterface.viewByAverageRating();
+                case 3 -> userInterface.viewItemReviews();
+                case 4 -> userInterface.rentGame(customer);
+                case 5 -> userInterface.returnGame(customer);
+                case 6 -> userInterface.rentAlbum(customer);
+                case 7 -> userInterface.returnAlbum(customer);
+                case 8 -> userInterface.sendAMessage(customer.getID());
+                case 9 -> userInterface.showCustomerMessages(customer.getID());
+                case 10 -> userInterface.deleteAMessage(customer.getID());
+                case 11-> userInterface.requestMembershipUpgrade(customer);
+                case 12 -> userInterface.viewCredits(customer);
+                case 13 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid Input! Please try again!");
             }
-        } while(!(customerMenuOption == 11));
+        } while(!(customerMenuOption == 13));
     }
 
     //initializes some test users
