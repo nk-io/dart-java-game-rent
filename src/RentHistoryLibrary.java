@@ -23,6 +23,7 @@ public class RentHistoryLibrary {
         }
     }
 
+    // had to change epic feature 6.3 to now calculate here so code isn't repeated
     public double calculateTotalProfit(){
         double totalRentProfit = 0.0;
         for(int i = 0; i < rentHistoryList.size(); i++){
@@ -74,7 +75,6 @@ public class RentHistoryLibrary {
             String id = "";
             for(int i = 0; i < rentHistoryList.size(); i++){
                 id = rentHistoryList.get(i).getItemID();
-                System.out.println("Total profit for id: " + id + " " + getSameItemIDProfit(id) + " SEK");
                 if(getSameItemIDProfit(id) > currentMaxProfit){
                     currentMaxProfit = getSameItemIDProfit(id);
                     currentMaxID = id;
@@ -93,7 +93,6 @@ public class RentHistoryLibrary {
             String id = "";
             for(int i = 0; i < rentHistoryList.size(); i++){
                 id = rentHistoryList.get(i).getCustomerID();
-                System.out.println("Total profit for customer id: " + id + " " + getSameCustomerIDProfit(id) + " SEK");
                 if(getSameCustomerIDProfit(rentHistoryList.get(i).getCustomerID()) > currentMaxProfit){
                     currentMaxProfit = getSameCustomerIDProfit(id);
                     currentMaxID = id;
