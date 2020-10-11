@@ -301,7 +301,7 @@ public class UserInterface {
     public void listRentTransactions(){
         System.out.println("List of rent history transactions: \n" + rentHistoryLibrary.showAllRentHistory());
     }
-
+  
     public void showMostProfitableItem(){
         String itemID = rentHistoryLibrary.getMostProfitableItem();
         Item itemInfo;
@@ -311,13 +311,12 @@ public class UserInterface {
             } else{
                 itemInfo = gameLibrary.doesItemExist(itemID);
             }
-            System.out.println("Most profitable item: " + itemInfo.toString() );
+            System.out.println("Most profitable item: " + itemInfo.toString());
         } else {
             System.out.println("No items have been rented so there is no most profitable item");
         }
 
     }
-
     public void showBestCustomer(){
         String bestCustomerID =rentHistoryLibrary.getBestCustomer();
         if(bestCustomerID == null){
