@@ -266,12 +266,19 @@ public class UserInterface {
     }
 
     public void showMostProfitableItem(){
-    System.out.println("Most profitable item: " + rentHistoryLibrary.getMostProfitableItem());
+        String itemID =rentHistoryLibrary.getMostProfitableItem();
+        Item itemInfo;
+        if(gameLibrary.doesItemExist(itemID) == null){
+            itemInfo = albumLibrary.doesItemExist(itemID);
+        } else{
+            itemInfo = gameLibrary.doesItemExist(itemID);
+        };
+        System.out.println("Most profitable item: " + itemInfo.toString() );
     }
 
     public void showBestCustomer(){
         String bestCustomerID =rentHistoryLibrary.getBestCustomer();
-       System.out.println("Best customer: " + "id:" + bestCustomerID + " name: " + customerLibrary.getName(bestCustomerID));
+       System.out.println("Best customer: id: " + bestCustomerID + " name: " + customerLibrary.getName(bestCustomerID));
     }
 
 //--------------------------------------------People
