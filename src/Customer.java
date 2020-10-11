@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Customer extends User {
     private Membership membership = Membership.NONE;
     private int storeCredits = 0;
+    private boolean upgradeRequest = false;
     //private ArrayList<RentalRecord> records = new ArrayList<>();
     private int numOfCurrentRentedItems = 0;
 
@@ -18,6 +19,7 @@ public class Customer extends User {
     }
 
     // Getters
+    public boolean getUpgradeRequest() { return upgradeRequest; }
     public int getNumOfCurrentRentedItems(){
         return numOfCurrentRentedItems;
     }
@@ -36,7 +38,7 @@ public class Customer extends User {
     public void addToNumOfCurrentRentedItems(){
         this.numOfCurrentRentedItems  += 1;
     }
-
+    public void setUpgradeRequest(boolean upgrade) { upgradeRequest = upgrade; }
     public void subFromNumOfCurrentRentedItems(){
         this.numOfCurrentRentedItems -= 1;
     }

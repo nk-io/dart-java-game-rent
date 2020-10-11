@@ -180,7 +180,7 @@ public class DartController {
                 case 4 -> userInterface.removeAlbum();
                 case 5 -> userInterface.registerCustomer();
                 case 6 -> userInterface.removeCustomer();
-                case 7 -> System.out.println("Feature coming soon...");
+                case 7 -> userInterface.upgradeCustomer();
                 case 8 -> userInterface.showTotalRentProfit();
                 case 9 -> userInterface.listAllGames();
                 case 10 -> userInterface.listAllAlbums();
@@ -222,7 +222,7 @@ public class DartController {
                 case 6 -> userInterface.sendAMessage(customer.getID());
                 case 7 -> userInterface.showCustomerMessages(customer.getID());
                 case 8 -> userInterface.deleteAMessage(customer.getID());
-                case 9 -> System.out.println("Feature coming soon...");
+                case 9 -> userInterface.requestMembershipUpgrade(customer);
                 case 10 -> userInterface.viewCredits(customer);
                 case 11 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid Input! Please try again!");
