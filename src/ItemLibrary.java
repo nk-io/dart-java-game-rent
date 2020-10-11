@@ -51,13 +51,14 @@ abstract class ItemLibrary {
     }
 
 
-    public boolean rentItem(String idToRent){
+    public boolean rentItem(String idToRent, Customer customer){
         if(itemList.size() > 0){
             for(int i = 0; i < itemList.size(); i++){
                 if(itemList.get(i).getID().equals(idToRent) && !itemList.get(i).isItemAvailableToRent()){
                     return false;
                 } else if(itemList.get(i).getID().equals(idToRent)){
                     itemList.get(i).setNotAvailableToRent();
+                    customer.addToCurrentRentedItemsByCustomer(itemList.get(i));
                     return true;
                 }
             }
@@ -65,14 +66,23 @@ abstract class ItemLibrary {
         return false;
     }
 
-    public double returnItem(String itemToReturn, int daysRented) {
-        double totalRent;
+    public double returnItem(String itemToReturn, int daysRented, Customer customer) {
+        double rentExpense=0;
         for (int i = 0; i < itemList.size(); i++) {
             if (!itemList.get(i).isItemAvailableToRent()) {
                 if (itemList.get(i).getID().equals(itemToReturn)) {
-                    totalRent = itemList.get(i).getDailyRentFee() * daysRented;
-                    itemList.get(i).setAvailableToRent();
-                    return totalRent;
+                    if(customer.checkIfTheItemRentedByCustomer(itemToReturn)){
+                        if(customer.getStoreCredits() > 4){
+                            customer.decrementStoreCredits();
+                        }
+                        else{
+                            customer.addCredits();
+                            rentExpense = itemList.get(i).getDailyRentFee() * daysRented * (1-customer.getDiscount());
+                        }
+                        itemList.get(i).setAvailableToRent();
+                        customer.subFromCurrentRentedItemsByCustomer(itemList.get(i));
+                        return rentExpense;
+                    }
                 }
             }
         }
@@ -89,10 +99,6 @@ abstract class ItemLibrary {
             }
             return listOfAll.toString();
         }
-    }
-
-    public double rentFee(Customer customer, double rentFee){
-        return rentFee *  (1 - customer.getDiscount());
     }
 
     public ArrayList<Item> sortedItems(ArrayList <Item> item){
