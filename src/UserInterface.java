@@ -306,10 +306,10 @@ public class UserInterface {
         String itemID = rentHistoryLibrary.getMostProfitableItem();
         Item itemInfo = null;
         if(gameLibrary.doesItemExist(itemID) == null){
+            itemInfo = albumLibrary.doesItemExist((itemID));
         } else{
             itemInfo = gameLibrary.doesItemExist(itemID);
         }
-
         if(itemInfo == null){
             System.out.println("No items have been rented so there is no most profitable item");
         } else {
