@@ -36,10 +36,24 @@ public class Customer extends User {
     public void addToNumOfCurrentRentedItems(){
         this.numOfCurrentRentedItems  += 1;
     }
+
     public void subFromNumOfCurrentRentedItems(){
         this.numOfCurrentRentedItems -= 1;
     }
 
+    public void addCredits(){
+        if (getMembership() == Membership.SILVER){
+            storeCredits += 1;
+        } else if (getMembership() == Membership.GOLD){
+            storeCredits += 2;
+        } else if (getMembership() == Membership.PLATINUM){
+            storeCredits += 3;
+        } else if (getMembership() == Membership.NONE){
+            storeCredits += 5;
+        }
+    }
+
+    /*
     public boolean hasEnoughCreditsToRent() {
         if (this.storeCredits >= 5) {
             return true;
@@ -48,17 +62,16 @@ public class Customer extends User {
     }
 
 
-
-
     public void incrementStoreCredits() {
         this.storeCredits = this.storeCredits + this.membership.getStoreCredits();
     }
 
+ */
+
     public void decrementStoreCredits() {
-        if (hasEnoughCreditsToRent()) {
-            this.storeCredits = this.storeCredits - 5;
-        }
+        this.storeCredits = this.storeCredits - 5;
     }
+
 /*
     public void addRecord(RentalRecord record) {
         records.add(record);

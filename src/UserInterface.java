@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class UserInterface {
 
     private GameLibrary gameLibrary;
@@ -18,7 +16,6 @@ public class UserInterface {
         this.employeeLibrary = employeeLibrary;
         this.customerLibrary = customerLibrary;
         this.messageLibrary = messageLibrary;
-        this.reviewLibrary = reviewLibrary;
         this.reviewLibrary = reviewLibrary;
         this.rentHistoryLibrary = rentHistoryLibrary;
 
@@ -93,7 +90,7 @@ public class UserInterface {
     }
 
 
-    public Customer rentGame(Customer customer){
+    public void rentGame(Customer customer){
         if (customer.getNumOfCurrentRentedItems() < customer.getMembership().getRentalLimit()) {
             listAllGames();
             String idToRent = InputClass.askStringInput("Enter item id of the game you want to rent: ");
@@ -109,11 +106,10 @@ public class UserInterface {
                     customer.getNumOfCurrentRentedItems() + " items out of " +
                     customer.getMembership().getRentalLimit());
         }
-        return customer;
     }
 
 
-    public Customer rentAlbum(Customer customer){
+    public void rentAlbum(Customer customer){
         if (customer.getNumOfCurrentRentedItems() < customer.getMembership().getRentalLimit()) {
             listAllAlbums();
             String idToRent = InputClass.askStringInput("Enter item id of the album you want to rent: ");
@@ -129,54 +125,64 @@ public class UserInterface {
                     customer.getNumOfCurrentRentedItems() + " items out of " +
                     customer.getMembership().getRentalLimit());
         }
-        return customer;
     }
 
 
-    public Customer returnGame(Customer customer){
+    public void returnGame(Customer customer){
         listAllGames();
         String idToReturn = InputClass.askStringInput("Please enter the ID of the game you want to return: ");
         Game isIDRight = (Game) gameLibrary.doesItemExist(idToReturn);
         if (isIDRight != null && !gameLibrary.isItAvailable(idToReturn)){
+            double rentExpense = 0;
             int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ");
             while (daysRented < 0) {
                 daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
             }
-            double rentExpense = gameLibrary.rentFee(customer, gameLibrary.returnItem(idToReturn, daysRented));
-            System.out.println("The total fee is: " + rentExpense + " SEK.");
-            System.out.println("The game has been successfully returned. ");
+            if (customer.getStoreCredits() > 4) {
+                System.out.println("You have used 5 credits and rented the game for free.");
+                customer.decrementStoreCredits();
+            } else {
+                rentExpense = gameLibrary.rentFee(customer, gameLibrary.returnItem(idToReturn, daysRented));
+                System.out.println("The total fee is: " + rentExpense + " SEK.");
+                System.out.println("The game has been successfully returned. ");
+                customer.addCredits();
+            }
+            customer.subFromNumOfCurrentRentedItems();
             giveRating(isIDRight, customer);
             RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
             rentHistoryLibrary.addRentHistory(newTransaction);
-            customer.subFromNumOfCurrentRentedItems();
         } else {
             System.out.println("Game with ID: " + idToReturn + " was not found or is not rented. ");
         }
-
-        return customer;
     }
 
 
-    public Customer returnAlbum(Customer customer){
+    public void returnAlbum(Customer customer){
         listAllAlbums();
         String idToReturn = InputClass.askStringInput("Please enter the ID of the album you want to return: ");
         Album isIDRight = (Album) albumLibrary.doesItemExist(idToReturn);
         if (isIDRight != null && !albumLibrary.isItAvailable(idToReturn)){
+            double rentExpense = 0;
             int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ");
             while (daysRented < 0) {
                 daysRented = InputClass.askIntInput("Please enter a valid number of days: ");
             }
-            double rentExpense = albumLibrary.rentFee(customer , albumLibrary.returnItem(idToReturn, daysRented));
-            System.out.println("The total fee is: " + rentExpense + " SEK.");
+            if (customer.getStoreCredits() > 4){
+                System.out.println("You have used 5 credits and rented the album for free.");
+                customer.decrementStoreCredits();
+            } else {
+                rentExpense = albumLibrary.rentFee(customer , albumLibrary.returnItem(idToReturn, daysRented));
+                System.out.println("The total fee is: " + rentExpense + " SEK.");
+                System.out.println("The album has been successfully returned. ");
+                customer.addCredits();
+            }
+            customer.subFromNumOfCurrentRentedItems();
             giveRating(isIDRight, customer);
-            System.out.println("The album has been successfully returned. ");
             RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
             rentHistoryLibrary.addRentHistory(newTransaction);
-            customer.subFromNumOfCurrentRentedItems();
         } else {
             System.out.println("Album with ID: " + idToReturn + " was not found or is not rented. ");
         }
-        return customer;
     }
 
     // needed to change this for 11.1 return behaviors
@@ -189,19 +195,20 @@ public class UserInterface {
         }
         if(ratingCheck.equalsIgnoreCase(("NO"))){
             System.out.println("No review given.");
-        } else{
+        } else {
             giveRatingScore(returnedItem);
             String reviewCheck = InputClass.askStringInput("Would you leave written review? Enter Yes or No ");
             while(!reviewCheck.equalsIgnoreCase("YES") && !reviewCheck.equalsIgnoreCase("NO")){
                 reviewCheck = InputClass.askStringInput("Invalid input. Please enter yes or no!");
             }
             if(reviewCheck.equalsIgnoreCase("YES")){
-                giveWrittenReview( returnedItem, customer);
-            } else{
-                System.out.println("Thanks for leaving a rating.");
+                giveWrittenReview(returnedItem, customer);
+            } else {
+                System.out.println("Thank you for leaving a rating.");
             }
         }
     }
+
 
     private void giveRatingScore(Item returnedItem) {
             int userRating = InputClass.askIntInput("Please enter your rating (a number between 0 and 5): ");
@@ -211,10 +218,11 @@ public class UserInterface {
             returnedItem.giveRating(userRating);
     }
 
+
     private void giveWrittenReview(Item returnedItem, Customer customer){
             String review = InputClass.askStringInput("Please enter your written review: ");
             reviewLibrary.submitReview(returnedItem.getID(), customer, review);
-            System.out.println("Thanks for leaving a review and rating!");
+            System.out.println("Thank you for leaving a review and rating!");
     }
 
 
@@ -236,19 +244,17 @@ public class UserInterface {
         }
     }
 
+
     public void showTotalRentProfit(){
-        double totalRentProfit = rentHistoryLibrary.calculateTotalProfit();
-        System.out.println("Total rent profit for all items rented: " + totalRentProfit + "SEK");
+        System.out.println("Total rent profit for all items rented: " + rentHistoryLibrary.calculateTotalProfit() + "SEK");
     }
 
     public void listRentFrequency(){
-        System.out.println("All items rent frequency: ");
-        System.out.println(rentHistoryLibrary.showRentFrequency());
+        System.out.println("All items rent frequency: \n" + rentHistoryLibrary.showRentFrequency());
     }
 
     public void listRentTransactions(){
-        System.out.println("List of rent history transactions: ");
-        System.out.println(rentHistoryLibrary.showAllRentHistory());
+        System.out.println("List of rent history transactions: \n" + rentHistoryLibrary.showAllRentHistory());
     }
 
     public void showMostProfitableItem(){
@@ -258,9 +264,6 @@ public class UserInterface {
     public void showBestCustomer(){
        System.out.println("Best customer: " + rentHistoryLibrary.getBestCustomer());
     }
-
-
-
 
 //--------------------------------------------People
 
@@ -290,6 +293,11 @@ public class UserInterface {
         } else {
             System.out.println("There are no customers registered in the system.");
         }
+    }
+
+
+    public void viewCredits(Customer customer){
+        System.out.println("You have: " + customer.getStoreCredits() + " credits.");
     }
 
 

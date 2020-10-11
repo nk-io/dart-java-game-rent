@@ -2,8 +2,6 @@
 // Methods are no longer statics
 // Added messageList for Epic Feature 9
 
-import java.util.ArrayList;
-
 public class DartController {
 
     private GameLibrary gameLibrary;
@@ -217,15 +215,15 @@ public class DartController {
             customerMenuOption = InputClass.askIntInput(customerMenuMessage);
             switch (customerMenuOption) {
                 case 1 -> userInterface.searchItem();
-                case 2 -> customer = userInterface.rentGame(customer);
-                case 3 -> customer = userInterface.returnGame(customer);
-                case 4 -> customer = userInterface.rentAlbum(customer);
-                case 5 -> customer = userInterface.returnAlbum(customer);
+                case 2 -> userInterface.rentGame(customer);
+                case 3 -> userInterface.returnGame(customer);
+                case 4 -> userInterface.rentAlbum(customer);
+                case 5 -> userInterface.returnAlbum(customer);
                 case 6 -> userInterface.sendAMessage(customer.getID());
                 case 7 -> userInterface.showCustomerMessages(customer.getID());
                 case 8 -> userInterface.deleteAMessage(customer.getID());
                 case 9 -> System.out.println("Feature coming soon...");
-                case 10 -> System.out.println("Feature coming soon...");
+                case 10 -> userInterface.viewCredits(customer);
                 case 11 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid Input! Please try again!");
             }

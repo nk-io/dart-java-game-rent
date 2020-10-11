@@ -85,7 +85,7 @@ abstract class ItemLibrary {
         } else {
             StringBuilder listOfAll = new StringBuilder();
             for(int i=0; i<itemList.size(); i++){
-                listOfAll.append(itemList.get(i).toString() + "\n");
+                listOfAll.append(itemList.get(i).toString());
             }
             return listOfAll.toString();
         }
