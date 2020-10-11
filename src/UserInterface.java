@@ -91,6 +91,9 @@ public class UserInterface {
 
 
     public void rentGame(Customer customer){
+        System.out.println("Welcome " + customer.getMembership().toString() + " tier customer!");
+        System.out.println("You may may rent " + customer.getMembership().getRentalLimit() + " total items.");
+        System.out.println("You are currently renting " + customer.getNumOfCurrentRentedItems()+".");
         if (customer.getNumOfCurrentRentedItems() < customer.getMembership().getRentalLimit()) {
             listAllGames();
             String idToRent = InputClass.askStringInput("Enter item id of the game you want to rent: ");
@@ -108,6 +111,9 @@ public class UserInterface {
 
 
     public void rentAlbum(Customer customer){
+        System.out.println("Welcome " + customer.getMembership().toString() + " tier customer!");
+        System.out.println("You may may rent " + customer.getMembership().getRentalLimit() + " total items.");
+        System.out.println("You are currently renting " + customer.getNumOfCurrentRentedItems()+".");
         if (customer.getNumOfCurrentRentedItems() < customer.getMembership().getRentalLimit()) {
             listAllAlbums();
             String idToRent = InputClass.askStringInput("Enter item id of the album you want to rent: ");
@@ -120,7 +126,7 @@ public class UserInterface {
         } else {
             System.out.println("Rental limit exceeded! You're currently renting " +
                     customer.getNumOfCurrentRentedItems() + " items out of " +
-                    customer.getMembership().getRentalLimit());
+                    customer.getMembership().getRentalLimit() +".");
         }
     }
 
@@ -144,8 +150,11 @@ public class UserInterface {
                     System.out.println("You have used 5 credits and rented the game for free.");
                 } else {
                     rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
+                    System.out.println("As a " + customer.getMembership().toString() + " tier customer, " +
+                                        "you have received a discount of " + customer.getMembership().getDiscount()*100 + "%!");
                     System.out.println("The total fee is: " + rentExpense + " SEK.");
                     System.out.println("The game has been successfully returned. ");
+                    System.out.println("You have received " + customer.getMembership().getStoreCredits() + " credits from this transaction.");
                 }
 
                 giveRating(isIDRight, customer);
@@ -178,8 +187,11 @@ public class UserInterface {
 
                 } else {
                     rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
+                    System.out.println("As a " + customer.getMembership().toString() + " tier customer, " +
+                                        "you have received a discount of " + customer.getMembership().getDiscount()*100 + "%!");
                     System.out.println("The total fee is: " + rentExpense + " SEK.");
                     System.out.println("The album has been successfully returned. ");
+                    System.out.println("You have received " + customer.getMembership().getStoreCredits() + " credits from this transaction.");
                 };
                 giveRating(isIDRight, customer);
                 RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
@@ -341,7 +353,6 @@ public class UserInterface {
                 System.out.println(optionsCounter + ". Customer ID: " + customer.getID() + " | Membership: " + customer.getMembership().toString());
             }
         }
-
         if (customersToUpgrade.size() > 0) {
             optionsCounter += 1;
             System.out.println(optionsCounter + ". Return to Employee Menu.");
@@ -375,6 +386,10 @@ public class UserInterface {
     }
 
     public void requestMembershipUpgrade(Customer customer) {
+        System.out.println("Your current membership tier is " + customer.getMembership().toString() + ".");
+        System.out.println("As such, your total rental limit is " + customer.getMembership().getRentalLimit() + " items.");
+        System.out.println("You receive a discount of " + customer.getMembership().getDiscount()*100 + "% when returning items.");
+        System.out.println("You also receive " + customer.getMembership().getStoreCredits() + " credits when returning an item.");
         if (customer.getMembership() == Membership.PLATINUM) {
             System.out.println("You have reached the maximum membership level and cannot be upgraded further!");
         } else if (customer.getUpgradeRequest() == true) {
