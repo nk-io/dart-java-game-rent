@@ -66,44 +66,40 @@ public class RentHistoryLibrary {
 
 
     public String getMostProfitableItem() {
-        Map<String, Double> itemProfits = new HashMap<String, Double>();
         if(rentHistoryList.size() == 0){
             return "No items have ever been rented so there is no most profitable item.";
         } else{
-            double currentMax = 0;
-            String currentID = "";
+            double currentMaxProfit = 0;
+            String currentMaxID = "";
+            String id = "";
             for(int i = 0; i < rentHistoryList.size(); i++){
-                itemProfits.put(rentHistoryList.get(i).getItemID(), rentHistoryList.get(i).getRentExpense());
+                id = rentHistoryList.get(i).getItemID();
+                System.out.println("Total profit for id: " + id + " " + getSameItemIDProfit(id) + " SEK");
+                if(getSameItemIDProfit(id) > currentMaxProfit){
+                    currentMaxProfit = getSameItemIDProfit(id);
+                    currentMaxID = id;
+                }
             }
-            for(String id: itemProfits.keySet()){
-               System.out.println("Total profit for id: " + id + " " + getSameItemIDProfit(id) + " SEK");
-               if(getSameItemIDProfit(id) > currentMax){
-                currentMax = getSameItemIDProfit(id);
-                currentID = id;
-               }
-            }
-            return currentID;
+            return currentMaxID;
         }
     }
 
     public String getBestCustomer() {
-        Map<String, Double> customerProfits = new HashMap<String, Double>();
         if(rentHistoryList.size() == 0){
             return "No items have ever been rented so there is no best customer.";
         } else{
-            double currentMax = 0;
-            String currentID = "";
+            double currentMaxProfit = 0;
+            String currentMaxID = "";
+            String id = "";
             for(int i = 0; i < rentHistoryList.size(); i++){
-                customerProfits.put(rentHistoryList.get(i).getCustomerID(), rentHistoryList.get(i).getRentExpense());
-            }
-            for(String id: customerProfits.keySet()){
+                id = rentHistoryList.get(i).getCustomerID();
                 System.out.println("Total profit for customer id: " + id + " " + getSameCustomerIDProfit(id) + " SEK");
-                if(getSameCustomerIDProfit(id) > currentMax){
-                    currentMax = getSameCustomerIDProfit(id);
-                    currentID = id;
+                if(getSameCustomerIDProfit(rentHistoryList.get(i).getCustomerID()) > currentMaxProfit){
+                    currentMaxProfit = getSameCustomerIDProfit(id);
+                    currentMaxID = id;
                 }
             }
-            return currentID;
+            return currentMaxID;
         }
     }
 
@@ -111,8 +107,10 @@ public class RentHistoryLibrary {
 
     public double getSameItemIDProfit(String itemID){
         double totalProfit = 0;
-        for(int i= 0; i < rentHistoryList.size();i++ ){
-            if(rentHistoryList.get(i).getItemID().equals(itemID)){
+        String currentItemID = "";
+        for(int i= 0; i < rentHistoryList.size();i++){
+            currentItemID = rentHistoryList.get(i).getItemID();
+            if(currentItemID.equals(itemID)){
                 totalProfit = totalProfit + rentHistoryList.get(i).getRentExpense();
             }
         }
@@ -121,8 +119,10 @@ public class RentHistoryLibrary {
 
     public double getSameCustomerIDProfit(String customerID){
         double totalProfit = 0;
+        String currentCustomerID = "";
         for(int i= 0; i < rentHistoryList.size();i++ ){
-            if(rentHistoryList.get(i).getCustomerID().equals(customerID)){
+            currentCustomerID = rentHistoryList.get(i).getCustomerID();
+            if(currentCustomerID.equals(customerID)){
                 totalProfit = totalProfit + rentHistoryList.get(i).getRentExpense();
             }
         }
