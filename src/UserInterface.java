@@ -28,9 +28,9 @@ public class UserInterface {
     public void registerGame(){
         String title = InputClass.askStringInput("Please enter the name of the game: ");
         String genre = InputClass.askStringInput("Please enter the genre of the game: ");
-        double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ");
+        double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ", "error");
         while(dailyRentFee < 0 ){
-            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
+            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ", "error");
         }
         Game newGame = gameLibrary.registerGame(title, genre, dailyRentFee);
         System.out.println("The game with " + newGame.toString() + " has been created successfully.");
@@ -61,9 +61,9 @@ public class UserInterface {
         String title = InputClass.askStringInput("Please enter the name of the album: ");
         String artist = InputClass.askStringInput("Please enter the artist of the album: ");
         int year = InputClass.askIntInput("Please enter the release year for the album: ");
-        double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ");
+        double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ", "error");
         while(dailyRentFee < 0 ){
-            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
+            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ", "error");
         }
         Album newAlbum = albumLibrary.registerAlbum(title, artist, year, dailyRentFee);
         System.out.println("The album with " + newAlbum.toString() + " has been created successfully.");
@@ -429,9 +429,9 @@ public class UserInterface {
         String password = InputClass.askStringInput("Please enter a new password: ");
         int birthYear = InputClass.askIntInput("Please enter the employee's birth year: ");
         String employeeAddress = InputClass.askStringInput("Please enter the employee's address: ");
-        double grossSalary = InputClass.askDoubleInput("Please enter the employee's gross salary (in SEK): ");
+        double grossSalary = InputClass.askDoubleInput("Please enter the employee's gross salary (in SEK): ", "error");
         while(grossSalary < 0){
-            grossSalary = InputClass.askDoubleInput("Please enter a valid gross salary (in SEK): ");
+            grossSalary = InputClass.askDoubleInput("Please enter a valid gross salary (in SEK): ", "error");
         }
         Employee newEmployee = employeeLibrary.registerEmployee(employeeName, password, birthYear, employeeAddress,grossSalary);
         System.out.println(newEmployee.toString()+ " has been created successfully!");
