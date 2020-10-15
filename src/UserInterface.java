@@ -39,7 +39,7 @@ public class UserInterface {
 
     public void removeGame(){
         listAllGames();
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the game you want to remove: ", "Invalid input");
+        String idToRemove = InputClass.askStringInput("Please enter the ID of the game you want to remove: ", "Invalid input. Please try again. ");
         if (gameLibrary.isItAvailable(idToRemove) && gameLibrary.removeItem(idToRemove)){
             System.out.println("The game with id " + idToRemove + " has been removed!");
         } else {
@@ -72,7 +72,7 @@ public class UserInterface {
 
     public void removeAlbum(){
         listAllAlbums();
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the album you want to remove: ", "Invalid input");
+        String idToRemove = InputClass.askStringInput("Please enter the ID of the album you want to remove: ", "Invalid input. Please try again. ");
         if (albumLibrary.isItAvailable(idToRemove) && albumLibrary.removeItem(idToRemove)) {
             System.out.println("The album with id " + idToRemove + " has been removed!");
         } else {
@@ -93,7 +93,7 @@ public class UserInterface {
     public void rentGame(Customer customer){
         if (customer.getNumOfCurrentRentedItems() < customer.getMembership().getRentalLimit()) {
             listAllGames();
-            String idToRent = InputClass.askStringInput("Enter item id of the game you want to rent: ", "Invalid input. ");
+            String idToRent = InputClass.askStringInput("Enter item id of the game you want to rent: ", "Invalid input. Please try again. ");
             if (gameLibrary.rentItem(idToRent, customer)) {
                 System.out.println("The game with id: " + idToRent + " has been rented successfully!");
             } else {
@@ -110,7 +110,7 @@ public class UserInterface {
     public void rentAlbum(Customer customer){
         if (customer.getNumOfCurrentRentedItems() < customer.getMembership().getRentalLimit()) {
             listAllAlbums();
-            String idToRent = InputClass.askStringInput("Enter item id of the album you want to rent: ", "Invalid input. ");
+            String idToRent = InputClass.askStringInput("Enter item id of the album you want to rent: ", "Invalid input. Please try again. ");
             if (albumLibrary.rentItem(idToRent, customer)) {
                 System.out.println("The album with id: " + idToRent + " has been rented successfully!");
 
@@ -131,13 +131,13 @@ public class UserInterface {
             System.out.println("You have no game to return!");
         } else {
             System.out.println(customerItems);
-            String idToReturn = InputClass.askStringInput("Please enter the ID of the game you want to return: ", "Invalid input. ");
+            String idToReturn = InputClass.askStringInput("Please enter the ID of the game you want to return: ", "Invalid input. Please try again. ");
             Game isIDRight = (Game) gameLibrary.doesItemExist(idToReturn);
             if (isIDRight != null && !gameLibrary.isItAvailable(idToReturn) && customer.checkIfTheItemRentedByCustomer(idToReturn)) {
                 double rentExpense = 0;
-                int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ", "Invalid input. ");
-                while (daysRented < 0) {
-                    daysRented = InputClass.askIntInput("Please enter a valid number of days: " ,"Invalid input. ");
+                int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ", "Invalid input. Please enter an integer. ");
+                while (daysRented < 1) {
+                    daysRented = InputClass.askIntInput("Invalid operation. Upon returning an item, the number of days rented must be positive." ,"Invalid input. Please enter an integer. ");
                 }
                 if (customer.getStoreCredits() > 4) {
                     rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
@@ -169,8 +169,8 @@ public class UserInterface {
             if (isIDRight != null && !albumLibrary.isItAvailable(idToReturn) && customer.checkIfTheItemRentedByCustomer(idToReturn)){
                 double rentExpense = 0;
                 int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ", "Invalid input. ");
-                while (daysRented < 0) {
-                    daysRented = InputClass.askIntInput("Please enter a valid number of days: ", "Invalid input. ");
+                while (daysRented < 1) {
+                    daysRented = InputClass.askIntInput("Invalid operation. Upon returning an item, the number of days rented must be positive.", "Invalid input. ");
                 }
                 if (customer.getStoreCredits() > 4){
                     System.out.println("You have used 5 credits and rented the album for free.");
@@ -206,17 +206,17 @@ public class UserInterface {
     // should work the same
 
     private void giveRating(Item returnedItem, Customer customer){
-        String ratingCheck = InputClass.askStringInput("Would you like rate this item? Enter Yes or No ", "Invalid input. ");
+        String ratingCheck = InputClass.askStringInput("Would you like rate this item? Enter Yes or No ", "Invalid input. Please try again. ");
         while (!ratingCheck.equalsIgnoreCase("YES") && !ratingCheck.equalsIgnoreCase("NO")) {
-            ratingCheck = InputClass.askStringInput("Invalid input. Please enter yes or no!", "Invalid input. ");
+            ratingCheck = InputClass.askStringInput("Invalid input. Please enter yes or no!", "Invalid input. Please try again. ");
         }
         if(ratingCheck.equalsIgnoreCase(("NO"))){
             System.out.println("No review given.");
         } else {
             giveRatingScore(returnedItem);
-            String reviewCheck = InputClass.askStringInput("Would you leave written review? Enter Yes or No ", "Invalid input. ");
+            String reviewCheck = InputClass.askStringInput("Would you leave written review? Enter Yes or No ", "Invalid input. Please try again. ");
             while(!reviewCheck.equalsIgnoreCase("YES") && !reviewCheck.equalsIgnoreCase("NO")){
-                reviewCheck = InputClass.askStringInput("Invalid input. Please enter yes or no!", "Invalid input. ");
+                reviewCheck = InputClass.askStringInput("Invalid input. Please enter yes or no!", "Invalid input. Please try again. ");
             }
             if(reviewCheck.equalsIgnoreCase("YES")){
                 giveWrittenReview(returnedItem, customer);
@@ -228,41 +228,41 @@ public class UserInterface {
 
 
     private void giveRatingScore(Item returnedItem) {
-            int userRating = InputClass.askIntInput("Please enter your rating (a number between 0 and 5): ", "Invalid input. ");
+            int userRating = InputClass.askIntInput("Please enter your rating (a number between 0 and 5): ", "Invalid input. Please enter an integer. ");
             while (userRating < 0 || userRating > 5) {
-                userRating = InputClass.askIntInput("Please enter a number between 0 and 5: ", "Invalid input. ");
+                userRating = InputClass.askIntInput("Please enter a number between 0 and 5: ", "Invalid input. Please inter an integer. ");
             }
             returnedItem.giveRating(userRating);
     }
 
 
     private void giveWrittenReview(Item returnedItem, Customer customer){
-            String review = InputClass.askStringInput("Please enter your written review: ", "Invalid input. ");
+            String review = InputClass.askStringInput("Please enter your written review: ", "Invalid input. Please try again. ");
             reviewLibrary.submitReview(returnedItem.getID(), customer, review);
             System.out.println("Thank you for leaving a review and rating!");
     }
 
 
     public void searchItem(){
-        String itemCheck = InputClass.askStringInput("What is the item you are looking for? Type G for games, or A for albums.", "Invalid input. ");
+        String itemCheck = InputClass.askStringInput("What is the item you are looking for? Type G for games, or A for albums.", "Invalid input. Please try again. ");
         while(!itemCheck.equalsIgnoreCase("G") && !itemCheck.equalsIgnoreCase("A")){
-            itemCheck = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!", "Invalid input. ");
+            itemCheck = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!", "Invalid input. Please try again. ");
         }
         if(itemCheck.equalsIgnoreCase("G")){
-            String genreToSearch = InputClass.askStringInput("Please enter the genre you are looking for: ", "Invalid input. ");
+            String genreToSearch = InputClass.askStringInput("Please enter the genre you are looking for: ", "Invalid input. Please try again. ");
             String gamesWithGenre = gameLibrary.searchByGenre(genreToSearch);
             System.out.println(gamesWithGenre);
         } else if(itemCheck.equalsIgnoreCase("A")){
-            int yearToSearch = InputClass.askIntInput("Please enter the year you are looking for: ", "Invalid input. ");
+            int yearToSearch = InputClass.askIntInput("Please enter the year you are looking for: ", "Invalid input. Please enter an integer. ");
             String albumsByYear = albumLibrary.searchByYear(yearToSearch);
             System.out.println(albumsByYear);
         }
     }
 
     public void viewByAverageRating(){
-        String itemCheck = InputClass.askStringInput("Select an item: Type G for games, or A for albums.", "Invalid input. ");
+        String itemCheck = InputClass.askStringInput("Select an item: Type G for games, or A for albums.", "Invalid input. Please try again. ");
         while (!itemCheck.equalsIgnoreCase("G") && !itemCheck.equalsIgnoreCase("A")) {
-            itemCheck = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!", "Invalid input. ");
+            itemCheck = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!", "Invalid input. Please try again. ");
         }
         if (itemCheck.equalsIgnoreCase("G")) {
             ArrayList<Item> sortedGames = gameLibrary.sortedItems(gameLibrary.getItems());
@@ -281,7 +281,7 @@ public class UserInterface {
         listAllGames();
         System.out.println("--- List of All Albums ---");
         listAllAlbums();
-        String itemID = InputClass.askStringInput("Enter the ID of an item to see its reviews: ", "Invalid input. ");
+        String itemID = InputClass.askStringInput("Enter the ID of an item to see its reviews: ", "Invalid input. Please try again. ");
         if (albumLibrary.doesItemExist(itemID) != null || gameLibrary.doesItemExist(itemID) != null){
             String reviewList = reviewLibrary.showItemReviews(itemID);
             System.out.println(reviewList);
@@ -338,7 +338,7 @@ public class UserInterface {
 
     public void removeCustomer(){
         listAllCustomers();
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the customer to remove: ", "Invalid input. ");
+        String idToRemove = InputClass.askStringInput("Please enter the ID of the customer to remove: ", "Invalid input. Please try again. ");
         Customer customer = (Customer) customerLibrary.doesUserExist(idToRemove);
         ArrayList items = customer.getItemsIDs();
         if (items != null){
@@ -384,11 +384,11 @@ public class UserInterface {
             optionsCounter += 1;
             System.out.println(optionsCounter + ". Return to Employee Menu.");
 
-            int option = InputClass.askIntInput("Please select the customer you wish to interact with, or return to the previous menu: ", "Invalid input. ");
+            int option = InputClass.askIntInput("Please select the customer you wish to interact with, or return to the previous menu: ", "Invalid input. Please enter an integer. ");
             if (option == optionsCounter) { return;}
             else if (option > 0 && option <= customersToUpgrade.size()) {
                 Customer customer = customersToUpgrade.get(option - 1);
-                int approveOption = InputClass.askIntInput("Do you wish to approve or reject the membership request? \n1. Approve\n2. Reject", "Invalid input. ");
+                int approveOption = InputClass.askIntInput("Do you wish to approve or reject the membership request? \n1. Approve\n2. Reject", "Invalid input. Please enter an integer. ");
                 if (approveOption == 1) {
 
                     switch (customer.getMembership()) {
@@ -425,13 +425,13 @@ public class UserInterface {
 
 
     public void registerEmployee(){
-        String employeeName = InputClass.askStringInput("Please enter the employee's name: ", "Invalid input. ");
-        String password = InputClass.askStringInput("Please enter a new password: ", "Invalid input. ");
-        int birthYear = InputClass.askIntInput("Please enter the employee's birth year: ", "Invalid input. ");
-        String employeeAddress = InputClass.askStringInput("Please enter the employee's address: ", "Invalid input. ");
-        double grossSalary = InputClass.askDoubleInput("Please enter the employee's gross salary (in SEK): ", "error");
+        String employeeName = InputClass.askStringInput("Please enter the employee's name: ", "Invalid input. Please try again. ");
+        String password = InputClass.askStringInput("Please enter a new password: ", "Invalid input. Please try again. ");
+        int birthYear = InputClass.askIntInput("Please enter the employee's birth year: ", "Invalid input. Please enter an integer");
+        String employeeAddress = InputClass.askStringInput("Please enter the employee's address: ", "Invalid input. Please try again. ");
+        double grossSalary = InputClass.askDoubleInput("Please enter the employee's gross salary (in SEK): ", "Invalid input. Please enter a number. ");
         while(grossSalary < 0){
-            grossSalary = InputClass.askDoubleInput("Please enter a valid gross salary (in SEK): ", "error");
+            grossSalary = InputClass.askDoubleInput("Please enter a valid gross salary (in SEK): ", "Invalid input. Please enter a number. ");
         }
         Employee newEmployee = employeeLibrary.registerEmployee(employeeName, password, birthYear, employeeAddress,grossSalary);
         System.out.println(newEmployee.toString()+ " has been created successfully!");
@@ -440,7 +440,7 @@ public class UserInterface {
 
     public void removeEmployee(){
         listAllEmployees();
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the employee to remove: ", "Invalid input. ");
+        String idToRemove = InputClass.askStringInput("Please enter the ID of the employee to remove: ", "Invalid input. Please try again. ");
         boolean removed = employeeLibrary.removeUser(idToRemove);
         if (removed){
             System.out.println("Employee with ID" + idToRemove + " has been removed!");
@@ -460,8 +460,8 @@ public class UserInterface {
 
 
     public void registerManager(){
-        String name = InputClass.askStringInput("Please enter the name of the manager: ", "Invalid input. ");
-        String password = InputClass.askStringInput("Please enter a new password: ", "Invalid input. ");
+        String name = InputClass.askStringInput("Please enter the name of the manager: ", "Invalid input. Please try again. ");
+        String password = InputClass.askStringInput("Please enter a new password: ", "Invalid input. Please try again. ");
         Manager newManager = managerLibrary.registerManager(name, password);
         System.out.println("The manager " + newManager.toString() + " has been created successfully.");
     }
@@ -469,7 +469,7 @@ public class UserInterface {
 
     public void removeManager(){
         listAllManagers();
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the manager to remove: ", "Invalid input. ");
+        String idToRemove = InputClass.askStringInput("Please enter the ID of the manager to remove: ", "Invalid input. Please try again. ");
         boolean removed = managerLibrary.removeUser(idToRemove);
         if (removed){
             System.out.println("Manager with ID" + idToRemove + " has been removed!");
@@ -489,8 +489,8 @@ public class UserInterface {
 //--------------------------------------------Messages
 
     public void sendAMessage(String enteredID){
-        String receiverID = InputClass.askStringInput("Please enter the ID of the user you want to send a message to: ", "Invalid input. ");
-        String message = InputClass.askStringInput("Please enter your message: ", "Invalid input. ");
+        String receiverID = InputClass.askStringInput("Please enter the ID of the user you want to send a message to: ", "Invalid input. Please try again. ");
+        String message = InputClass.askStringInput("Please enter your message: ", "Invalid input. Please try again. ");
         Message sent = messageLibrary.sendAMessage(receiverID, enteredID, customerLibrary.getName(enteredID), customerLibrary, message);
         System.out.println();
         if (sent != null){

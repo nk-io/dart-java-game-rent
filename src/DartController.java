@@ -37,12 +37,12 @@ public class DartController {
             // Formats the received input to lower case so the program doesn't need to check whether it's upper or lower case
             switch (mainMenuOption.toLowerCase()) {
                 case "m" -> {
-                    String enteredID = InputClass.askStringInput("Please enter your ID: ", "ID not found. Please enter a valid ID.");
+                    String enteredID = InputClass.askStringInput("Please enter your ID: ", "Invalid input. Please try again. ");
                     Manager currentManagerUser = (Manager) managerLibrary.doesUserExist(enteredID);
                     //lets check if user exists
                     if (currentManagerUser != null) {
                         //user exists, now we can check ask and check the password
-                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ", "Please input your password.");
+                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ", "Invalid input. Please try again. ");
                         if (currentManagerUser.checkPassword(enteredPassword)) {
                             managerMenu();
                         } else {
@@ -54,11 +54,11 @@ public class DartController {
                 }
 
                 case "e" -> {
-                    String enteredID = InputClass.askStringInput("Please enter your ID: ", "ID not found. Please enter a valid ID.");
+                    String enteredID = InputClass.askStringInput("Please enter your ID: ", "Invalid input. Please try again. ");
                     Employee currentEmployeeUser = (Employee) employeeLibrary.doesUserExist(enteredID);
                     if (currentEmployeeUser != null) {
                         //user exists, now we can check ask and check the password
-                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ", "Please input your password.");
+                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ", "Invalid input. Please try again. ");
                         if (currentEmployeeUser.checkPassword(enteredPassword)) {
                             employeeMenu();
                         } else {
@@ -70,11 +70,11 @@ public class DartController {
                 }
 
                 case "c" -> {
-                    String enteredID = InputClass.askStringInput("Please enter your ID: ", "ID not found. Please enter a valid ID.");
+                    String enteredID = InputClass.askStringInput("Please enter your ID: ", "Invalid input. Please try again. ");
                     Customer currentCustomerUser = (Customer) customerLibrary.doesUserExist(enteredID);
                     if (currentCustomerUser != null) {
                         //user exists, now we can check ask and check the password
-                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ", "Please input your password. ");
+                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ", "Invalid input. Please try again. ");
                         if (currentCustomerUser.checkPassword(enteredPassword)) {
                             customerMenu(currentCustomerUser);
                         } else {
@@ -108,7 +108,7 @@ public class DartController {
                         "3. Enter “C” for Customer\n" +
                         "4. Enter “X” to exit system \n";
 
-        String mainMenuOption = InputClass.askStringInput(mainMenuMessage, "Invalid input. ");
+        String mainMenuOption = InputClass.askStringInput(mainMenuMessage, "Invalid input. Please try again. ");
 
         return mainMenuOption;
 
@@ -132,7 +132,7 @@ public class DartController {
                             "8. Show all rent transactions\n"+
                             "9. Return to Main Menu\n";
 
-            managerMenuOption = InputClass.askIntInput(managerMenuMessage, "Invalid input. ");
+            managerMenuOption = InputClass.askIntInput(managerMenuMessage, "Invalid input. Please try again. ");
             switch (managerMenuOption) {
                 case 1 -> userInterface.registerEmployee();
                 case 2 -> userInterface.listAllEmployees();
@@ -143,7 +143,7 @@ public class DartController {
                 case 7 -> userInterface.showTotalRentProfit();
                 case 8 -> userInterface.listRentTransactions();
                 case 9 -> System.out.println("Returning to Main Menu...");
-                default -> System.out.println("Invalid Input! Please try again!");
+                default -> System.out.println("Invalid input. Please try again. ");
             }
         } while(!(managerMenuOption == 9));
 
@@ -171,7 +171,7 @@ public class DartController {
                             "11. View all customers\n" +
                             "12. Return to Main Menu\n";
 
-            employeeMenuOption = InputClass.askIntInput(employeeMenuMessage, "Invalid input. ");
+            employeeMenuOption = InputClass.askIntInput(employeeMenuMessage, "Invalid input. Please try again. ");
 
             switch (employeeMenuOption) {
                 case 1 -> userInterface.registerGame();
@@ -186,7 +186,7 @@ public class DartController {
                 case 10 -> userInterface.listAllAlbums();
                 case 11 -> userInterface.listAllCustomers();
                 case 12 -> System.out.println("Returning to Main Menu...");
-                default -> System.out.println("Invalid Input! Please try again!");
+                default -> System.out.println("Invalid input. Please try again. ");
             }
         } while(!(employeeMenuOption == 12));
 
@@ -212,7 +212,7 @@ public class DartController {
                             "11. Request membership upgrade\n" +
                             "12. View my credits\n" +
                             "13. Return to Main Menu\n";
-            customerMenuOption = InputClass.askIntInput(customerMenuMessage, "Invalid input. ");
+            customerMenuOption = InputClass.askIntInput(customerMenuMessage, "Invalid input. Please try again. ");
             switch (customerMenuOption) {
                 case 1 -> userInterface.searchItem();
                 case 2 -> userInterface.viewByAverageRating();
@@ -227,7 +227,7 @@ public class DartController {
                 case 11-> userInterface.requestMembershipUpgrade(customer);
                 case 12 -> userInterface.viewCredits(customer);
                 case 13 -> System.out.println("Returning to Main Menu...");
-                default -> System.out.println("Invalid Input! Please try again!");
+                default -> System.out.println("Invalid input. Please try again. ");
             }
         } while(!(customerMenuOption == 13));
     }
