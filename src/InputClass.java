@@ -3,19 +3,20 @@ import java.util.Scanner;
 public class InputClass {
     static Scanner input = new Scanner(System.in);
 
-    public static String askStringInput (String message, String errorMessage){
+    public static String askStringInput (String message){
         System.out.println(message);
         String data = input.nextLine();
-        if (!data.equals("")) {
-            return data;
-        } else {
-            System.out.println(errorMessage);
-            return askStringInput(message, errorMessage);
+        return data;
+    }
+
+    public static String isItEmpty(String data, String errorMessage){
+        while (data.trim().equals("")) {
+            data = askStringInput(errorMessage);
         }
+        return data;
     }
 
     public static double askDoubleInput (String message, String errorMessage){
-
         System.out.println(message);
         String dataInput  = input.nextLine();
         //Instead of taking input as a double and risking an error if the user enters a string

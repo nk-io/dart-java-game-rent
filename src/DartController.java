@@ -37,12 +37,12 @@ public class DartController {
             // Formats the received input to lower case so the program doesn't need to check whether it's upper or lower case
             switch (mainMenuOption.toLowerCase()) {
                 case "m" -> {
-                    String enteredID = InputClass.askStringInput("Please enter your ID: ", "Invalid input. Please try again. ");
+                    String enteredID = InputClass.askStringInput("Please enter your ID: ");
                     Manager currentManagerUser = (Manager) managerLibrary.doesUserExist(enteredID);
                     //lets check if user exists
                     if (currentManagerUser != null) {
                         //user exists, now we can check ask and check the password
-                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ", "Invalid input. Please try again. ");
+                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
                         if (currentManagerUser.checkPassword(enteredPassword)) {
                             managerMenu();
                         } else {
@@ -54,11 +54,11 @@ public class DartController {
                 }
 
                 case "e" -> {
-                    String enteredID = InputClass.askStringInput("Please enter your ID: ", "Invalid input. Please try again. ");
+                    String enteredID = InputClass.askStringInput("Please enter your ID: ");
                     Employee currentEmployeeUser = (Employee) employeeLibrary.doesUserExist(enteredID);
                     if (currentEmployeeUser != null) {
                         //user exists, now we can check ask and check the password
-                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ", "Invalid input. Please try again. ");
+                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
                         if (currentEmployeeUser.checkPassword(enteredPassword)) {
                             employeeMenu();
                         } else {
@@ -70,11 +70,11 @@ public class DartController {
                 }
 
                 case "c" -> {
-                    String enteredID = InputClass.askStringInput("Please enter your ID: ", "Invalid input. Please try again. ");
+                    String enteredID = InputClass.askStringInput("Please enter your ID: ");
                     Customer currentCustomerUser = (Customer) customerLibrary.doesUserExist(enteredID);
                     if (currentCustomerUser != null) {
                         //user exists, now we can check ask and check the password
-                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ", "Invalid input. Please try again. ");
+                        String enteredPassword = InputClass.askStringInput("Please type the password to enter: ");
                         if (currentCustomerUser.checkPassword(enteredPassword)) {
                             customerMenu(currentCustomerUser);
                         } else {
@@ -108,7 +108,7 @@ public class DartController {
                         "3. Enter “C” for Customer\n" +
                         "4. Enter “X” to exit system \n";
 
-        String mainMenuOption = InputClass.askStringInput(mainMenuMessage, "Invalid input. Please try again. ");
+        String mainMenuOption = InputClass.askStringInput(mainMenuMessage);
 
         return mainMenuOption;
 
