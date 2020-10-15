@@ -326,6 +326,11 @@ public class UserInterface {
         }
     }
 
+//--------------------------------------------Export
+    public void createExport(){
+        Export.createExport(rentHistoryLibrary.exportRentHistory());
+    }
+
 //--------------------------------------------People
 
     public void registerCustomer(){

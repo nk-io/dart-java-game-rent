@@ -22,6 +22,11 @@ public class RentHistory {
         return this.customer.getID();
     }
 
+    public String getItemTitle(){
+        return this.item.getTitle();
+    }
+
+
     public double getRentExpense(){
         return this.rentExpense;
     }
@@ -30,10 +35,10 @@ public class RentHistory {
     @Override
     public String toString() {
         return
-                "'customer ID='" + customer.getID() + '\'' +
-                        ", 'item ID='" + item.getID() + '\'' +
-                        ", days rented=" + daysRented +
-                        ", rent expense=" + rentExpense + "SEK" + "\n";
+                "'Customer ID: '" + customer.getID() + '\'' +
+                        ", 'Item ID: '" + item.getID() + '\'' +
+                        ", Days Rented: " + daysRented +
+                        ", Rent Expense: " + rentExpense + "SEK" + "\n";
     }
 
 }

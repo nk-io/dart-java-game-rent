@@ -130,7 +130,8 @@ public class DartController {
                             "6. View the best customer\n"+
                             "7. Show total rent profits\n"+
                             "8. Show all rent transactions\n"+
-                            "9. Return to Main Menu\n";
+                            "9. Export rent transactions\n"+
+                            "10. Return to Main Menu\n";
 
             managerMenuOption = InputClass.askIntInput(managerMenuMessage, "Invalid input. Please try again. ");
             switch (managerMenuOption) {
@@ -142,10 +143,11 @@ public class DartController {
                 case 6 -> userInterface.showBestCustomer();
                 case 7 -> userInterface.showTotalRentProfit();
                 case 8 -> userInterface.listRentTransactions();
-                case 9 -> System.out.println("Returning to Main Menu...");
+                case 9 -> userInterface.createExport();
+                case 10 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid input. Please try again. ");
             }
-        } while(!(managerMenuOption == 9));
+        } while(!(managerMenuOption == 10));
 
     }
     // Prints the employee menu and asks for integer input
