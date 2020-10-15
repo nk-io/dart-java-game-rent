@@ -23,6 +23,28 @@ public class RentHistoryLibrary {
         }
     }
 
+    public String exportRentHistory() {
+        if (rentHistoryList.size() == 0) {
+            return "There are no transactions available.";
+        } else {
+            StringBuilder builder = new StringBuilder();
+            String custID;
+            String itemID;
+            String itemTitle;
+            double rentPaid;
+            for (int i = 0; i < rentHistoryList.size(); i++) {
+                custID = rentHistoryList.get(i).getCustomerID();
+                itemID = rentHistoryList.get(i).getItemID();
+                itemTitle = rentHistoryList.get(i).getItemTitle();
+                rentPaid = rentHistoryList.get(i).getRentExpense();
+                builder.append("customer id: " + custID + "; item id: " + itemID + "; item title: "  + itemTitle  + "; rent paid: " + rentPaid + ";");
+                builder.append("\n");
+            }
+            return builder.toString();
+        }
+    }
+
+
     // had to change epic feature 6.3 to now calculate here so code isn't repeated
     public double calculateTotalProfit(){
         double totalRentProfit = 0.0;
