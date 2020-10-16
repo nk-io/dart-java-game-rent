@@ -66,7 +66,10 @@ abstract class ItemLibrary {
         return false;
     }
 
-    public double returnItem(String itemToReturn, int daysRented, Customer customer) {
+    public double returnItem(String itemToReturn, int daysRented, Customer customer) throws Exception {
+        if (daysRented < 1){
+            throw new Exception("Invalid operation. Upon returning an item, the number of days rented must be positive.");
+        }
         double rentExpense=0;
         for (int i = 0; i < itemList.size(); i++) {
             if (!itemList.get(i).isItemAvailableToRent()) {
