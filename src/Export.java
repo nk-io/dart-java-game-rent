@@ -9,13 +9,12 @@ public class Export {
             File export = new File("export.txt");
             if (export.createNewFile()) {
                 System.out.println("Export created: " + export.getName());
-                writeToFile(rentHistory);
             } else {
                 System.out.println("Export already exists. Updating export...");
-                writeToFile(rentHistory);
             }
+            writeToFile(rentHistory);
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("Something went wrong.");
         }
     }
 
@@ -25,7 +24,7 @@ public class Export {
             writer.write(rentHistory);
             writer.close();
         } catch (IOException e) {
-            System.out.println("An error occurred.");
+            System.out.println("Something went wrong.");
         }
     }
 
