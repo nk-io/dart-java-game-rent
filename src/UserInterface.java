@@ -134,28 +134,23 @@ public class UserInterface {
             String idToReturn = InputClass.askStringInput("Please enter the ID of the game you want to return: ");
             Game isIDRight = (Game) gameLibrary.doesItemExist(idToReturn);
             if (isIDRight != null && !gameLibrary.isItAvailable(idToReturn) && customer.checkIfTheItemRentedByCustomer(idToReturn)) {
-                int tries = 0;
-                do {
-                    try {
-                        double rentExpense = 0;
-                        int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ", "Invalid input. Please enter an integer. ");
+                double rentExpense = 0;
+                int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ", "Invalid input. Please enter an integer. ");
+                while (daysRented < 1) {
+                    daysRented = InputClass.askIntInput("Invalid operation. Upon returning an item, the number of days rented must be positive." ,"Invalid input. Please enter an integer. ");
+                }
+                if (customer.getStoreCredits() > 4) {
+                    rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
+                    System.out.println("You have used 5 credits and rented the game for free.");
+                } else {
+                    rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
+                    System.out.println("The total fee is: " + rentExpense + " SEK.");
+                    System.out.println("The game has been successfully returned. ");
+                }
 
-                        if (customer.getStoreCredits() > 4) {
-                            rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
-                            System.out.println("You have used 5 credits and rented the game for free.");
-                        } else {
-                            rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
-                            System.out.println("The total fee is: " + rentExpense + " SEK.");
-                            System.out.println("The game has been successfully returned. ");
-                        }
-                        giveRating(isIDRight, customer);
-                        RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
-                        rentHistoryLibrary.addRentHistory(newTransaction);
-                        tries += 1;
-                    } catch (Exception e){
-                        System.out.println(e.getMessage());
-                    }
-                } while (tries == 0);
+                giveRating(isIDRight, customer);
+                RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
+                rentHistoryLibrary.addRentHistory(newTransaction);
             } else {
                 System.out.println("Game with ID: " + idToReturn + " was not found or is not rented by you. ");
             }
@@ -172,31 +167,28 @@ public class UserInterface {
             String idToReturn = InputClass.askStringInput("Please enter the ID of the album you want to return: ");
             Album isIDRight = (Album) albumLibrary.doesItemExist(idToReturn);
             if (isIDRight != null && !albumLibrary.isItAvailable(idToReturn) && customer.checkIfTheItemRentedByCustomer(idToReturn)){
-                int tries = 0;
-                do {
-                    try {
-                        double rentExpense = 0;
-                        int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ", "Invalid input. Please enter an integer. ");
-                        if (customer.getStoreCredits() > 4){
-                            System.out.println("You have used 5 credits and rented the album for free.");
-                            rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
-                        } else {
-                            rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
-                            System.out.println("The total fee is: " + rentExpense + " SEK.");
-                            System.out.println("The album has been successfully returned. ");
-                        }
-                        giveRating(isIDRight, customer);
-                        RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
-                        rentHistoryLibrary.addRentHistory(newTransaction);
-                        tries += 1;
-                    } catch (Exception e){
-                        System.out.println(e.getMessage());
-                    }
-                } while (tries == 0);
+                double rentExpense = 0;
+                int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ", "Invalid input. Please enter an integer. ");
+                while (daysRented < 1) {
+                    daysRented = InputClass.askIntInput("Invalid operation. Upon returning an item, the number of days rented must be positive.", "Invalid input. Please enter an integer. ");
+                }
+                if (customer.getStoreCredits() > 4){
+                    System.out.println("You have used 5 credits and rented the album for free.");
+                    rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
+
+                } else {
+                    rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
+                    System.out.println("The total fee is: " + rentExpense + " SEK.");
+                    System.out.println("The album has been successfully returned. ");
+                };
+                giveRating(isIDRight, customer);
+                RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
+                rentHistoryLibrary.addRentHistory(newTransaction);
             } else {
                 System.out.println("Album with ID: " + idToReturn + " was not found or is not rented by you. ");
             }
         }
+
     }
 
 
@@ -335,6 +327,7 @@ public class UserInterface {
     }
 
 //--------------------------------------------Export
+
     public void createExport(){
         Export.createExport(rentHistoryLibrary.exportRentHistory());
     }
