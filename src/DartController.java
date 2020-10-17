@@ -134,9 +134,10 @@ public class DartController {
                             "6. View the best customer\n"+
                             "7. Show total rent profits\n"+
                             "8. Show all rent transactions\n"+
-                            "9. Return to Main Menu\n";
+                            "9. Export rent transactions\n"+
+                            "10. Return to Main Menu\n";
 
-            managerMenuOption = InputClass.askIntInput(managerMenuMessage);
+            managerMenuOption = InputClass.askIntInput(managerMenuMessage, "Invalid input. Please try again. ");
             switch (managerMenuOption) {
                 case 1 -> userInterface.registerEmployee();
                 case 2 -> userInterface.listAllEmployees();
@@ -146,10 +147,11 @@ public class DartController {
                 case 6 -> userInterface.showBestCustomer();
                 case 7 -> userInterface.showTotalRentProfit();
                 case 8 -> userInterface.listRentTransactions();
-                case 9 -> System.out.println("Returning to Main Menu...");
-                default -> System.out.println("Invalid Input! Please try again!");
+                case 9 -> userInterface.createExport();
+                case 10 -> System.out.println("Returning to Main Menu...");
+                default -> System.out.println("Invalid input. Please try again. ");
             }
-        } while(!(managerMenuOption == 9));
+        } while(!(managerMenuOption == 10));
 
     }
     // Prints the employee menu and asks for integer input
@@ -175,7 +177,7 @@ public class DartController {
                             "11. View all customers\n" +
                             "12. Return to Main Menu\n";
 
-            employeeMenuOption = InputClass.askIntInput(employeeMenuMessage);
+            employeeMenuOption = InputClass.askIntInput(employeeMenuMessage, "Invalid input. Please try again. ");
 
             switch (employeeMenuOption) {
                 case 1 -> userInterface.registerGame();
@@ -190,7 +192,7 @@ public class DartController {
                 case 10 -> userInterface.listAllAlbums();
                 case 11 -> userInterface.listAllCustomers();
                 case 12 -> System.out.println("Returning to Main Menu...");
-                default -> System.out.println("Invalid Input! Please try again!");
+                default -> System.out.println("Invalid input. Please try again. ");
             }
         } while(!(employeeMenuOption == 12));
 
@@ -216,7 +218,7 @@ public class DartController {
                             "11. Request membership upgrade\n" +
                             "12. View my credits\n" +
                             "13. Return to Main Menu\n";
-            customerMenuOption = InputClass.askIntInput(customerMenuMessage);
+            customerMenuOption = InputClass.askIntInput(customerMenuMessage, "Invalid input. Please try again. ");
             switch (customerMenuOption) {
                 case 1 -> userInterface.searchItem();
                 case 2 -> userInterface.viewByAverageRating();
@@ -231,7 +233,7 @@ public class DartController {
                 case 11-> userInterface.requestMembershipUpgrade(customer);
                 case 12 -> userInterface.viewCredits(customer);
                 case 13 -> System.out.println("Returning to Main Menu...");
-                default -> System.out.println("Invalid Input! Please try again!");
+                default -> System.out.println("Invalid input. Please try again. ");
             }
         } while(!(customerMenuOption == 13));
     }
