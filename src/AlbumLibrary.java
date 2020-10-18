@@ -1,4 +1,6 @@
+//import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class AlbumLibrary extends ItemLibrary {
 
@@ -9,8 +11,23 @@ public class AlbumLibrary extends ItemLibrary {
 
     }
 
+    public String sortByYear(ArrayList<Item> item) {
+        ArrayList<Album> tempList = new ArrayList<>();
+        tempList = (ArrayList) item.clone();
+
+        tempList.sort(Comparator.comparing(Album::getYear).reversed());
+
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < tempList.size(); i++) {
+            builder.append(tempList.get(i).toString());
+        }
+
+        return builder.toString();
+    }
+
     public String searchByYear(int year) {
         ArrayList<Item> subList = new ArrayList<>();
+        String subListByRating;
         for (int i = 0; i < getItems().size(); i++) {
             Album currentAlbum = (Album) getItems().get(i);
             if (year == currentAlbum.getYear()) {
@@ -20,15 +37,8 @@ public class AlbumLibrary extends ItemLibrary {
         if (subList.size() == 0) {
             return "There are no registered albums released in the given year.";
         } else {
-            subList = sortedItems(subList);
-            StringBuilder builder = new StringBuilder();
-            builder.append("Albums are sorted by average ratings\n");
-            for(int i=0; i<subList.size(); i++){
-                builder.append(subList.get(i).toString());
-
-            }
-            return builder.toString();
+            subListByRating = sortByRating(subList);
+            return subListByRating;
         }
     }
-
 }

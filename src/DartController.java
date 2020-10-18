@@ -202,7 +202,7 @@ public class DartController {
             String customerMenuMessage =
                     "Customer Screen - Type one of the options below:\n" +
                             "1. Search for an item\n" +
-                            "2. View items by average rating\n" +
+                            "2. View sorted items\n" +
                             "3. View reviews of an item\n" +
                             "4. Rent a game\n" +
                             "5. Return a game\n" +
@@ -217,7 +217,7 @@ public class DartController {
             customerMenuOption = InputClass.askIntInput(customerMenuMessage, "Invalid input. Please try again. ");
             switch (customerMenuOption) {
                 case 1 -> userInterface.searchItem();
-                case 2 -> userInterface.viewByAverageRating();
+                case 2 -> userInterface.viewSortedItems();
                 case 3 -> userInterface.viewItemReviews();
                 case 4 -> userInterface.rentGame(customer);
                 case 5 -> userInterface.returnGame(customer);

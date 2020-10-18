@@ -10,6 +10,7 @@ public class GameLibrary extends ItemLibrary{
 
     public String searchByGenre(String genre) {
         ArrayList<Item> subList = new ArrayList<>();
+        String subListByGenre;
         for (int i = 0; i < getItems().size(); i++) {
             Game currentGame = (Game) getItems().get(i);
             if (currentGame.getGenre().equalsIgnoreCase(genre)) {
@@ -19,14 +20,8 @@ public class GameLibrary extends ItemLibrary{
         if(subList.size() == 0){
             return "There are no games with the given genre.";
         } else {
-            subList = sortedItems(subList);
-            StringBuilder builder = new StringBuilder();
-            builder.append("Games are sorted by average ratings\n");
-            for(int i=0; i<subList.size(); i++){
-                builder.append(subList.get(i).toString());
-
-            }
-            return builder.toString();
+            subListByGenre = sortByRating(subList);
+            return subListByGenre   ;
         }
     }
 }

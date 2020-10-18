@@ -252,38 +252,49 @@ public class UserInterface {
 
 
     public void searchItem(){
-        String itemCheck = InputClass.askStringInput("What is the item you are looking for? Type G for games, or A for albums.");
-        while(!itemCheck.equalsIgnoreCase("G") && !itemCheck.equalsIgnoreCase("A")){
-            itemCheck = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!");
+        String itemOption = InputClass.askStringInput("What is the item you are looking for? Type G for games, or A for albums.");
+        while(!itemOption.equalsIgnoreCase("G") && !itemOption.equalsIgnoreCase("A")){
+            itemOption = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!");
         }
-        if(itemCheck.equalsIgnoreCase("G")){
+        if(itemOption.equalsIgnoreCase("G")){
             String genreToSearch = InputClass.askStringInput("Please enter the genre you are looking for: ");
             String gamesWithGenre = gameLibrary.searchByGenre(genreToSearch);
             System.out.println(gamesWithGenre);
-        } else if(itemCheck.equalsIgnoreCase("A")){
+        } else if(itemOption.equalsIgnoreCase("A")){
             int yearToSearch = InputClass.askIntInput("Please enter the year you are looking for: ", "Invalid input. Please enter an integer. ");
             String albumsByYear = albumLibrary.searchByYear(yearToSearch);
             System.out.println(albumsByYear);
         }
     }
 
-    public void viewByAverageRating(){
-        String itemCheck = InputClass.askStringInput("Select an item: Type G for games, or A for albums.");
-        while (!itemCheck.equalsIgnoreCase("G") && !itemCheck.equalsIgnoreCase("A")) {
-            itemCheck = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!");
+    public void viewSortedItems(){
+        String itemOption = InputClass.askStringInput("Select an item: Type G for games, or A for albums.");
+        while (!itemOption.equalsIgnoreCase("G") && !itemOption.equalsIgnoreCase("A")) {
+            itemOption = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!");
         }
-        if (itemCheck.equalsIgnoreCase("G")) {
-            ArrayList<Item> sortedGames = gameLibrary.sortedItems(gameLibrary.getItems());
-            for(Item game : sortedGames){
-                System.out.println(game);
+
+        if (itemOption.equalsIgnoreCase("G")) {
+            String sortedGames = gameLibrary.sortByRating(gameLibrary.getItems());
+            System.out.println("The following games are sorted by average rating.");
+            System.out.println(sortedGames);
+        } else if (itemOption.equalsIgnoreCase("A")) {
+            String sortOption = InputClass.askStringInput("Select sorting: Type R to view by average rating, or Y to view by release year");
+
+            while (!sortOption.equalsIgnoreCase("R") && !sortOption.equalsIgnoreCase("Y")) {
+                sortOption = InputClass.askStringInput("Invalid input! Please enter R or Y!");
             }
-        } else if (itemCheck.equalsIgnoreCase("A")) {
-            ArrayList<Item> sortedAlbums = albumLibrary.sortedItems(albumLibrary.getItems());
-            for(Item album : sortedAlbums) {
-                System.out.println(album);
+            if (sortOption.equalsIgnoreCase("R")) {
+                String albumsByRating = albumLibrary.sortByRating(albumLibrary.getItems());
+                System.out.println("The following albums are sorted by average rating.");
+                System.out.println(albumsByRating);
+            } else if (sortOption.equalsIgnoreCase("Y")) {
+                String albumsByYear = albumLibrary.sortByYear(albumLibrary.getItems());
+                System.out.println("The following games are sorted by release year.");
+                System.out.println(albumsByYear);
             }
         }
     }
+
     public void viewItemReviews(){
         System.out.println("--- List of All Games ---");
         listAllGames();

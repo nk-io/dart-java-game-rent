@@ -104,10 +104,11 @@ abstract class ItemLibrary {
         }
     }
 
-    public ArrayList<Item> sortedItems(ArrayList <Item> item){
-        ArrayList<Item> temp = new ArrayList<>();
-        temp = (ArrayList) item.clone();
-        temp.sort(Collections.reverseOrder(new Comparator<Item>() {
+    public String sortByRating(ArrayList <Item> item){
+        ArrayList<Item> tempList = new ArrayList<>();
+        tempList = (ArrayList) item.clone();
+
+        tempList.sort(Collections.reverseOrder(new Comparator<Item>() {
 
             @Override
             public int compare(Item i1, Item i2) {
@@ -118,7 +119,12 @@ abstract class ItemLibrary {
                 return 0;
             }
         }));
-        return temp;
+
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < tempList.size(); i++){
+            builder.append(tempList.get(i).toString());
+        }
+        return builder.toString();
     }
 
 }
