@@ -236,18 +236,18 @@ public class UserInterface {
 
 
     private void giveRatingScore(Item returnedItem) {
-            int userRating = InputClass.askIntInput("Please enter your rating (a number between 0 and 5): ", "Invalid input. Please enter an integer. ");
-            while (userRating < 0 || userRating > 5) {
-                userRating = InputClass.askIntInput("Please enter a number between 0 and 5: ", "Invalid input. Please inter an integer. ");
-            }
-            returnedItem.giveRating(userRating);
+        int userRating = InputClass.askIntInput("Please enter your rating (a number between 0 and 5): ", "Invalid input. Please enter an integer. ");
+        while (userRating < 0 || userRating > 5) {
+            userRating = InputClass.askIntInput("Please enter a number between 0 and 5: ", "Invalid input. Please inter an integer. ");
+        }
+        returnedItem.giveRating(userRating);
     }
 
 
     private void giveWrittenReview(Item returnedItem, Customer customer){
-            String review = InputClass.askStringInput("Please enter your written review: ");
-            reviewLibrary.submitReview(returnedItem.getID(), customer, review);
-            System.out.println("Thank you for leaving a review and rating!");
+        String review = InputClass.askStringInput("Please enter your written review: ");
+        reviewLibrary.submitReview(returnedItem.getID(), customer, review);
+        System.out.println("Thank you for leaving a review and rating!");
     }
 
 
@@ -309,7 +309,7 @@ public class UserInterface {
     public void listRentTransactions(){
         System.out.println("List of rent history transactions: \n" + rentHistoryLibrary.showAllRentHistory());
     }
-  
+
     public void showMostProfitableItem(){
         String itemID = rentHistoryLibrary.getMostProfitableItem();
         Item itemInfo;
@@ -335,6 +335,7 @@ public class UserInterface {
     }
 
 //--------------------------------------------Export
+
     public void createExport(){
         Export.createExport(rentHistoryLibrary.exportRentHistory());
     }

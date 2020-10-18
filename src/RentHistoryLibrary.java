@@ -37,7 +37,7 @@ public class RentHistoryLibrary {
                 itemID = rentHistoryList.get(i).getItemID();
                 itemTitle = rentHistoryList.get(i).getItemTitle();
                 rentPaid = rentHistoryList.get(i).getRentExpense();
-                builder.append("customer id: " + custID + "; item id: " + itemID + "; item title: "  + itemTitle  + "; rent paid: " + rentPaid + ";");
+                builder.append(custID + ";" + itemID + ";"  + itemTitle  + ";" + rentPaid + ";");
                 builder.append("\n");
             }
             return builder.toString();
@@ -71,22 +71,6 @@ public class RentHistoryLibrary {
             return builder.toString();
         }
     }
-
-    public int checkFrequencyOfItemID(String ItemID){
-        int frequency = 0;
-        ArrayList<String> IDS = new ArrayList<String>();
-        for(int i = 0; i < rentHistoryList.size();i++){
-            IDS.add(rentHistoryList.get(i).getItemID());
-        }
-        Set<String> IDSet = new HashSet<String>(IDS);
-        for (String id : IDSet) {
-            if(ItemID.equals(id)){
-                frequency = Collections.frequency(IDS, id);
-            }
-        }
-        return frequency;
-    }
-
 
     public String getMostProfitableItem() {
         if(rentHistoryList.size() == 0){
