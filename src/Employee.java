@@ -2,6 +2,8 @@
 //Employee Menu and Employee classes have been merged
 //Methods are no longer statics
 //Some properties have been inherited from parent User class
+import Exceptions.*;
+
 import java.time.LocalDateTime;
 public class Employee extends User{
 
@@ -13,8 +15,18 @@ public class Employee extends User{
     private double ageBonus;
 
 
-    Employee(String name, String password, int birthYear, String address, double grossSalary) {
+    Employee(String name, String password, int birthYear, String address, double grossSalary) throws EmployeeNegativeBirthYearException,EmployeeEmptyAddressException,EmployeeNegativeSalaryException {
         super(name, password);
+        if(birthYear<0){
+            throw new EmployeeNegativeBirthYearException();
+        }
+        else if(address.isEmpty()){
+            throw new EmployeeEmptyAddressException();
+        }
+        else if(grossSalary<0){
+            throw new EmployeeNegativeSalaryException();
+        }
+
         this.birthYear = birthYear;
         this.address = address;
         setGrossSalary(grossSalary);

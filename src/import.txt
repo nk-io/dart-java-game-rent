@@ -1,0 +1,8 @@
+Employee;Alan Turing;000000;1912;Intelligence Street 4;20000
+Customer;Beyonce;000000;
+Employee;Barbara Liskov;000000;1930;OOP Street 1;35000
+Game;Fire Emblem;Strategy;150
+Game;Diablo 3;RPG;190
+Album;Chromatica;Lady Gaga;2020;250
+Album;Dirty Computer;Janelle Monáe;2018;250
+Customer;Meryl Streep;000000;

@@ -1,8 +1,13 @@
+import Exceptions.GameEmptyGenreException;
+
 public class Game extends Item {
     private String genre;
 
-    Game(String title, double dailyRentFee, String genre){
+    Game(String title, double dailyRentFee, String genre) throws GameEmptyGenreException{
         super(title, dailyRentFee);
+        if(genre.isEmpty()){
+            throw new GameEmptyGenreException();
+        }
         this.genre=genre;
     }
     public String getGenre() {

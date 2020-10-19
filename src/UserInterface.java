@@ -1,3 +1,5 @@
+import Exceptions.*;
+
 import java.util.ArrayList;
 
 public class UserInterface {
@@ -26,14 +28,20 @@ public class UserInterface {
     //--------------------------------------------Items
 
     public void registerGame(){
-        String title = InputClass.isItEmpty(InputClass.askStringInput("Please enter the name of the game: "), "error message");
+        String title = InputClass.askStringInput("Please enter the name of the game: ");
         String genre = InputClass.askStringInput("Please enter the genre of the game: ");
-        double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ", "Invalid input");
+        double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ", "Invalid input. Please enter a number.B");
         while(dailyRentFee < 0 ){
-            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ", "Invalid input");
+            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ", "Invalid input. Please enter a number.");
         }
-        Game newGame = gameLibrary.registerGame(title, genre, dailyRentFee);
-        System.out.println("The game with " + newGame.toString() + " has been created successfully.");
+        try{
+            Game newGame = gameLibrary.registerGame(title, genre, dailyRentFee);
+            System.out.println("The game with " + newGame.toString() + " has been created successfully.");
+        }catch (EmptyNameException | NegativeRentFeeException | GameEmptyGenreException ex){
+            System.out.println(ex.getMessage());
+        }
+
+
     }
 
 
@@ -65,8 +73,13 @@ public class UserInterface {
         while(dailyRentFee < 0 ){
             dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ", "Invalid input");
         }
-        Album newAlbum = albumLibrary.registerAlbum(title, artist, year, dailyRentFee);
-        System.out.println("The album with " + newAlbum.toString() + " has been created successfully.");
+        try{
+            Album newAlbum = albumLibrary.registerAlbum(title, artist, year, dailyRentFee);
+            System.out.println("The album with " + newAlbum.toString() + " has been created successfully.");
+        } catch (EmptyNameException | NegativeRentFeeException | AlbumEmptyArtistException | AlbumNegativeYearException ex){
+            System.out.println(ex.getMessage());
+        }
+
     }
 
 
@@ -345,8 +358,12 @@ public class UserInterface {
     public void registerCustomer(){
         String name = InputClass.askStringInput("Please enter the name of the customer: ");
         String password = InputClass.askStringInput("Please enter a new password: ");
-        Customer newCustomer = customerLibrary.registerCustomer(name, password);
-        System.out.println("The customer " + newCustomer.toString() + " has been created successfully.");
+        try{
+            Customer newCustomer = customerLibrary.registerCustomer(name, password);
+            System.out.println("The customer " + newCustomer.toString() + " has been created successfully.");
+        } catch (EmptyNameException | EmptyPasswordException ex){
+            System.out.println(ex.getMessage());
+        }
     }
 
 
@@ -447,8 +464,13 @@ public class UserInterface {
         while(grossSalary < 0){
             grossSalary = InputClass.askDoubleInput("Please enter a valid gross salary (in SEK): ", "Invalid input. Please enter a number. ");
         }
-        Employee newEmployee = employeeLibrary.registerEmployee(employeeName, password, birthYear, employeeAddress,grossSalary);
-        System.out.println(newEmployee.toString()+ " has been created successfully!");
+        try{
+            Employee newEmployee = employeeLibrary.registerEmployee(employeeName, password, birthYear, employeeAddress,grossSalary);
+            System.out.println(newEmployee.toString()+ " has been created successfully!");
+        } catch ( EmptyNameException | EmptyPasswordException | EmployeeNegativeBirthYearException | EmployeeEmptyAddressException | EmployeeNegativeSalaryException ex){
+            System.out.println(ex.getMessage());
+        }
+
     }
 
 
@@ -524,4 +546,8 @@ public class UserInterface {
         messageLibrary.deleteAMessage(enteredID);
     }
 
+    public void importDataFromATxt() {
+        String filePath = InputClass.askStringInput("Please enter the file path: ");
+        System.out.println(Import.importDataFromATxt(filePath, customerLibrary,employeeLibrary,gameLibrary,albumLibrary));
+    }
 }

@@ -1,3 +1,6 @@
+import Exceptions.EmptyNameException;
+import Exceptions.EmptyPasswordException;
+
 import java.util.ArrayList;
 
 public class CustomerLibrary extends UserLibrary {
