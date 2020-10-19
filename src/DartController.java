@@ -2,6 +2,12 @@
 // Methods are no longer statics
 // Added messageList for Epic Feature 9
 
+import Exceptions.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
 public class DartController {
 
     private GameLibrary gameLibrary;
@@ -28,7 +34,6 @@ public class DartController {
 
     //Starts the main program loop
     public void start() {
-
         boolean mainMenuActive = true;
 
         // Starts the program by printing the main menu from DartController
@@ -131,7 +136,8 @@ public class DartController {
                             "7. Show total rent profits\n"+
                             "8. Show all rent transactions\n"+
                             "9. Export rent transactions\n"+
-                            "10. Return to Main Menu\n";
+                            "10.Import data from a txt file\n"+
+                            "11. Return to Main Menu\n";
 
             managerMenuOption = InputClass.askIntInput(managerMenuMessage, "Invalid input. Please try again. ");
             switch (managerMenuOption) {
@@ -144,10 +150,11 @@ public class DartController {
                 case 7 -> userInterface.showTotalRentProfit();
                 case 8 -> userInterface.listRentTransactions();
                 case 9 -> userInterface.createExport();
-                case 10 -> System.out.println("Returning to Main Menu...");
+                case 10 -> userInterface.importDataFromATxt();
+                case 11 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid input. Please try again. ");
             }
-        } while(!(managerMenuOption == 10));
+        } while(!(managerMenuOption == 11));
 
     }
     // Prints the employee menu and asks for integer input

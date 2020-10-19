@@ -9,7 +9,6 @@ public class Customer extends User {
     private Membership membership = Membership.NONE;
     private int storeCredits = 0;
     private boolean upgradeRequest = false;
-    //private ArrayList<RentalRecord> records = new ArrayList<>();
     private ArrayList<Item> currentRentedItemsByCustomer = new ArrayList<>();
 
     Customer(String name, String password){

@@ -1,10 +1,19 @@
+import Exceptions.AlbumEmptyArtistException;
+import Exceptions.AlbumNegativeYearException;
+
 public class Album extends Item{
 
     private String artist;
     private int year;
 
-    Album(String title, double dailyRentFee, String artist, int year){
+    Album(String title, double dailyRentFee, String artist, int year) throws AlbumEmptyArtistException, AlbumNegativeYearException{
         super(title, dailyRentFee);
+        if(artist.isEmpty()){
+            throw new AlbumEmptyArtistException();
+        }
+        if(year<0){
+            throw new AlbumNegativeYearException();
+        }
         this.artist = artist;
         this.year = year;
     }

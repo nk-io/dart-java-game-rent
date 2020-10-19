@@ -1,8 +1,21 @@
+import Exceptions.EmptyNameException;
+import Exceptions.GameEmptyGenreException;
+import Exceptions.NegativeRentFeeException;
+
 import java.util.ArrayList;
 
 public class GameLibrary extends ItemLibrary{
 
     public Game registerGame(String title, String genre, double dailyRentFee){
+        if(title.isEmpty()){
+            throw new EmptyNameException("Game");
+        }
+        if(genre.isEmpty()){
+            throw new GameEmptyGenreException();
+        }
+        if(dailyRentFee<0){
+            throw new NegativeRentFeeException("Game");
+        }
         Game newGame = new Game(title, dailyRentFee, genre);
         addItemToList(newGame);
         return newGame;

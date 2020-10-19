@@ -2,14 +2,23 @@
 // Password property and methods have been added to achieve password protection for every user
 // UserMenu class became User class and its parent class for all user classes
 
+import Exceptions.EmptyNameException;
+import Exceptions.EmptyPasswordException;
+
 //Parent class for all users
-public class User {
+abstract class User {
 
     private String ID;
     private String name;
     private String password;
 
-    User(String name, String password){
+    User(String name, String password) throws EmptyNameException, EmptyPasswordException {
+        if(name.isEmpty()){
+            throw new EmptyNameException(getClass().toString().split(" ")[1]);
+        }
+        if(password.isEmpty()){
+            throw new EmptyPasswordException(getClass().toString().split(" ")[1]);
+        }
         this.ID=RandomUID.generateRandomID();
         this.name = name;
         this.password = password;

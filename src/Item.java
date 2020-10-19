@@ -1,4 +1,7 @@
-public class Item {
+import Exceptions.EmptyNameException;
+import Exceptions.NegativeRentFeeException;
+
+abstract class Item {
 
     private String ID;
     private String title;
@@ -7,7 +10,13 @@ public class Item {
     private double averageRating;
     private int numOfRatings;
 
-    public Item(String title, double dailyRentFee){
+    public Item(String title, double dailyRentFee) throws EmptyNameException, NegativeRentFeeException {
+        if(title.isEmpty()){
+            throw new EmptyNameException(getClass().toString().split(" ")[1]);
+        }
+        if(dailyRentFee<0){
+            throw new NegativeRentFeeException(getClass().toString().split(" ")[1]);
+        }
         this.ID = RandomUID.generateRandomID();
         this.title = title;
         this.dailyRentFee = dailyRentFee;
