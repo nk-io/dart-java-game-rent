@@ -2,12 +2,6 @@
 // Methods are no longer statics
 // Added messageList for Epic Feature 9
 
-import Exceptions.*;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-
 public class DartController {
 
     private GameLibrary gameLibrary;
@@ -139,7 +133,7 @@ public class DartController {
                             "10.Import data from a txt file\n"+
                             "11. Return to Main Menu\n";
 
-            managerMenuOption = InputClass.askIntInput(managerMenuMessage, "Invalid input. Please try again. ");
+            managerMenuOption = InputClass.askIntInput(managerMenuMessage);
             switch (managerMenuOption) {
                 case 1 -> userInterface.registerEmployee();
                 case 2 -> userInterface.listAllEmployees();
@@ -180,7 +174,7 @@ public class DartController {
                             "11. View all customers\n" +
                             "12. Return to Main Menu\n";
 
-            employeeMenuOption = InputClass.askIntInput(employeeMenuMessage, "Invalid input. Please try again. ");
+            employeeMenuOption = InputClass.askIntInput(employeeMenuMessage);
 
             switch (employeeMenuOption) {
                 case 1 -> userInterface.registerGame();
@@ -221,7 +215,7 @@ public class DartController {
                             "11. Request membership upgrade\n" +
                             "12. View my credits\n" +
                             "13. Return to Main Menu\n";
-            customerMenuOption = InputClass.askIntInput(customerMenuMessage, "Invalid input. Please try again. ");
+            customerMenuOption = InputClass.askIntInput(customerMenuMessage);
             switch (customerMenuOption) {
                 case 1 -> userInterface.searchItem();
                 case 2 -> userInterface.viewSortedItems();
@@ -254,7 +248,7 @@ public class DartController {
         Game game2 =gameLibrary.registerGame("testGame2","testGenre", 350);
         Game game3 =gameLibrary.registerGame("testGame3","testGenre", 150);
         Album album1 = albumLibrary.registerAlbum("testTitle","Test Artist", 2012,200);
-        Album album2 = albumLibrary.registerAlbum("testTitle2","Test Artist2", 2012,300);
+        Album album2 = albumLibrary.registerAlbum("testTitle2","Test Artist2", 2013,300);
         Album album3 = albumLibrary.registerAlbum("testTitle3","Test Artist3", 2012,15);
         userInterface.listAllManagers();
         userInterface.listAllEmployees();

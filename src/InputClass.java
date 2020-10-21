@@ -9,14 +9,7 @@ public class InputClass {
         return data;
     }
 
-    public static String isItEmpty(String data, String errorMessage){
-        while (data.trim().equals("")) {
-            data = askStringInput(errorMessage);
-        }
-        return data;
-    }
-
-    public static double askDoubleInput (String message, String errorMessage){
+    public static double askDoubleInput (String message){
         System.out.println(message);
         String dataInput  = input.nextLine();
         //Instead of taking input as a double and risking an error if the user enters a string
@@ -26,20 +19,18 @@ public class InputClass {
             double data = Double.parseDouble(dataInput);
             return data;
         } catch (Exception e) {
-            message = errorMessage;
-            return askDoubleInput(message, errorMessage);
+            return askDoubleInput("Invalid input. Please enter a number.");
         }
     }
 
-    public static int askIntInput(String message, String errorMessage) {
+    public static int askIntInput(String message) {
         System.out.println(message);
         String dataInput  = input.nextLine();
         try {
             int data = Integer.parseInt(dataInput);
             return data;
         } catch (Exception e) {
-            message = errorMessage;
-            return askIntInput(message, errorMessage);
+            return askIntInput("Invalid input. Please enter an integer.");
         }
     }
 

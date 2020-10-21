@@ -30,9 +30,9 @@ public class UserInterface {
     public void registerGame(){
         String title = InputClass.askStringInput("Please enter the name of the game: ");
         String genre = InputClass.askStringInput("Please enter the genre of the game: ");
-        double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ", "Invalid input. Please enter a number.B");
+        double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ");
         while(dailyRentFee < 0 ){
-            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ", "Invalid input. Please enter a number.");
+            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
         }
         try{
             Game newGame = gameLibrary.registerGame(title, genre, dailyRentFee);
@@ -40,8 +40,6 @@ public class UserInterface {
         }catch (EmptyNameException | NegativeRentFeeException | GameEmptyGenreException ex){
             System.out.println(ex.getMessage());
         }
-
-
     }
 
 
@@ -68,10 +66,10 @@ public class UserInterface {
     public void registerAlbum(){
         String title = InputClass.askStringInput("Please enter the name of the album: ");
         String artist = InputClass.askStringInput("Please enter the artist of the album: ");
-        int year = InputClass.askIntInput("Please enter the release year for the album: ", "Invalid input. Please enter an integer. ");
-        double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ", "Invalid input. Please enter a number.");
+        int year = InputClass.askIntInput("Please enter the release year for the album: ");
+        double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ");
         while(dailyRentFee < 0 ){
-            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ", "Invalid input");
+            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
         }
         try{
             Album newAlbum = albumLibrary.registerAlbum(title, artist, year, dailyRentFee);
@@ -79,7 +77,6 @@ public class UserInterface {
         } catch (EmptyNameException | NegativeRentFeeException | AlbumEmptyArtistException | AlbumNegativeYearException ex){
             System.out.println(ex.getMessage());
         }
-
     }
 
 
@@ -151,7 +148,7 @@ public class UserInterface {
                 do {
                     try {
                         double rentExpense = 0;
-                        int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ", "Invalid input. Please enter an integer. ");
+                        int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ");
 
                         if (customer.getStoreCredits() > 4) {
                             rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
@@ -189,7 +186,7 @@ public class UserInterface {
                 do {
                     try {
                         double rentExpense = 0;
-                        int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ", "Invalid input. Please enter an integer. ");
+                        int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ");
                         if (customer.getStoreCredits() > 4){
                             System.out.println("You have used 5 credits and rented the album for free.");
                             rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
@@ -249,9 +246,9 @@ public class UserInterface {
 
 
     private void giveRatingScore(Item returnedItem) {
-        int userRating = InputClass.askIntInput("Please enter your rating (a number between 0 and 5): ", "Invalid input. Please enter an integer. ");
+        int userRating = InputClass.askIntInput("Please enter your rating (a number between 0 and 5): ");
         while (userRating < 0 || userRating > 5) {
-            userRating = InputClass.askIntInput("Please enter a number between 0 and 5: ", "Invalid input. Please inter an integer. ");
+            userRating = InputClass.askIntInput("Please enter a number between 0 and 5: ");
         }
         returnedItem.giveRating(userRating);
     }
@@ -274,7 +271,7 @@ public class UserInterface {
             String gamesWithGenre = gameLibrary.searchByGenre(genreToSearch);
             System.out.println(gamesWithGenre);
         } else if(itemOption.equalsIgnoreCase("A")){
-            int yearToSearch = InputClass.askIntInput("Please enter the year you are looking for: ", "Invalid input. Please enter an integer. ");
+            int yearToSearch = InputClass.askIntInput("Please enter the year you are looking for: ");
             String albumsByYear = albumLibrary.searchByYear(yearToSearch);
             System.out.println(albumsByYear);
         }
@@ -347,8 +344,8 @@ public class UserInterface {
         } else {
             System.out.println("No items have been rented so there is no most profitable item");
         }
-
     }
+
     public void showBestCustomer(){
         String bestCustomerID =rentHistoryLibrary.getBestCustomer();
         if(bestCustomerID == null){
@@ -356,12 +353,6 @@ public class UserInterface {
         } else{
             System.out.println("Best customer: id: " + bestCustomerID + " name: " + customerLibrary.getName(bestCustomerID));
         }
-    }
-
-//--------------------------------------------Export
-
-    public void createExport(){
-        Export.createExport(rentHistoryLibrary.exportRentHistory());
     }
 
 //--------------------------------------------People
@@ -396,6 +387,7 @@ public class UserInterface {
         }
     }
 
+
     public void listAllCustomers(){
         if (customerLibrary.listAll() != null){
             System.out.println(customerLibrary.listAll());
@@ -421,16 +413,15 @@ public class UserInterface {
                 System.out.println(optionsCounter + ". Customer ID: " + customer.getID() + " | Membership: " + customer.getMembership().toString());
             }
         }
-
         if (customersToUpgrade.size() > 0) {
             optionsCounter += 1;
             System.out.println(optionsCounter + ". Return to Employee Menu.");
 
-            int option = InputClass.askIntInput("Please select the customer you wish to interact with, or return to the previous menu: ", "Invalid input. Please enter an integer. ");
+            int option = InputClass.askIntInput("Please select the customer you wish to interact with, or return to the previous menu: ");
             if (option == optionsCounter) { return;}
             else if (option > 0 && option <= customersToUpgrade.size()) {
                 Customer customer = customersToUpgrade.get(option - 1);
-                int approveOption = InputClass.askIntInput("Do you wish to approve or reject the membership request? \n1. Approve\n2. Reject", "Invalid input. Please enter an integer. ");
+                int approveOption = InputClass.askIntInput("Do you wish to approve or reject the membership request? \n1. Approve\n2. Reject");
                 if (approveOption == 1) {
 
                     switch (customer.getMembership()) {
@@ -469,11 +460,11 @@ public class UserInterface {
     public void registerEmployee(){
         String employeeName = InputClass.askStringInput("Please enter the employee's name: ");
         String password = InputClass.askStringInput("Please enter a new password: ");
-        int birthYear = InputClass.askIntInput("Please enter the employee's birth year: ", "Invalid input. Please enter an integer");
+        int birthYear = InputClass.askIntInput("Please enter the employee's birth year: ");
         String employeeAddress = InputClass.askStringInput("Please enter the employee's address: ");
-        double grossSalary = InputClass.askDoubleInput("Please enter the employee's gross salary (in SEK): ", "Invalid input. Please enter a number. ");
+        double grossSalary = InputClass.askDoubleInput("Please enter the employee's gross salary (in SEK): ");
         while(grossSalary < 0){
-            grossSalary = InputClass.askDoubleInput("Please enter a valid gross salary (in SEK): ", "Invalid input. Please enter a number. ");
+            grossSalary = InputClass.askDoubleInput("Please enter a valid gross salary (in SEK): ");
         }
         try{
             Employee newEmployee = employeeLibrary.registerEmployee(employeeName, password, birthYear, employeeAddress,grossSalary);
@@ -481,7 +472,6 @@ public class UserInterface {
         } catch ( EmptyNameException | EmptyPasswordException | EmployeeNegativeBirthYearException | EmployeeEmptyAddressException | EmployeeNegativeSalaryException ex){
             System.out.println(ex.getMessage());
         }
-
     }
 
 
@@ -525,6 +515,7 @@ public class UserInterface {
         }
     }
 
+
     public void listAllManagers(){
         if (managerLibrary.listAll() != null){
             System.out.println(managerLibrary.listAll());
@@ -557,8 +548,15 @@ public class UserInterface {
         messageLibrary.deleteAMessage(enteredID);
     }
 
+//--------------------------------------------Export/Import
+
+    public void createExport(){
+        Export.createExport(rentHistoryLibrary.exportRentHistory());
+    }
+
     public void importDataFromATxt() {
         String filePath = InputClass.askStringInput("Please enter the file path: ");
         System.out.println(Import.importDataFromATxt(filePath, customerLibrary,employeeLibrary,gameLibrary,albumLibrary));
     }
+    
 }

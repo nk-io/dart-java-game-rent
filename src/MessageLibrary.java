@@ -59,10 +59,10 @@ public class MessageLibrary {
         ArrayList<Message> messagesOfCurrentCustomer = findAllMessagesOfCustomer(customerID);
         if(messagesOfCurrentCustomer != null){
             System.out.println(showCustomersMessages(customerID));
-            int messageIndexToDelete = InputClass.askIntInput("Please enter the index of the message you want to delete: \n(Enter -1 to exit)" , "Invalid input. Please enter an integer. ");
+            int messageIndexToDelete = InputClass.askIntInput("Please enter the index of the message you want to delete: \n(Enter -1 to exit)");
             while(messageIndexToDelete == 0 || messageIndexToDelete < -1 || messageIndexToDelete > messagesOfCurrentCustomer.size()){
                 System.out.println("Invalid input!");
-                messageIndexToDelete = InputClass.askIntInput("Please enter the index of the message you want to delete: \n(Enter -1 to exit)" , "Invalid input. Please enter an integer. ");
+                messageIndexToDelete = InputClass.askIntInput("Please enter the index of the message you want to delete: \n(Enter -1 to exit)");
             }
             if (messageIndexToDelete != -1){
                 messageList.remove(messageIndexToDelete-1);

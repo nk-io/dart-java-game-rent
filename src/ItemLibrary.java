@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-
 abstract class ItemLibrary {
 
     private ArrayList<Item> itemList = new ArrayList<>();
