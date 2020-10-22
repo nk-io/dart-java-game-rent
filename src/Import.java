@@ -34,6 +34,8 @@ public class Import {
                         builder.append("Invalid input at line "+lineCounter+"\n");
                         builder.append(ex.getMessage());
                         builder.append("\n");
+                    } catch (ArrayIndexOutOfBoundsException ex){
+                        builder.append("Invalid input at line "+lineCounter+"\n");
                     }
 
                 }else if(partsOfCurrentLine[0].equalsIgnoreCase("employee")){
@@ -45,7 +47,10 @@ public class Import {
                         builder.append("Invalid input at line "+lineCounter+"\n");
                         builder.append(ex.getMessage());
                         builder.append("\n");
+                    } catch (ArrayIndexOutOfBoundsException ex){
+                        builder.append("Invalid input at line "+lineCounter+"\n");
                     }
+
                 }else if(partsOfCurrentLine[0].equalsIgnoreCase("game")){
                     try{
                         gameLibrary.registerGame(partsOfCurrentLine[1], partsOfCurrentLine[2], Double.parseDouble(partsOfCurrentLine[3]));
@@ -54,6 +59,8 @@ public class Import {
                         builder.append("Invalid input at line "+lineCounter+"\n");
                         builder.append(ex.getMessage());
                         builder.append("\n");
+                    } catch (ArrayIndexOutOfBoundsException ex){
+                        builder.append("Invalid input at line "+lineCounter+"\n");
                     }
 
                 }else if(partsOfCurrentLine[0].equalsIgnoreCase("album")){
@@ -64,6 +71,8 @@ public class Import {
                         builder.append("Invalid input at line "+lineCounter+"\n");
                         builder.append(ex.getMessage());
                         builder.append("\n");
+                    } catch (ArrayIndexOutOfBoundsException ex){
+                        builder.append("Invalid input at line "+lineCounter+"\n");
                     }
 
                 }else{

@@ -130,7 +130,7 @@ public class DartController {
                             "7. Show total rent profits\n"+
                             "8. Show all rent transactions\n"+
                             "9. Export rent transactions\n"+
-                            "10.Import data from a txt file\n"+
+                            "10. Import data from a txt file\n"+
                             "11. Return to Main Menu\n";
 
             managerMenuOption = InputClass.askIntInput(managerMenuMessage);
@@ -227,7 +227,7 @@ public class DartController {
                 case 8 -> userInterface.sendAMessage(customer.getID());
                 case 9 -> userInterface.showCustomerMessages(customer.getID());
                 case 10 -> userInterface.deleteAMessage(customer.getID());
-                case 11-> userInterface.requestMembershipUpgrade(customer);
+                case 11 -> userInterface.requestMembershipUpgrade(customer);
                 case 12 -> userInterface.viewCredits(customer);
                 case 13 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid input. Please try again. ");
