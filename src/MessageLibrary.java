@@ -63,7 +63,7 @@ class MessageLibrary {
                 messageIndexToDelete = InputClass.askIntInput("Please enter the index of the message you want to delete: \n(Enter -1 to exit)");
             }
             if (messageIndexToDelete != -1){
-                messageList.remove(messageIndexToDelete-1);
+                messageList.remove(messagesOfCurrentCustomer.get(messageIndexToDelete-1));
                 System.out.println("The message you wanted to remove has been deleted");
             }
             else{
