@@ -25,8 +25,8 @@ abstract class User {
 
     @Override
     public String toString() {
-        return "ID='" + ID + '\'' +
-                ", name='" + name + '\'';
+        return "ID= '" + ID + '\'' +
+                ", name= '" + name + '\'';
     }
 
     public String getName(){
@@ -41,21 +41,11 @@ abstract class User {
     }
     //Checks for the password for user
     public boolean checkPassword(String inputPassword) {
-        if(this.password.equals(inputPassword)){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return this.password.equals(inputPassword);
     }
 
     public boolean checkID(String inputID) {
-        if(this.ID.equals(inputID)){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return this.ID.equals(inputID);
     }
 
 }

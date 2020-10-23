@@ -23,4 +23,5 @@ class Game extends Item {
                 " SEK. Rent status: " + getRentStatus() +
                 ", Average rating: "+ getAverageRating() + "\n";
     }
+
 }

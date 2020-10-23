@@ -11,16 +11,13 @@ class AlbumLibrary extends ItemLibrary {
     }
 
     public String sortByYear(ArrayList<Item> item) {
-        ArrayList<Album> tempList = new ArrayList<>();
+        ArrayList<Album> tempList;
         tempList = (ArrayList) item.clone();
-
         tempList.sort(Comparator.comparing(Album::getYear).reversed());
-
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < tempList.size(); i++) {
             builder.append(tempList.get(i).toString());
         }
-
         return builder.toString();
     }
 
@@ -40,4 +37,5 @@ class AlbumLibrary extends ItemLibrary {
             return subListByRating;
         }
     }
+
 }

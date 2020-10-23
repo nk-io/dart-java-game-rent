@@ -15,18 +15,18 @@ abstract class ItemLibrary {
     }
 
     public Item doesItemExist(String idToSearch){
-        for (int i = 0; i < itemList.size(); i++) {
-            if (itemList.get(i).getID().equals(idToSearch)) {
-                return itemList.get(i);
+        for (Item item : itemList) {
+            if (item.getID().equals(idToSearch)) {
+                return item;
             }
         }
         return null;
     }
 
     public boolean isItAvailable(String idToSearch){
-        for (int i = 0; i < itemList.size(); i++) {
-            if (itemList.get(i).getID().equals(idToSearch)) {
-                if (itemList.get(i).isItemAvailableToRent()) {
+        for (Item item : itemList) {
+            if (item.getID().equals(idToSearch)) {
+                if (item.isItemAvailableToRent()) {
                     return true;
                 }
             }
@@ -45,19 +45,14 @@ abstract class ItemLibrary {
     }
 
 
-    public boolean areThereAnyItems(){
-        return itemList.size() != 0;
-    }
-
-
     public boolean rentItem(String idToRent, Customer customer){
         if(itemList.size() > 0){
-            for(int i = 0; i < itemList.size(); i++){
-                if(itemList.get(i).getID().equals(idToRent) && !itemList.get(i).isItemAvailableToRent()){
+            for (Item item : itemList) {
+                if (item.getID().equals(idToRent) && !item.isItemAvailableToRent()) {
                     return false;
-                } else if(itemList.get(i).getID().equals(idToRent)){
-                    itemList.get(i).setNotAvailableToRent();
-                    customer.addToCurrentRentedItemsByCustomer(itemList.get(i));
+                } else if (item.getID().equals(idToRent)) {
+                    item.setNotAvailableToRent();
+                    customer.addToCurrentRentedItemsByCustomer(item);
                     return true;
                 }
             }
@@ -70,19 +65,18 @@ abstract class ItemLibrary {
             throw new Exception("Invalid operation. Upon returning an item, the number of days rented must be positive.");
         }
         double rentExpense=0;
-        for (int i = 0; i < itemList.size(); i++) {
-            if (!itemList.get(i).isItemAvailableToRent()) {
-                if (itemList.get(i).getID().equals(itemToReturn)) {
-                    if(customer.checkIfTheItemRentedByCustomer(itemToReturn)){
-                        if(customer.getStoreCredits() > 4){
+        for (Item item : itemList) {
+            if (!item.isItemAvailableToRent()) {
+                if (item.getID().equals(itemToReturn)) {
+                    if (customer.checkIfTheItemRentedByCustomer(itemToReturn)) {
+                        if (customer.getStoreCredits() > 4) {
                             customer.decrementStoreCredits();
-                        }
-                        else{
+                        } else {
                             customer.incrementStoreCredits();
-                            rentExpense = itemList.get(i).getDailyRentFee() * daysRented * (1-customer.getDiscount());
+                            rentExpense = item.getDailyRentFee() * daysRented * (1 - customer.getDiscount());
                         }
-                        itemList.get(i).setAvailableToRent();
-                        customer.subFromCurrentRentedItemsByCustomer(itemList.get(i));
+                        item.setAvailableToRent();
+                        customer.subFromCurrentRentedItemsByCustomer(item);
                         return rentExpense;
                     }
                 }
@@ -104,9 +98,8 @@ abstract class ItemLibrary {
     }
 
     public String sortByRating(ArrayList <Item> item){
-        ArrayList<Item> tempList = new ArrayList<>();
+        ArrayList<Item> tempList;
         tempList = (ArrayList) item.clone();
-
         tempList.sort(Collections.reverseOrder(new Comparator<Item>() {
 
             @Override

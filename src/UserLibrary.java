@@ -12,9 +12,9 @@ abstract class UserLibrary {
 
 
     public User doesUserExist(String idToSearch){
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getID().equals(idToSearch)) {
-                return userList.get(i);
+        for (User user : userList) {
+            if (user.getID().equals(idToSearch)) {
+                return user;
             }
         }
         return null;
@@ -32,11 +32,6 @@ abstract class UserLibrary {
     }
 
 
-    public boolean areThereAnyUsers(){
-        return userList.size() != 0;
-    }
-
-
     public String listAll(){
         if(userList.size() < 1){
             return null;
@@ -51,13 +46,14 @@ abstract class UserLibrary {
 
 
     public String getName(String enteredID){
-        for (int i = 0; i < userList.size(); i++){
-            if (userList.get(i).checkID(enteredID)){
-                return userList.get(i).getName();
+        for (User user : userList) {
+            if (user.checkID(enteredID)) {
+                return user.getName();
             }
         }
         return null;
     }
+
 
     // Updates user by removing old user object -> new updated user
     public boolean updateUser(User user) {
@@ -70,6 +66,5 @@ abstract class UserLibrary {
         }
         return false;
     }
-
 
 }

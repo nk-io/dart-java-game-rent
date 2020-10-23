@@ -37,29 +37,30 @@ class Customer extends User {
         currentRentedItemsByCustomer.add(item);
     }
     public void setUpgradeRequest(boolean upgrade) { upgradeRequest = upgrade; }
-
     public void subFromCurrentRentedItemsByCustomer(Item item){
         currentRentedItemsByCustomer.remove(item);
     }
 
     public String getCurrentRentedGamesByCustomer(){
         StringBuilder builder = new StringBuilder();
-        for(int i=0; i< currentRentedItemsByCustomer.size(); i++){
-            if(currentRentedItemsByCustomer.get(i) instanceof Game) {
-                builder.append(currentRentedItemsByCustomer.get(i).toString());
+        for (Item item : currentRentedItemsByCustomer) {
+            if (item instanceof Game) {
+                builder.append(item.toString());
             }
         }
         return builder.toString();
     }
+
     public String getCurrentRentedAlbumsByCustomer(){
         StringBuilder builder = new StringBuilder();
-        for(int i=0; i< currentRentedItemsByCustomer.size(); i++){
-            if(currentRentedItemsByCustomer.get(i) instanceof Album) {
-                builder.append(currentRentedItemsByCustomer.get(i).toString());
+        for (Item item : currentRentedItemsByCustomer) {
+            if (item instanceof Album) {
+                builder.append(item.toString());
             }
         }
         return builder.toString();
     }
+
     public boolean checkIfTheItemRentedByCustomer(String itemID){
         for(int i=0; i<currentRentedItemsByCustomer.size(); i++){
             if(currentRentedItemsByCustomer.get(i).getID().equals(itemID)){
@@ -70,7 +71,7 @@ class Customer extends User {
     }
 
     public ArrayList getItemsIDs(){
-        ArrayList itemsId = new ArrayList();
+        ArrayList<String> itemsId = new ArrayList<>();
         for(int i=0; i< currentRentedItemsByCustomer.size(); i++){
             itemsId.add(currentRentedItemsByCustomer.get(i).getID());
         }
@@ -83,6 +84,17 @@ class Customer extends User {
 
     public void decrementStoreCredits() {
         this.storeCredits = this.storeCredits - 5;
+    }
+
+    public void upgradeCustomer(){
+        if (getMembership() instanceof RegularMembership) {
+            setMembership(new SilverMembership());
+        } else if (getMembership() instanceof SilverMembership) {
+            setMembership(new GoldMembership());
+        } else if (getMembership() instanceof GoldMembership) {
+            setMembership(new PlatinumMembership());
+        }
+        setUpgradeRequest(false);
     }
 
 }
