@@ -1,5 +1,5 @@
-import Exceptions.EmptyNameException;
-import Exceptions.NegativeRentFeeException;
+import exception.EmptyNameException;
+import exception.NegativeRentFeeException;
 
 abstract class Item {
 

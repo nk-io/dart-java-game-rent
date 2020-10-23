@@ -1,11 +1,10 @@
-// Change Log for Milestone 2
 //Employee Menu and Employee classes have been merged
 //Methods are no longer statics
 //Some properties have been inherited from parent User class
-import Exceptions.*;
+import exception.*;
 
 import java.time.LocalDateTime;
-public class Employee extends User{
+class Employee extends User{
 
     private int birthYear;
     private String address;

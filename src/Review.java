@@ -1,4 +1,4 @@
-public class Review {
+class Review {
     String ID;
     String itemID;
     Customer customer;

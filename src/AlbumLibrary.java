@@ -1,8 +1,7 @@
-//import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class AlbumLibrary extends ItemLibrary {
+class AlbumLibrary extends ItemLibrary {
 
     public Album registerAlbum(String title, String artist, int year, double dailyRentFee) {
         Album newAlbum = new Album(title, dailyRentFee, artist, year);

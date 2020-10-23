@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-public class RentHistoryLibrary {
+class RentHistoryLibrary {
     public ArrayList<RentHistory> rentHistoryList = new ArrayList<>();
 
     public void addRentHistory(RentHistory newRentHistory) {

@@ -1,4 +1,4 @@
-package Exceptions;
+package exception;
 
 public class GameEmptyGenreException extends RuntimeException{
     public GameEmptyGenreException(){

@@ -1,4 +1,4 @@
-package Exceptions;
+package exception;
 
 public class NegativeRentFeeException extends RuntimeException{
     public NegativeRentFeeException(String type){

@@ -1,4 +1,4 @@
-package Exceptions;
+package exception;
 
 public class AlbumEmptyArtistException extends RuntimeException{
     public AlbumEmptyArtistException(){

@@ -1,9 +1,10 @@
-import Exceptions.*;
+import exception.*;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 
-public class Import {
+class Import {
     // Sample format for the txt file to be imported
 
     //Customer;Name;Password

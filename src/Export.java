@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Export {
+class Export {
 
     public static void createExport(String rentHistory) {
         try {

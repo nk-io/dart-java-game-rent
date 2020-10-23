@@ -1,4 +1,6 @@
-import Exceptions.*;
+import exception.*;
+import membership.*;
+
 
 import java.util.ArrayList;
 
@@ -111,7 +113,7 @@ public class UserInterface {
             }
         } else {
             System.out.println("Rental limit exceeded! You're currently renting " +
-                    customer.getNumOfCurrentRentedItems() + " items out of " +
+                    customer.getNumOfCurrentRentedItems() + " item(s) out of " +
                     customer.getMembership().getRentalLimit());
         }
     }
@@ -129,7 +131,7 @@ public class UserInterface {
             }
         } else {
             System.out.println("Rental limit exceeded! You're currently renting " +
-                    customer.getNumOfCurrentRentedItems() + " items out of " +
+                    customer.getNumOfCurrentRentedItems() + " item(s) out of " +
                     customer.getMembership().getRentalLimit());
         }
     }
@@ -232,7 +234,7 @@ public class UserInterface {
             System.out.println("No review given.");
         } else {
             giveRatingScore(returnedItem);
-            String reviewCheck = InputClass.askStringInput("Would you leave written review? Enter Yes or No ");
+            String reviewCheck = InputClass.askStringInput("Would you leave a written review? Enter Yes or No ");
             while(!reviewCheck.equalsIgnoreCase("YES") && !reviewCheck.equalsIgnoreCase("NO")){
                 reviewCheck = InputClass.askStringInput("Invalid input. Please enter yes or no!");
             }
@@ -398,7 +400,7 @@ public class UserInterface {
 
 
     public void viewCredits(Customer customer){
-        System.out.println("You have: " + customer.getStoreCredits() + " credits.");
+        System.out.println("You have: " + customer.getStoreCredits() + " credit(s).");
     }
 
     public void upgradeCustomer(){
@@ -407,7 +409,7 @@ public class UserInterface {
         int optionsCounter = 0;
         for (User user: customerLibrary.getUsers()) {
             Customer customer = (Customer) user;
-            if (customer.getUpgradeRequest() == true && customer.getMembership() != Membership.PLATINUM) {
+            if (customer.getUpgradeRequest() == true) {
                 optionsCounter += 1;
                 customersToUpgrade.add(customer);
                 System.out.println(optionsCounter + ". Customer ID: " + customer.getID() + " | Membership: " + customer.getMembership().toString());
@@ -424,13 +426,15 @@ public class UserInterface {
                 int approveOption = InputClass.askIntInput("Do you wish to approve or reject the membership request? \n1. Approve\n2. Reject");
                 if (approveOption == 1) {
 
-                    switch (customer.getMembership()) {
-                        case NONE -> customer.setMembership(Membership.SILVER);
-                        case SILVER -> customer.setMembership(Membership.GOLD);
-                        case GOLD -> customer.setMembership(Membership.PLATINUM);
+                    if (customer.getMembership() instanceof RegularMembership) {
+                        customer.setMembership(new SilverMembership());
+                    } else if (customer.getMembership() instanceof SilverMembership) {
+                        customer.setMembership(new GoldMembership());
+                    } else if (customer.getMembership() instanceof GoldMembership) {
+                        customer.setMembership(new PlatinumMembership());
                     }
                     customer.setUpgradeRequest(false);
-                    System.out.println("The customer " + customer.getID() + " has been upgraded to " + customer.getMembership().toString() + " membership!");
+                    System.out.println("The customer " + customer.getID() + " has been upgraded to '" + customer.getMembership().toString() + "' membership!");
                 }
                 else if (approveOption == 2){
                     System.out.println("This membership request has been rejected.");
@@ -446,7 +450,7 @@ public class UserInterface {
     }
 
     public void requestMembershipUpgrade(Customer customer) {
-        if (customer.getMembership() == Membership.PLATINUM) {
+        if (customer.getMembership() instanceof PlatinumMembership) {
             System.out.println("You have reached the maximum membership level and cannot be upgraded further!");
         } else if (customer.getUpgradeRequest() == true) {
             System.out.println("You have already requested to be upgraded! Your request is still being reviewed!");

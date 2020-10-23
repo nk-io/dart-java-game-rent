@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class InputClass {
+class InputClass {
     static Scanner input = new Scanner(System.in);
 
     public static String askStringInput (String message){

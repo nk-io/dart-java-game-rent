@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class MessageLibrary {
+class MessageLibrary {
     private ArrayList<Message> messageList = new ArrayList<>();
 
     public Message sendAMessage(String receiverID, String senderID, String senderName, CustomerLibrary customerLibrary, String message ){

@@ -1,4 +1,4 @@
-package Exceptions;
+package exception;
 
 public class EmptyPasswordException extends RuntimeException{
     public EmptyPasswordException(String type){

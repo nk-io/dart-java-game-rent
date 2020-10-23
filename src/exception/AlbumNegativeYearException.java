@@ -1,4 +1,4 @@
-package Exceptions;
+package exception;
 
 public class AlbumNegativeYearException extends RuntimeException{
     public AlbumNegativeYearException(){

@@ -1,11 +1,13 @@
+import membership.*;
+
 import java.util.ArrayList;
 
 // Change Log for Milestone 2
 //Customer Menu and Customer classes have been merged
 //Methods are no longer statics
 //Some properties and methods have been inherited from parent User class
-public class Customer extends User {
-    private Membership membership = Membership.NONE;
+class Customer extends User {
+    private Membership membership = new RegularMembership();
     private int storeCredits = 0;
     private boolean upgradeRequest = false;
     private ArrayList<Item> currentRentedItemsByCustomer = new ArrayList<>();
@@ -67,7 +69,6 @@ public class Customer extends User {
         return false;
     }
 
-
     public ArrayList getItemsIDs(){
         ArrayList itemsId = new ArrayList();
         for(int i=0; i< currentRentedItemsByCustomer.size(); i++){
@@ -76,9 +77,8 @@ public class Customer extends User {
         return itemsId;
     }
 
-
     public void incrementStoreCredits() {
-        this.storeCredits = this.storeCredits + this.membership.getStoreCredits();
+        this.storeCredits = this.storeCredits + this.membership.getStoreCreditsPerRental();
     }
 
     public void decrementStoreCredits() {

@@ -1,8 +1,7 @@
-// Change Log for Milestone 2
 // Methods are no longer statics
 // Added messageList for Epic Feature 9
 
-public class DartController {
+class DartController {
 
     private GameLibrary gameLibrary;
     private AlbumLibrary albumLibrary;
@@ -167,7 +166,7 @@ public class DartController {
                             "4. Remove a song album\n" +
                             "5. Register a customer\n" +
                             "6. Remove a customer\n" +
-                            "7. Membership requests \n" +
+                            "7. View membership requests \n" +
                             "8. Show total rent profits \n" +
                             "9. View all games\n" +
                             "10. View all song albums\n" +

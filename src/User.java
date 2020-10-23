@@ -1,9 +1,8 @@
-// Change Log for Milestone 2
 // Password property and methods have been added to achieve password protection for every user
 // UserMenu class became User class and its parent class for all user classes
 
-import Exceptions.EmptyNameException;
-import Exceptions.EmptyPasswordException;
+import exception.EmptyNameException;
+import exception.EmptyPasswordException;
 
 //Parent class for all users
 abstract class User {
@@ -19,7 +18,7 @@ abstract class User {
         if(password.isEmpty()){
             throw new EmptyPasswordException(getClass().toString().split(" ")[1]);
         }
-        this.ID=RandomUID.generateRandomID();
+        this.ID= RandomUID.generateRandomID();
         this.name = name;
         this.password = password;
     }

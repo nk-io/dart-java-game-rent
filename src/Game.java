@@ -1,6 +1,6 @@
-import Exceptions.GameEmptyGenreException;
+import exception.GameEmptyGenreException;
 
-public class Game extends Item {
+class Game extends Item {
     private String genre;
 
     Game(String title, double dailyRentFee, String genre) throws GameEmptyGenreException{

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class ReviewLibrary {
+class ReviewLibrary {
     private ArrayList<Review> reviewList = new ArrayList<>();
     private void addReview(Review newReview){
         reviewList.add(newReview);

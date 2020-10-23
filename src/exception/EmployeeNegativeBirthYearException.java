@@ -1,4 +1,4 @@
-package Exceptions;
+package exception;
 
 public class EmployeeNegativeBirthYearException extends RuntimeException{
     public EmployeeNegativeBirthYearException(){

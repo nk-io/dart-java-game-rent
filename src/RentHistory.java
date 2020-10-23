@@ -1,4 +1,4 @@
-public class RentHistory {
+class RentHistory {
     private String ID;
     private Customer customer;
     private Item item;
@@ -35,8 +35,8 @@ public class RentHistory {
     @Override
     public String toString() {
         return
-                "'Customer ID: '" + customer.getID() + '\'' +
-                        ", 'Item ID: '" + item.getID() + '\'' +
+                "Customer ID: '" + customer.getID() + '\'' +
+                        ", Item ID: '" + item.getID() + '\'' +
                         ", Days Rented: " + daysRented +
                         ", Rent Expense: " + rentExpense + "SEK" + "\n";
     }

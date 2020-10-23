@@ -1,7 +1,7 @@
 //created this class for Epic Feature 9
 import java.time.Instant;
 
-public class Message {
+class Message {
     private String ID;
     private String senderID;
     private String senderName;

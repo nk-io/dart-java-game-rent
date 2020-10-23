@@ -1,7 +1,7 @@
-import Exceptions.AlbumEmptyArtistException;
-import Exceptions.AlbumNegativeYearException;
+import exception.AlbumEmptyArtistException;
+import exception.AlbumNegativeYearException;
 
-public class Album extends Item{
+class Album extends Item{
 
     private String artist;
     private int year;
