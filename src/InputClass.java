@@ -5,19 +5,15 @@ class InputClass {
 
     public static String askStringInput (String message){
         System.out.println(message);
-        String data = input.nextLine();
-        return data;
+        return input.nextLine();
     }
 
     public static double askDoubleInput (String message){
         System.out.println(message);
         String dataInput  = input.nextLine();
-        //Instead of taking input as a double and risking an error if the user enters a string
-        //We take a string as input and later try to convert it to a double
-        //If the conversion fails, the user will be asked to try again
+        //We take a string as input and later try to convert it to a double, If the conversion fails, the user will be asked to try again
         try {
-            double data = Double.parseDouble(dataInput);
-            return data;
+            return Double.parseDouble(dataInput);
         } catch (Exception e) {
             return askDoubleInput("Invalid input. Please enter a number.");
         }
@@ -27,8 +23,7 @@ class InputClass {
         System.out.println(message);
         String dataInput  = input.nextLine();
         try {
-            int data = Integer.parseInt(dataInput);
-            return data;
+            return Integer.parseInt(dataInput);
         } catch (Exception e) {
             return askIntInput("Invalid input. Please enter an integer.");
         }
@@ -38,4 +33,5 @@ class InputClass {
     public static void closeScanner(){
         input.close();
     }
+
 }

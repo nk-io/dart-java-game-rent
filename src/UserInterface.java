@@ -33,9 +33,6 @@ public class UserInterface {
         String title = InputClass.askStringInput("Please enter the name of the game: ");
         String genre = InputClass.askStringInput("Please enter the genre of the game: ");
         double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ");
-        while(dailyRentFee < 0 ){
-            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
-        }
         try{
             Game newGame = gameLibrary.registerGame(title, genre, dailyRentFee);
             System.out.println("The game with " + newGame.toString() + " has been created successfully.");
@@ -70,9 +67,6 @@ public class UserInterface {
         String artist = InputClass.askStringInput("Please enter the artist of the album: ");
         int year = InputClass.askIntInput("Please enter the release year for the album: ");
         double dailyRentFee = InputClass.askDoubleInput("Please enter the daily rent fee: ");
-        while(dailyRentFee < 0 ){
-            dailyRentFee = InputClass.askDoubleInput("Please enter a valid daily rent fee: ");
-        }
         try{
             Album newAlbum = albumLibrary.registerAlbum(title, artist, year, dailyRentFee);
             System.out.println("The album with " + newAlbum.toString() + " has been created successfully.");
@@ -109,7 +103,7 @@ public class UserInterface {
             if (gameLibrary.rentItem(idToRent, customer)) {
                 System.out.println("The game with id: " + idToRent + " has been rented successfully!");
             } else {
-                System.out.println("The game with id: " + idToRent + " is already rented or not found.");
+                System.out.println("The game with id: " + idToRent + " is already rented or was not found.");
             }
         } else {
             System.out.println("Rental limit exceeded! You're currently renting " +
@@ -125,9 +119,8 @@ public class UserInterface {
             String idToRent = InputClass.askStringInput("Enter item id of the album you want to rent: ");
             if (albumLibrary.rentItem(idToRent, customer)) {
                 System.out.println("The album with id: " + idToRent + " has been rented successfully!");
-
             } else {
-                System.out.println("The album with id: " + idToRent + " is already rented or not found.");
+                System.out.println("The album with id: " + idToRent + " is already rented or was not found.");
             }
         } else {
             System.out.println("Rental limit exceeded! You're currently renting " +
@@ -146,28 +139,23 @@ public class UserInterface {
             String idToReturn = InputClass.askStringInput("Please enter the ID of the game you want to return: ");
             Game isIDRight = (Game) gameLibrary.doesItemExist(idToReturn);
             if (isIDRight != null && !gameLibrary.isItAvailable(idToReturn) && customer.checkIfTheItemRentedByCustomer(idToReturn)) {
-                int tries = 0;
-                do {
-                    try {
-                        double rentExpense = 0;
-                        int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ");
-
-                        if (customer.getStoreCredits() > 4) {
-                            rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
-                            System.out.println("You have used 5 credits and rented the game for free.");
-                        } else {
-                            rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
-                            System.out.println("The total fee is: " + rentExpense + " SEK.");
-                            System.out.println("The game has been successfully returned. ");
-                        }
-                        giveRating(isIDRight, customer);
-                        RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
-                        rentHistoryLibrary.addRentHistory(newTransaction);
-                        tries += 1;
-                    } catch (Exception e){
-                        System.out.println(e.getMessage());
+                try {
+                    double rentExpense = 0;
+                    int daysRented = InputClass.askIntInput("Please enter the number of days you rented the game: ");
+                    if (customer.getStoreCredits() > 4) {
+                        rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
+                        System.out.println("You have used 5 credits and rented the game for free.");
+                    } else {
+                        rentExpense = gameLibrary.returnItem(idToReturn, daysRented, customer);
+                        System.out.println("The total fee is: " + rentExpense + " SEK.");
+                        System.out.println("The game has been successfully returned. ");
                     }
-                } while (tries == 0);
+                    giveRating(isIDRight, customer);
+                    RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
+                    rentHistoryLibrary.addRentHistory(newTransaction);
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             } else {
                 System.out.println("Game with ID: " + idToReturn + " was not found or is not rented by you. ");
             }
@@ -184,27 +172,23 @@ public class UserInterface {
             String idToReturn = InputClass.askStringInput("Please enter the ID of the album you want to return: ");
             Album isIDRight = (Album) albumLibrary.doesItemExist(idToReturn);
             if (isIDRight != null && !albumLibrary.isItAvailable(idToReturn) && customer.checkIfTheItemRentedByCustomer(idToReturn)){
-                int tries = 0;
-                do {
-                    try {
-                        double rentExpense = 0;
-                        int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ");
-                        if (customer.getStoreCredits() > 4){
-                            System.out.println("You have used 5 credits and rented the album for free.");
-                            rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
-                        } else {
-                            rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
-                            System.out.println("The total fee is: " + rentExpense + " SEK.");
-                            System.out.println("The album has been successfully returned. ");
-                        }
-                        giveRating(isIDRight, customer);
-                        RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
-                        rentHistoryLibrary.addRentHistory(newTransaction);
-                        tries += 1;
-                    } catch (Exception e){
-                        System.out.println(e.getMessage());
+                try {
+                    double rentExpense = 0;
+                    int daysRented = InputClass.askIntInput("Please enter the number of days you rented the album: ");
+                    if (customer.getStoreCredits() > 4){
+                        System.out.println("You have used 5 credits and rented the album for free.");
+                        rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
+                    } else {
+                        rentExpense = albumLibrary.returnItem(idToReturn, daysRented, customer);
+                        System.out.println("The total fee is: " + rentExpense + " SEK.");
+                        System.out.println("The album has been successfully returned. ");
                     }
-                } while (tries == 0);
+                    giveRating(isIDRight, customer);
+                    RentHistory newTransaction = new RentHistory(customer, isIDRight, daysRented, rentExpense);
+                    rentHistoryLibrary.addRentHistory(newTransaction);
+                } catch (Exception e){
+                    System.out.println(e.getMessage());
+                }
             } else {
                 System.out.println("Album with ID: " + idToReturn + " was not found or is not rented by you. ");
             }
@@ -222,9 +206,9 @@ public class UserInterface {
         } catch (Exception e){ }
     }
 
+
     // needed to change this for 11.1 return behaviors
     // should work the same
-
     private void giveRating(Item returnedItem, Customer customer){
         String ratingCheck = InputClass.askStringInput("Would you like rate this item? Enter Yes or No ");
         while (!ratingCheck.equalsIgnoreCase("YES") && !ratingCheck.equalsIgnoreCase("NO")) {
@@ -279,12 +263,12 @@ public class UserInterface {
         }
     }
 
+
     public void viewSortedItems(){
         String itemOption = InputClass.askStringInput("Select an item: Type G for games, or A for albums.");
         while (!itemOption.equalsIgnoreCase("G") && !itemOption.equalsIgnoreCase("A")) {
             itemOption = InputClass.askStringInput("Invalid input! Please enter G for games, or A for albums!");
         }
-
         if (itemOption.equalsIgnoreCase("G")) {
             String sortedGames = gameLibrary.sortByRating(gameLibrary.getItems());
             System.out.println("The following games are sorted by average rating.");
@@ -306,6 +290,7 @@ public class UserInterface {
             }
         }
     }
+
 
     public void viewItemReviews(){
         System.out.println("--- List of All Games ---");
@@ -403,6 +388,7 @@ public class UserInterface {
         System.out.println("You have: " + customer.getStoreCredits() + " credit(s).");
     }
 
+
     public void upgradeCustomer(){
         System.out.println("Pending customer upgrade requests:");
         ArrayList<Customer> customersToUpgrade = new ArrayList<>();
@@ -419,28 +405,19 @@ public class UserInterface {
         if (customersToUpgrade.size() > 0) {
             optionsCounter += 1;
             System.out.println(optionsCounter + ". Return to Employee Menu.");
-
             int option = InputClass.askIntInput("Please select the customer you wish to interact with, or return to the previous menu: ");
             if (option == optionsCounter) { return;}
             else if (option > 0 && option <= customersToUpgrade.size()) {
                 Customer customer = customersToUpgrade.get(option - 1);
                 int approveOption = InputClass.askIntInput("Do you wish to approve or reject the membership request? \n1. Approve\n2. Reject");
                 if (approveOption == 1) {
-
-                    if (customer.getMembership() instanceof RegularMembership) {
-                        customer.setMembership(new SilverMembership());
-                    } else if (customer.getMembership() instanceof SilverMembership) {
-                        customer.setMembership(new GoldMembership());
-                    } else if (customer.getMembership() instanceof GoldMembership) {
-                        customer.setMembership(new PlatinumMembership());
-                    }
-                    customer.setUpgradeRequest(false);
+                    customer.upgradeCustomer();
                     System.out.println("The customer " + customer.getID() + " has been upgraded to '" + customer.getMembership().toString() + "' membership!");
-                }
-                else if (approveOption == 2){
+                } else if (approveOption == 2){
                     System.out.println("This membership request has been rejected.");
                     customer.setUpgradeRequest(false);
-                } else { System.out.println("Invalid input.");
+                } else {
+                    System.out.println("Invalid input.");
                 }
             } else {
                 System.out.println("Invalid input.");
@@ -449,6 +426,7 @@ public class UserInterface {
             System.out.println("There are no currently pending customer upgrade requests.");
         }
     }
+
 
     public void requestMembershipUpgrade(Customer customer) {
         if (customer.getMembership() instanceof PlatinumMembership) {

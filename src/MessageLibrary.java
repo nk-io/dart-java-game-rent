@@ -17,9 +17,9 @@ class MessageLibrary {
 
     private ArrayList<Message> findAllMessagesOfCustomer(String customerID){
         ArrayList<Message> messagesOfCurrentCustomer = new ArrayList<>();
-        for(int i=0; i<messageList.size(); i++){
-            if (messageList.get(i).getRecipientID().equals(customerID)){
-                messagesOfCurrentCustomer.add(messageList.get(i));
+        for (Message message : messageList) {
+            if (message.getRecipientID().equals(customerID)) {
+                messagesOfCurrentCustomer.add(message);
             }
         }
         //lets sort messages
@@ -30,7 +30,6 @@ class MessageLibrary {
                 }
             }
         }
-
         return messagesOfCurrentCustomer;
     }
 
@@ -46,7 +45,6 @@ class MessageLibrary {
                 if (!messagesOfCurrentCustomer.get(i).checkIfIsRead()){
                     builder.append("Unread!! ");
                     messagesOfCurrentCustomer.get(i).setRead();
-
                 }
                 builder.append("\n");
                 builder.append(messagesOfCurrentCustomer.get(i).toString());
@@ -73,4 +71,5 @@ class MessageLibrary {
             }
         }
     }
+
 }

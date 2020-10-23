@@ -31,22 +31,17 @@ class RentHistoryLibrary {
             return "There are no transactions available.";
         } else {
             StringBuilder builder = new StringBuilder();
-            String custID;
-            String itemID;
-            String itemTitle;
-            double rentPaid;
-            for (int i = 0; i < rentHistoryList.size(); i++) {
-                custID = rentHistoryList.get(i).getCustomerID();
-                itemID = rentHistoryList.get(i).getItemID();
-                itemTitle = rentHistoryList.get(i).getItemTitle();
-                rentPaid = rentHistoryList.get(i).getRentExpense();
-                builder.append(custID + ";" + itemID + ";"  + itemTitle  + ";" + rentPaid + ";");
+            for (RentHistory rentHistory : rentHistoryList) {
+                String custID = rentHistory.getCustomerID();
+                String itemID = rentHistory.getItemID();
+                String itemTitle = rentHistory.getItemTitle();
+                double rentPaid = rentHistory.getRentExpense();
+                builder.append(custID + ";" + itemID + ";" + itemTitle + ";" + rentPaid + ";");
                 builder.append("\n");
             }
             return builder.toString();
         }
     }
-
 
     // had to change epic feature 6.3 to now calculate here so code isn't repeated
     public double calculateTotalProfit(){
@@ -81,9 +76,8 @@ class RentHistoryLibrary {
         } else{
             double currentMaxProfit = 0;
             String currentMaxID = "";
-            String id = "";
             for(int i = 0; i < rentHistoryList.size(); i++){
-                id = rentHistoryList.get(i).getItemID();
+                String id = rentHistoryList.get(i).getItemID();
                 if(getSameItemIDProfit(id) > currentMaxProfit){
                     currentMaxProfit = getSameItemIDProfit(id);
                     currentMaxID = id;
@@ -99,10 +93,9 @@ class RentHistoryLibrary {
         } else{
             double currentMaxProfit = 0;
             String currentMaxID = "";
-            String id = "";
-            for(int i = 0; i < rentHistoryList.size(); i++){
-                id = rentHistoryList.get(i).getCustomerID();
-                if(getSameCustomerIDProfit(rentHistoryList.get(i).getCustomerID()) > currentMaxProfit){
+            for (RentHistory rentHistory : rentHistoryList) {
+                String id = rentHistory.getCustomerID();
+                if (getSameCustomerIDProfit(rentHistory.getCustomerID()) > currentMaxProfit) {
                     currentMaxProfit = getSameCustomerIDProfit(id);
                     currentMaxID = id;
                 }
@@ -111,15 +104,11 @@ class RentHistoryLibrary {
         }
     }
 
-
-
     public double getSameItemIDProfit(String itemID){
         double totalProfit = 0;
-        String currentItemID = "";
-        for(int i= 0; i < rentHistoryList.size();i++){
-            currentItemID = rentHistoryList.get(i).getItemID();
-            if(currentItemID.equals(itemID)){
-                totalProfit = totalProfit + rentHistoryList.get(i).getRentExpense();
+        for (RentHistory rentHistory : rentHistoryList) {
+            if (rentHistory.getItemID().equals(itemID)) {
+                totalProfit = totalProfit + rentHistory.getRentExpense();
             }
         }
         return totalProfit;
@@ -127,11 +116,9 @@ class RentHistoryLibrary {
 
     public double getSameCustomerIDProfit(String customerID){
         double totalProfit = 0;
-        String currentCustomerID = "";
-        for(int i= 0; i < rentHistoryList.size();i++ ){
-            currentCustomerID = rentHistoryList.get(i).getCustomerID();
-            if(currentCustomerID.equals(customerID)){
-                totalProfit = totalProfit + rentHistoryList.get(i).getRentExpense();
+        for (RentHistory rentHistory : rentHistoryList) {
+            if (rentHistory.getCustomerID().equals(customerID)) {
+                totalProfit = totalProfit + rentHistory.getRentExpense();
             }
         }
         return totalProfit;

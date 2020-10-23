@@ -37,12 +37,7 @@ class Message {
         isRead=true;
     }
     public boolean isAfter(Message otherMessage){
-        if(date.isAfter(otherMessage.date)){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return date.isAfter(otherMessage.date);
     }
 
     //Method that inserts new lines at first space after 55 characters to increase readability of longer messages.

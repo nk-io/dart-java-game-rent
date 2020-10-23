@@ -26,11 +26,9 @@ class RentHistory {
         return this.item.getTitle();
     }
 
-
     public double getRentExpense(){
         return this.rentExpense;
     }
-
 
     @Override
     public String toString() {
