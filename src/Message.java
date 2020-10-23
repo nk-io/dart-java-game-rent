@@ -20,7 +20,9 @@ class Message {
         this.isRead=false;
         this.date = Instant.now();
     }
-
+    public String getID() {
+        return ID;
+    }
     public String getSenderID() {
         return senderID;
     }
