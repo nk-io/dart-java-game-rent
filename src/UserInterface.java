@@ -409,12 +409,13 @@ public class UserInterface {
         int optionsCounter = 0;
         for (User user: customerLibrary.getUsers()) {
             Customer customer = (Customer) user;
-            if (customer.getUpgradeRequest() == true) {
+            if (customer.getUpgradeRequest()) {
                 optionsCounter += 1;
                 customersToUpgrade.add(customer);
                 System.out.println(optionsCounter + ". Customer ID: " + customer.getID() + " | Membership: " + customer.getMembership().toString());
             }
         }
+        // Options counter here is to make the input options easier to interact with; select a # vs. copy & pasting an ID
         if (customersToUpgrade.size() > 0) {
             optionsCounter += 1;
             System.out.println(optionsCounter + ". Return to Employee Menu.");
@@ -452,7 +453,7 @@ public class UserInterface {
     public void requestMembershipUpgrade(Customer customer) {
         if (customer.getMembership() instanceof PlatinumMembership) {
             System.out.println("You have reached the maximum membership level and cannot be upgraded further!");
-        } else if (customer.getUpgradeRequest() == true) {
+        } else if (customer.getUpgradeRequest()) {
             System.out.println("You have already requested to be upgraded! Your request is still being reviewed!");
         } else {
             customer.setUpgradeRequest(true);
