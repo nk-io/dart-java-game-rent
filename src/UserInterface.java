@@ -1,3 +1,5 @@
+//To implement milestone 2 and onward, we modified all the classes by making the UserInterface and breaking up all previous methods to only print inside this class.
+
 import exception.*;
 import membership.*;
 
@@ -195,7 +197,7 @@ public class UserInterface {
         }
     }
 
-
+    //Returns all items when deleting a customer
     public void returnItems(String idToReturn , Customer customer){
         int daysRented = 0;
         try {
@@ -481,7 +483,7 @@ public class UserInterface {
         listAllEmployees();
         String idToSearch = InputClass.askStringInput("Please enter the ID of the employee: ");
         Employee employee = (Employee) employeeLibrary.doesUserExist(idToSearch);
-        System.out.println("The net salary of " + employee.getName() + " is " + employee.getNetSalary() + "SEK and has a bonus of " + (employee.getNetSalary() - employee.getAgeBonus()) + "SEK.");
+        System.out.println("The net salary of " + employee.getName() + " is " + employee.getNetSalary() + "SEK and has a bonus of " + (-(employee.getNetSalary() - employee.getAgeBonus())) + "SEK.");
     }
 
 

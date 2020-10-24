@@ -121,7 +121,7 @@ class DartController {
                             "1. Register an employee\n" +
                             "2. View all employees\n" +
                             "3. Remove an employee\n" +
-                            "4. See an employees salary\n"+
+                            "4. See an employee's salary\n"+
                             "5. View the most profitable item\n"+
                             "6. View rent frequency of all items\n"+
                             "7. View the best customer\n"+
