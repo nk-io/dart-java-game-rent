@@ -200,10 +200,10 @@ public class UserInterface {
         int daysRented = 0;
         try {
             albumLibrary.returnItem(idToReturn, daysRented, customer);
-        } catch (Exception e) { }
+        } catch (Exception ignored) { }
         try {
             gameLibrary.returnItem(idToReturn, daysRented, customer);
-        } catch (Exception e){ }
+        } catch (Exception ignored){ }
     }
 
 
@@ -366,8 +366,7 @@ public class UserInterface {
                 returnItems(items.get(i).toString(), customer);
             }
         }
-        boolean removed = customerLibrary.removeUser(idToRemove);
-        if (removed){
+        if (customerLibrary.removeUser(idToRemove)){
             System.out.println("Customer with ID: " + idToRemove + " has been removed!");
         } else {
             System.out.println("Customer with id: " + idToRemove + " not found.");
@@ -461,8 +460,7 @@ public class UserInterface {
     public void removeEmployee(){
         listAllEmployees();
         String idToRemove = InputClass.askStringInput("Please enter the ID of the employee to remove: ");
-        boolean removed = employeeLibrary.removeUser(idToRemove);
-        if (removed){
+        if (employeeLibrary.removeUser(idToRemove)){
             System.out.println("Employee with ID" + idToRemove + " has been removed!");
         } else {
             System.out.println("Employee with id: " + idToRemove + " not found.");
@@ -479,23 +477,11 @@ public class UserInterface {
     }
 
 
-    public void registerManager(){
-        String name = InputClass.askStringInput("Please enter the name of the manager: ");
-        String password = InputClass.askStringInput("Please enter a new password: ");
-        Manager newManager = managerLibrary.registerManager(name, password);
-        System.out.println("The manager " + newManager.toString() + " has been created successfully.");
-    }
-
-
-    public void removeManager(){
-        listAllManagers();
-        String idToRemove = InputClass.askStringInput("Please enter the ID of the manager to remove: ");
-        boolean removed = managerLibrary.removeUser(idToRemove);
-        if (removed){
-            System.out.println("Manager with ID" + idToRemove + " has been removed!");
-        } else {
-            System.out.println("Manager with id: " + idToRemove + " not found.");
-        }
+    public void seeEmployeeSalary() {
+        listAllEmployees();
+        String idToSearch = InputClass.askStringInput("Please enter the ID of the employee: ");
+        Employee employee = (Employee) employeeLibrary.doesUserExist(idToSearch);
+        System.out.println("The net salary of " + employee.getName() + " is " + employee.getNetSalary() + "SEK and has a bonus of " + (employee.getNetSalary() - employee.getAgeBonus()) + "SEK.");
     }
 
 

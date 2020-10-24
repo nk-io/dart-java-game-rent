@@ -106,9 +106,7 @@ class DartController {
                         "3. Enter “C” for Customer\n" +
                         "4. Enter “X” to exit system \n";
 
-        String mainMenuOption = InputClass.askStringInput(mainMenuMessage);
-
-        return mainMenuOption;
+        return InputClass.askStringInput(mainMenuMessage);
 
     }
     // Prints the manager menu and asks for integer input
@@ -123,28 +121,30 @@ class DartController {
                             "1. Register an employee\n" +
                             "2. View all employees\n" +
                             "3. Remove an employee\n" +
-                            "4. View the most profitable item\n"+
-                            "5. View rent frequency of all items\n"+
-                            "6. View the best customer\n"+
-                            "7. Show total rent profits\n"+
-                            "8. Show all rent transactions\n"+
-                            "9. Export rent transactions\n"+
-                            "10. Import data from a txt file\n"+
-                            "11. Return to Main Menu\n";
+                            "4. See an employees salary\n"+
+                            "5. View the most profitable item\n"+
+                            "6. View rent frequency of all items\n"+
+                            "7. View the best customer\n"+
+                            "8. Show total rent profits\n"+
+                            "9. Show all rent transactions\n"+
+                            "10. Export rent transactions\n"+
+                            "11. Import data from a txt file\n"+
+                            "12. Return to Main Menu\n";
 
             managerMenuOption = InputClass.askIntInput(managerMenuMessage);
             switch (managerMenuOption) {
                 case 1 -> userInterface.registerEmployee();
                 case 2 -> userInterface.listAllEmployees();
                 case 3 -> userInterface.removeEmployee();
-                case 4 -> userInterface.showMostProfitableItem();
-                case 5 -> userInterface.listRentFrequency();
-                case 6 -> userInterface.showBestCustomer();
-                case 7 -> userInterface.showTotalRentProfit();
-                case 8 -> userInterface.listRentTransactions();
-                case 9 -> userInterface.createExport();
-                case 10 -> userInterface.importDataFromATxt();
-                case 11 -> System.out.println("Returning to Main Menu...");
+                case 4 -> userInterface.seeEmployeeSalary();
+                case 5 -> userInterface.showMostProfitableItem();
+                case 6 -> userInterface.listRentFrequency();
+                case 7 -> userInterface.showBestCustomer();
+                case 8 -> userInterface.showTotalRentProfit();
+                case 9 -> userInterface.listRentTransactions();
+                case 10 -> userInterface.createExport();
+                case 11 -> userInterface.importDataFromATxt();
+                case 12 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid input. Please try again. ");
             }
         } while(!(managerMenuOption == 11));
@@ -174,7 +174,6 @@ class DartController {
                             "12. Return to Main Menu\n";
 
             employeeMenuOption = InputClass.askIntInput(employeeMenuMessage);
-
             switch (employeeMenuOption) {
                 case 1 -> userInterface.registerGame();
                 case 2 -> userInterface.removeGame();
@@ -214,6 +213,7 @@ class DartController {
                             "11. Request membership upgrade\n" +
                             "12. View my credits\n" +
                             "13. Return to Main Menu\n";
+
             customerMenuOption = InputClass.askIntInput(customerMenuMessage);
             switch (customerMenuOption) {
                 case 1 -> userInterface.searchItem();

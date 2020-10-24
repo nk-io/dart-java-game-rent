@@ -1,21 +1,22 @@
 package membership;
 
 public class GoldMembership extends Membership {
+    private double discount = 0.15;
+    private int rentalLimit = 5;
+    private int storeCreditsPerRental = 2;
+
     @Override
     public double getDiscount() {
-        double discount = 0.15;
         return discount;
     }
 
     @Override
     public int getRentalLimit() {
-        int rentalLimit = 5;
         return rentalLimit;
     }
 
     @Override
     public int getStoreCreditsPerRental() {
-        int storeCreditsPerRental = 2;
         return storeCreditsPerRental;
     }
 
