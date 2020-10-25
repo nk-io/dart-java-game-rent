@@ -1,7 +1,9 @@
-//To implement milestone 2 and onward, we modified all the classes by making the UserInterface and breaking up all previous methods to only print inside this class.
-//Milestone 3
-//New menu items for importing and exporting
-//Try-catch blocks for exception handling
+/*To implement milestone 2 and onward, we modified all the classes by making the UserInterface and breaking up all previous methods to only print inside this class.
+Milestone 3:
+New menu items for importing and exporting
+Try-catch blocks for exception handling
+Since our own packages were introduced, they are imported
+Switch cases for Membership upgrades refactored to else-if conditional statements*/
 import exception.*;
 import membership.*;
 
@@ -398,10 +400,11 @@ public class UserInterface {
         int optionsCounter = 0;
         for (User user: customerLibrary.getUsers()) {
             Customer customer = (Customer) user;
+            // Shows customers with a boolean (T) who have requested a membership upgrade
             if (customer.getUpgradeRequest()) {
                 optionsCounter += 1;
                 customersToUpgrade.add(customer);
-                System.out.println(optionsCounter + ". Customer ID: " + customer.getID() + " | Membership: " + customer.getMembership().toString());
+                System.out.println(optionsCounter + ". Customer ID: " + customer.getID() + " | Membership: " + customer.getMembership().getType());
             }
         }
         // Options counter here is to make the input options easier to interact with; select a # vs. copy & pasting an ID
@@ -415,7 +418,7 @@ public class UserInterface {
                 int approveOption = InputClass.askIntInput("Do you wish to approve or reject the membership request? \n1. Approve\n2. Reject");
                 if (approveOption == 1) {
                     customer.upgradeCustomer();
-                    System.out.println("The customer " + customer.getID() + " has been upgraded to '" + customer.getMembership().toString() + "' membership!");
+                    System.out.println("The customer " + customer.getID() + " has been upgraded to '" + customer.getMembership().getType() + "' membership!");
                 } else if (approveOption == 2){
                     System.out.println("This membership request has been rejected.");
                     customer.setUpgradeRequest(false);
@@ -432,11 +435,16 @@ public class UserInterface {
 
 
     public void requestMembershipUpgrade(Customer customer) {
+        System.out.println("Your current type of membership is " + customer.getMembership().getType() + ". As such, you benefit from the following:");
+        System.out.println("Your total rental limit consists of " + customer.getMembership().getRentalLimit() + " item(s).");
+        System.out.println("You will receive a discount of " + customer.getMembership().getDiscount()*100 + "% when returning items, which will be reflected in your total fee.");
+        System.out.println("You also gain " + customer.getMembership().getStoreCreditsPerRental() + " rental credit(s) when you return an item.");
         if (customer.getMembership() instanceof PlatinumMembership) {
             System.out.println("You have reached the maximum membership level and cannot be upgraded further!");
         } else if (customer.getUpgradeRequest()) {
             System.out.println("You have already requested to be upgraded! Your request is still being reviewed!");
         } else {
+            // Boolean: Sets to true -> displays under the employee's menu
             customer.setUpgradeRequest(true);
             System.out.println(("Your request to be upgraded has been submitted!"));
         }
