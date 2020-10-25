@@ -147,7 +147,7 @@ class DartController {
                 case 12 -> System.out.println("Returning to Main Menu...");
                 default -> System.out.println("Invalid input. Please try again. ");
             }
-        } while(!(managerMenuOption == 11));
+        } while(!(managerMenuOption == 12));
 
     }
     // Prints the employee menu and asks for integer input
