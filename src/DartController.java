@@ -233,26 +233,13 @@ class DartController {
             }
         } while(!(customerMenuOption == 13));
     }
-
-    //initializes some test users
-    //this method created for testing purposes
+    /*
+    initializes some test users
+    this method created for testing purposes
     public void testingInit(){
         managerLibrary.registerManager("testManager1", "man1");
-        managerLibrary.registerManager("testManager2", "man2");
-        employeeLibrary.registerEmployee("testEmployee1", "emp1", 1995, "address1", 10000);
-        employeeLibrary.registerEmployee("testEmployee2", "emp2", 1994, "address2", 20000);
-        Customer cust1 = customerLibrary.registerCustomer("testCustomer1", "cust1");
-        Customer cust2 = customerLibrary.registerCustomer("testCustomer2", "cust2");
-        Customer cust3 = customerLibrary.registerCustomer("testCustomer3", "cust3");
-        Game game1 = gameLibrary.registerGame("testGame","testGenre", 300);
-        Game game2 =gameLibrary.registerGame("testGame2","testGenre", 350);
-        Game game3 =gameLibrary.registerGame("testGame3","testGenre", 150);
-        Album album1 = albumLibrary.registerAlbum("testTitle","Test Artist", 2012,200);
-        Album album2 = albumLibrary.registerAlbum("testTitle2","Test Artist2", 2013,300);
-        Album album3 = albumLibrary.registerAlbum("testTitle3","Test Artist3", 2012,15);
         userInterface.listAllManagers();
-        userInterface.listAllEmployees();
-        userInterface.listAllCustomers();
     }
+    */
 
 }
