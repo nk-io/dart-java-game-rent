@@ -1,3 +1,5 @@
+//Milestone 3
+//Constructor throws some Exceptions for Epic Feature 12
 import exception.EmptyNameException;
 import exception.NegativeRentFeeException;
 

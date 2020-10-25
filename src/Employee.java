@@ -1,6 +1,8 @@
 //Employee Menu and Employee classes have been merged
 //Methods are no longer statics
 //Some properties have been inherited from parent User class
+//Milestone 3
+//Constructor throws some Exceptions for Epic Feature 12
 import exception.*;
 
 import java.time.LocalDateTime;
