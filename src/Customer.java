@@ -1,11 +1,12 @@
-import membership.*;
-
-import java.util.ArrayList;
-
 // Change Log for Milestone 2
 //Customer Menu and Customer classes have been merged
 //Methods are no longer statics
 //Some properties and methods have been inherited from parent User class
+//Milestone 3
+//Constructor throws some Exceptions for Epic Feature 12
+import membership.*;
+import java.util.ArrayList;
+
 class Customer extends User {
     private Membership membership = new RegularMembership();
     private int storeCredits = 0;

@@ -1,6 +1,8 @@
+//Milestone 2
 // Password property and methods have been added to achieve password protection for every user
 // UserMenu class became User class and its parent class for all user classes
-
+//Milestone 3
+//Constructor throws some Exceptions for Epic Feature 12
 import exception.EmptyNameException;
 import exception.EmptyPasswordException;
 

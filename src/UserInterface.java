@@ -1,5 +1,7 @@
 //To implement milestone 2 and onward, we modified all the classes by making the UserInterface and breaking up all previous methods to only print inside this class.
-
+//Milestone 3
+//New menu items for importing and exporting
+//Try-catch blocks for exception handling
 import exception.*;
 import membership.*;
 
