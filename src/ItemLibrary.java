@@ -1,5 +1,9 @@
+/*sortByRating() now returns a String instead of an ArrayList to avoid repeating code whenever we call this method
+  Previously we had to turn the ArrayList into a String
+  Replaced the old compare method with more readable Comparator.comparing method
+*/
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 abstract class ItemLibrary {
@@ -100,17 +104,12 @@ abstract class ItemLibrary {
     public String sortByRating(ArrayList <Item> item){
         ArrayList<Item> tempList;
         tempList = (ArrayList) item.clone();
-        tempList.sort(Collections.reverseOrder(new Comparator<Item>() {
 
-            @Override
-            public int compare(Item i1, Item i2) {
-                if (i1.getAverageRating() > i2.getAverageRating())
-                    return 1;
-                if (i1.getAverageRating() < i2.getAverageRating())
-                    return -1;
-                return 0;
-            }
-        }));
+        /* Sorts the cloned ArrayList according to the Comparator obtained
+           This particular Comparator accepts getAverageRating() as a Comparable sort key from type Item
+           which means that it compares Albums by their average rating and it also imposes a natural (because of the Comparable sort key)
+           reverse ordering since items with the highest average rating must be shown first */
+        tempList.sort(Comparator.comparing(Item::getAverageRating).reversed());
 
         StringBuilder builder = new StringBuilder();
         for(int i = 0; i < tempList.size(); i++){
